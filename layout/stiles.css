@@ -1,266 +1,275 @@
 @font-face {
-    font-family: StratosSkyeng;
-    src: url(./assets/fonts/stratosskyengweb-light.woff2) format("woff2");
-    font-weight: 300;
-    font-style: normal;
-    font-display: fallback;
+	font-family: StratosSkyeng;
+	src: url(./assets/fonts/stratosskyengweb-light.woff2) format('woff2');
+	font-weight: 300;
+	font-style: normal;
+	font-display: fallback;
 }
 @font-face {
-    font-family: StratosSkyeng;
-    src: url(./assets/fonts/stratosskyengweb-regular.woff2) format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: fallback;
+	font-family: StratosSkyeng;
+	src: url(./assets/fonts/stratosskyengweb-regular.woff2) format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: fallback;
 }
-@font-face{
-    font-family: StratosSkyeng;
-    src: url(./assets/fonts/stratosskyengweb-bold.woff2) format("woff2");
-    font-weight: 700;
-    font-style: normal;
-    font-display:fallback;
+@font-face {
+	font-family: StratosSkyeng;
+	src: url(./assets/fonts/stratosskyengweb-bold.woff2) format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: fallback;
 }
 
 * {
-    padding: 0;
-    margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 body {
-    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+	font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+}
+@media (orientation: portrait) {
+	section {
+		display: flex;
+		flex-direction: column;
+	}
+	.gamer1,
+	.gamer2 {
+		width: 100vw;
+		height: 50vh;
+	}
 }
 
 :root {
-    --section-background-color: #D5E052;
-    --game1-color: #D3E03D;
-    --game1-background-color: #69E0DB;
-    --game2-color: #983DE0;
-    --game2-background-color: #E07D48;
+	--section-background-color: #d5e052;
+	--game1-color: #d3e03d;
+	--game1-background-color: #69e0db;
+	--game2-color: #983de0;
+	--game2-background-color: #e07d48;
 }
 
 section {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    background-color: var(--section-background-color);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	background-color: var(--section-background-color);
 }
 
 h2 {
-    font-weight: bold;
-    font-size: 40px;
-    margin-bottom: 20px;
-    text-shadow: 1px 0 1px #000,
-    0 1px 1px #000,
-    -1px 0 1px #000,
-    0 -1px 1px #000;
+	font-weight: bold;
+	font-size: 40px;
+	margin-bottom: 20px;
+	text-shadow: 1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000;
 }
 
-.gamer1, .gamer2 {
-    padding: 15px;
-    height: 100vh;
-    flex-grow: 1;
+.gamer1,
+.gamer2 {
+	padding: 15px;
+	height: 100vh;
+	flex-grow: 1;
 }
 
 .content-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .gamer1 {
-    margin-right: 10px;
-    color: var(--game1-color);
-    background-color: var(--game1-background-color);
+	margin-right: 10px;
+	color: var(--game1-color);
+	background-color: var(--game1-background-color);
 }
 
 .gamer2 {
-    color: var(--game2-color);
-    background-color: var(--game2-background-color);
+	color: var(--game2-color);
+	background-color: var(--game2-background-color);
 }
 
 .gamer1 .content-wrapper {
-    animation-iteration-count: 1;
-    animation-duration: 1.5s;
-    animation-name: slideRight;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-in-out;
-    -webkit-animation-timing-function: ease-in-out;
-    visibility: visible !important;
+	animation-iteration-count: 1;
+	animation-duration: 1.5s;
+	animation-name: slideRight;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
+	visibility: visible !important;
 }
 
 @keyframes slideRight {
-    0% {
-        transform: translateX(-150%);
-    }
-    50%{
-        transform: translateX(8%);
-    }
-    65%{
-        transform: translateX(-4%);
-    }
-    80%{
-        transform: translateX(4%);
-    }
-    95%{
-        transform: translateX(-2%);
-    }
-    100% {
-        transform: translateX(0%);
-    }
+	0% {
+		transform: translateX(-150%);
+	}
+	50% {
+		transform: translateX(8%);
+	}
+	65% {
+		transform: translateX(-4%);
+	}
+	80% {
+		transform: translateX(4%);
+	}
+	95% {
+		transform: translateX(-2%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
 }
 
 @-webkit-keyframes slideRight {
-    0% {
-        -webkit-transform: translateX(-150%);
-    }
-    50%{
-        -webkit-transform: translateX(8%);
-    }
-    65%{
-        -webkit-transform: translateX(-4%);
-    }
-    80%{
-        -webkit-transform: translateX(4%);
-    }
-    95%{
-        -webkit-transform: translateX(-2%);
-    }
-    100% {
-        -webkit-transform: translateX(0%);
-    }
+	0% {
+		-webkit-transform: translateX(-150%);
+	}
+	50% {
+		-webkit-transform: translateX(8%);
+	}
+	65% {
+		-webkit-transform: translateX(-4%);
+	}
+	80% {
+		-webkit-transform: translateX(4%);
+	}
+	95% {
+		-webkit-transform: translateX(-2%);
+	}
+	100% {
+		-webkit-transform: translateX(0%);
+	}
 }
 
 .gamer2 .content-wrapper {
-    animation-name: slideLeft;
-    -webkit-animation-name: slideLeft;
+	animation-name: slideLeft;
+	-webkit-animation-name: slideLeft;
 
-    animation-duration: 2s;
-    -webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-duration: 2s;
 
-    animation-timing-function: ease-in-out;
-    -webkit-animation-timing-function: ease-in-out;
+	animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
 
-    visibility: visible !important;
+	visibility: visible !important;
 }
 
 @keyframes slideLeft {
-    0% {
-        transform: translateX(150%);
-    }
-    50%{
-        transform: translateX(-8%);
-    }
-    65%{
-        transform: translateX(4%);
-    }
-    80%{
-        transform: translateX(-4%);
-    }
-    95%{
-        transform: translateX(2%);
-    }
-    100% {
-        transform: translateX(0%);
-    }
+	0% {
+		transform: translateX(150%);
+	}
+	50% {
+		transform: translateX(-8%);
+	}
+	65% {
+		transform: translateX(4%);
+	}
+	80% {
+		transform: translateX(-4%);
+	}
+	95% {
+		transform: translateX(2%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
 }
 
 @-webkit-keyframes slideLeft {
-    0% {
-        -webkit-transform: translateX(150%);
-    }
-    50%{
-        -webkit-transform: translateX(-8%);
-    }
-    65%{
-        -webkit-transform: translateX(4%);
-    }
-    80%{
-        -webkit-transform: translateX(-4%);
-    }
-    95%{
-        -webkit-transform: translateX(2%);
-    }
-    100% {
-        -webkit-transform: translateX(0%);
-    }
+	0% {
+		-webkit-transform: translateX(150%);
+	}
+	50% {
+		-webkit-transform: translateX(-8%);
+	}
+	65% {
+		-webkit-transform: translateX(4%);
+	}
+	80% {
+		-webkit-transform: translateX(-4%);
+	}
+	95% {
+		-webkit-transform: translateX(2%);
+	}
+	100% {
+		-webkit-transform: translateX(0%);
+	}
 }
 
 .choice-wrapper {
-    width: 440px;
-    height: 440px;
-    padding: 0;
-    position: relative;
+	width: 440px;
+	height: 440px;
+	padding: 0;
+	position: relative;
 }
 
-.scissors, .paper, .rock, .oblique-cross {
-    width: 440px;
-    height: 440px;
-    background-size: contain;
-    background-repeat: no-repeat;
+.scissors,
+.paper,
+.rock,
+.oblique-cross {
+	width: 440px;
+	height: 440px;
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 
 .scissors {
-    background-image: url("./assets/img/scissors.jpg");
+	background-image: url('./assets/img/scissors.jpg');
 }
 
 .paper {
-    background-image: url("./assets/img/paper.jpg");
+	background-image: url('./assets/img/paper.jpg');
 }
 
 .rock {
-    background-image: url("./assets/img/rock.jpg");
+	background-image: url('./assets/img/rock.jpg');
 }
 
 .oblique-cross {
-    position: absolute;
-    color: #cb2821;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 500px;
-    text-shadow: 1px 0 1px #000,
-    0 1px 1px #000,
-    -1px 0 1px #000,
-    0 -1px 1px #000;
-    animation: pulsing 3.5s infinite;
+	position: absolute;
+	color: #cb2821;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 500px;
+	text-shadow: 1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000;
+	animation: pulsing 3.5s infinite;
 }
 
 @-webkit-keyframes pulsing {
-    0% {
-        -webkit-transform: scale(0.5, 0.5);
-        transform: scale(0.8, 0.9)
-    }
-    50% {
-        -webkit-transform: scale(1.0, 1.0);
-        transform: scale(1.0, 1.0);
-    }
-    100% {
-        -webkit-transform: scale(0.5, 0.5);
-        transform: scale(0.8, 0.9);
-    }
+	0% {
+		-webkit-transform: scale(0.5, 0.5);
+		transform: scale(0.8, 0.9);
+	}
+	50% {
+		-webkit-transform: scale(1, 1);
+		transform: scale(1, 1);
+	}
+	100% {
+		-webkit-transform: scale(0.5, 0.5);
+		transform: scale(0.8, 0.9);
+	}
 }
 
 @keyframes pulsing {
-    0% {
-        -webkit-transform: scale(0.5, 0.5);
-        transform: scale(0.8, 0.9)
-    }
-    50% {
-        -webkit-transform: scale(1.0, 1.0);
-        transform: scale(1.0, 1.0);
-    }
-    100% {
-        -webkit-transform: scale(0.5, 0.5);
-        transform: scale(0.8, 0.9);
-    }
+	0% {
+		-webkit-transform: scale(0.5, 0.5);
+		transform: scale(0.8, 0.9);
+	}
+	50% {
+		-webkit-transform: scale(1, 1);
+		transform: scale(1, 1);
+	}
+	100% {
+		-webkit-transform: scale(0.5, 0.5);
+		transform: scale(0.8, 0.9);
+	}
 }
 
 .display-none {
-    display: none;
+	display: none;
 }
