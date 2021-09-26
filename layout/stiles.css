@@ -28,17 +28,6 @@
 body {
 	font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
 }
-@media (orientation: portrait) {
-	section {
-		display: flex;
-		flex-direction: column;
-	}
-	.gamer1,
-	.gamer2 {
-		width: 100vw;
-		height: 50vh;
-	}
-}
 
 :root {
 	--section-background-color: #d5e052;
@@ -227,6 +216,23 @@ h2 {
 
 .rock {
 	background-image: url('./assets/img/rock.jpg');
+}
+@media (max-width: 480px) {
+	section {
+		flex-direction: column;
+	}
+	.gamer1,
+	.gamer2 {
+		width: 100vw;
+		height: 50vh;
+	}
+	.scissors,
+	.paper,
+	.rock,
+	.oblique-cross {
+		width: 440px;
+		height: 200px;
+	}
 }
 
 .oblique-cross {
