@@ -36,6 +36,8 @@ body {
 	--game2-color: #983de0;
 	--game2-background-color: #e07d48;
 	--title-color: #fffff0;
+	--rock: rgb(185, 179, 179);
+	--scissors: rgb(211, 24, 24);
 }
 
 section {
@@ -218,23 +220,7 @@ h2 {
 .rock {
 	background-image: url('./assets/img/rock.jpg');
 }
-@media (max-width: 480px) {
-	section {
-		flex-direction: column;
-	}
-	.gamer1,
-	.gamer2 {
-		width: 100vw;
-		height: 50vh;
-	}
-	.scissors,
-	.paper,
-	.rock,
-	.oblique-cross {
-		width: 440px;
-		height: 200px;
-	}
-}
+
 .oblique-cross {
 	position: absolute;
 	color: #cb2821;
@@ -287,20 +273,67 @@ h2 {
 .title {
 	font-weight: 700;
 	font-size: 50px;
-	color: var(--title-color);
 	text-shadow: 1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000;
-	animation: slideTop 500ms 0s 1 backwards;
 }
-@keyframes slideTop {
+.title-image {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+}
+.rock-image {
+	width: 200px;
+	cursor: pointer;
+	animation: opacityRock 3s 1s 1 backwards;
+}
+@keyframes opacityRock {
 	from {
-		margin-top: -50%;
+		opacity: -1;
 	}
 
 	to {
-		margin-top: 0%;
+		opacity: 1;
 	}
 }
+.scissors-image {
+	width: 200px;
+	cursor: pointer;
+	animation: opacityScissors 3s 1.5s 1 backwards;
+}
+@keyframes opacityScissors {
+	from {
+		opacity: -1;
+	}
 
+	to {
+		opacity: 1;
+	}
+}
+.paper-image {
+	width: 200px;
+	cursor: pointer;
+	animation: opacityPaper 3s 2s 1 backwards;
+}
+@keyframes opacityPaper {
+	from {
+		opacity: -1;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+.rock-text {
+	color: var(--rock);
+	animation: opacityRock 2s 1s 1 backwards;
+}
+.scissors-text {
+	color: var(--scissors);
+	animation: opacityRock 2s 1.5s 1 backwards;
+}
+.paper-text {
+	color: var(--title-color);
+	animation: opacityRock 2s 2s 1 backwards;
+}
 .container {
 	max-width: 700px;
 	height: 100vh;
@@ -332,6 +365,17 @@ h2 {
 	font-weight: 700;
 	font-size: 20px;
 	cursor: pointer;
+	animation: slideRight 500ms 0s 1 backwards;
+}
+@keyframes slideRight {
+	from {
+		margin-right: -750%;
+		margin-left: 700%;
+	}
+
+	to {
+		margin-left: 0%;
+	}
 }
 .login-input:hover {
 	background: white;
@@ -353,8 +397,66 @@ h2 {
 	color: var(--title-color);
 	transition: background-color 300ms;
 	cursor: pointer;
+	animation: slideLeft 500ms 0s 1 backwards;
+}
+@keyframes slideLeft {
+	from {
+		margin-left: -750%;
+		margin-right: 700%;
+	}
+
+	to {
+		margin-left: 0%;
+	}
 }
 .login-button:hover {
 	background: #aa75d6;
 	color: #e0e0ce;
+}
+@media (max-width: 480px) and (orientation: landscape) {
+	.title {
+		font-weight: 700;
+		font-size: 50px;
+	}
+	.rock-image {
+		width: 120px;
+	}
+	.scissors-image {
+		width: 120px;
+	}
+	.paper-image {
+		width: 120px;
+	}
+}
+@media (max-width: 480px) and (orientation: portrait) {
+	.title {
+		font-weight: 700;
+		font-size: 50px;
+		display: flex;
+		flex-direction: column;
+	}
+	.rock-image {
+		width: 120px;
+	}
+	.scissors-image {
+		width: 120px;
+	}
+	.paper-image {
+		width: 120px;
+	}
+	section {
+		flex-direction: column;
+	}
+	.gamer1,
+	.gamer2 {
+		width: 100vw;
+		height: 50vh;
+	}
+	.scissors,
+	.paper,
+	.rock,
+	.oblique-cross {
+		width: 440px;
+		height: 200px;
+	}
 }
