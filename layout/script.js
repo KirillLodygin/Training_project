@@ -5,3 +5,7 @@ const colorMap = [
     ['#E05364', '#E03D50', '#E0C469', '#3BE05E', '#485FE0'],
     ['#536FE0', '#3D5DE0', '#E06982', '#E0B63A', '#79E08B']
 ];
+
+const GameState = {
+    gamerName: ''
+}
