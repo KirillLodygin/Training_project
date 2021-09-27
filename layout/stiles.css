@@ -35,6 +35,7 @@ body {
 	--game1-background-color: #69e0db;
 	--game2-color: #983de0;
 	--game2-background-color: #e07d48;
+	--title-color: #fffff0;
 }
 
 section {
@@ -234,7 +235,6 @@ h2 {
 		height: 200px;
 	}
 }
-
 .oblique-cross {
 	position: absolute;
 	color: #cb2821;
@@ -278,4 +278,83 @@ h2 {
 
 .display-none {
 	display: none;
+}
+
+/***************Экран Авторизации*******************************/
+.header {
+	background: var(--section-background-color);
+}
+.title {
+	font-weight: 700;
+	font-size: 50px;
+	color: var(--title-color);
+	text-shadow: 1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000;
+	animation: slideTop 500ms 0s 1 backwards;
+}
+@keyframes slideTop {
+	from {
+		margin-top: -50%;
+	}
+
+	to {
+		margin-top: 0%;
+	}
+}
+
+.container {
+	max-width: 700px;
+	height: 100vh;
+	margin: 0 auto;
+	background: var(--game2-background-color);
+}
+.main {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	height: 100%;
+}
+.login {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 300px;
+	height: auto;
+	min-height: 50px;
+}
+.login-input {
+	margin-bottom: 20px;
+	border: 2px solid var(--section-background-color);
+	border-radius: 10px;
+	background: var(--title-color);
+	color: var(--game2-color);
+	text-align: center;
+	font-weight: 700;
+	font-size: 20px;
+	cursor: pointer;
+}
+.login-input:hover {
+	background: white;
+}
+::-webkit-input-placeholder {
+	text-align: center;
+	color: var(--game2-color);
+	font-family: StratosSkyeng, Arial, sans-serif;
+	font-size: 15px;
+	font-weight: 300;
+}
+.login-button {
+	font-family: StratosSkyeng, Arial, sans-serif;
+	font-size: 25px;
+	align-items: center;
+	border: 2px solid var(--section-background-color);
+	border-radius: 10px;
+	background: var(--game2-color);
+	color: var(--title-color);
+	transition: background-color 300ms;
+	cursor: pointer;
+}
+.login-button:hover {
+	background: #aa75d6;
+	color: #e0e0ce;
 }
