@@ -7,11 +7,15 @@
 </head>
 <body>
 	<section>
+    <div class="round-number">
+      <p class="fadeIn invisible">Раунд 1</p>
+    </div>
+
 		<div class="gamer1">
 			<div class="content-wrapper">
 				<h2>Петр</h2>
 				<div class="choice-wrapper">
-					<div class="oblique-cross display-none">&#128942;</div>
+					<div class="result green-tick display-none">&#10004;</div>
 					<div class="scissors"></div>
 				</div>
 			</div>
@@ -22,11 +26,24 @@
 			<div class="content-wrapper">
 				<h2>Павел</h2>
 				<div class="choice-wrapper">
-					<div class="oblique-cross display-none">&#128942;</div>
+					<div class="result oblique-cross display-none">&#128942;</div>
 					<div class="paper"></div>
 				</div>
 			</div>
 		</div>
+
+    <div class="round-result-field">
+      <div class="round-result-wrapper bigEntrance">
+        <div class="round-result-window">
+          <div class="result-declaration">Ты использовал ножницы. Противник применил против тебя бумагу и проиграл! Еще раунд?</div>
+          <div class='btns-block'>
+            <button class="ok-button">Ok</button>
+            <button class="no-button">No!!!</button>
+          </div>
+        </div>
+        <div class="round-result-frame"></div>
+      </div>
+    </div>
 	</section>
 </body>
 </html>
