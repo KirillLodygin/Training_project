@@ -281,9 +281,8 @@ const startTemplateEngine = block => {
 gameState.gamerName = 'A';
 gameState.rivalName = 'B'
 
-
 const createTemplate = (templateStructure) => {
   return startTemplateEngine(templateStructure);
 };
 
-app.appendChild(createTemplate(gameField));
+app.appendChild(createTemplate(loginScreen));

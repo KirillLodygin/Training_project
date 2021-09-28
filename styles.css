@@ -35,6 +35,9 @@ body {
     --game1-background-color: #69E0DB;
     --game2-color: #983DE0;
     --game2-background-color: #E07D48;
+    --title-color: #fffff0;
+    --rock: rgb(185, 179, 179);
+    --scissors: rgb(211, 24, 24);
 }
 
 .game-field {
@@ -537,7 +540,7 @@ button {
     width: 100%;
 }
 .rock-image {
-    background-image: url('./assets/img/rock.jpg');
+    background-image: url('./layout/assets/img/rock.jpg');
     width: 200px;
     height: 200px;
     background-size: contain;
@@ -546,7 +549,7 @@ button {
 }
 @keyframes opacityRock {
     from {
-        opacity: -1;
+        opacity: 0;
     }
 
     to {
@@ -554,7 +557,7 @@ button {
     }
 }
 .scissors-image {
-    background-image: url('./assets/img/scissors.jpg');
+    background-image: url('./layout/assets/img/scissors.jpg');
     width: 200px;
     height: 200px;
     background-size: contain;
@@ -563,7 +566,7 @@ button {
 }
 @keyframes opacityScissors {
     from {
-        opacity: -1;
+        opacity: 0;
     }
 
     to {
@@ -571,7 +574,7 @@ button {
     }
 }
 .paper-image {
-    background-image: url('./assets/img/paper.jpg');
+    background-image: url('./layout/assets/img/paper.jpg');
     width: 200px;
     height: 200px;
     background-size: contain;
@@ -580,7 +583,7 @@ button {
 }
 @keyframes opacityPaper {
     from {
-        opacity: -1;
+        opacity: 0;
     }
 
     to {
@@ -642,7 +645,7 @@ button {
     }
 
     to {
-        margin-left: 0%;
+        margin-left: 0;
     }
 }
 .login-input:hover {
@@ -716,15 +719,15 @@ button {
         flex-direction: column;
     }
     .rock-image {
-        background-image: url('./assets/img/rock.jpg');
+        background-image: url('./layout/assets/img/rock.jpg');
         width: 120px;
     }
     .scissors-image {
-        background-image: url('./assets/img/scissors.jpg');
+        background-image: url('./layout/assets/img/scissors.jpg');
         width: 120px;
     }
     .paper-image {
-        background-image: url('./assets/img/paper.jpg');
+        background-image: url('./layout/assets/img/paper.jpg');
         width: 120px;
     }
 }
