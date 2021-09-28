@@ -204,8 +204,8 @@ gameState.gamerName = 'A';
 gameState.rivalName = 'B'
 
 
-const createTemplate = () => {
-  return startTemplateEngine(gameField);
+const createTemplate = (templateStructure) => {
+  return startTemplateEngine(templateStructure);
 };
 
-app.appendChild(createTemplate());
+app.appendChild(createTemplate(gameField));
