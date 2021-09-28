@@ -1,20 +1,20 @@
 @font-face {
     font-family: StratosSkyeng;
-    src: url(layout/assets/fonts/stratosskyengweb-light.woff2) format("woff2");
+    src: url(assets/fonts/stratosskyengweb-light.woff2) format("woff2");
     font-weight: 300;
     font-style: normal;
     font-display: fallback;
 }
 @font-face {
     font-family: StratosSkyeng;
-    src: url(layout/assets/fonts/stratosskyengweb-regular.woff2) format("woff2");
+    src: url(assets/fonts/stratosskyengweb-regular.woff2) format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: fallback;
 }
 @font-face{
     font-family: StratosSkyeng;
-    src: url(layout/assets/fonts/stratosskyengweb-bold.woff2) format("woff2");
+    src: url(assets/fonts/stratosskyengweb-bold.woff2) format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display:fallback;
@@ -234,15 +234,15 @@ h2 {
 }
 
 .scissors {
-    background-image: url("layout/assets/img/scissors.jpg");
+    background-image: url("assets/img/scissors.jpg");
 }
 
 .paper {
-    background-image: url("layout/assets/img/paper.jpg");
+    background-image: url("assets/img/paper.jpg");
 }
 
 .rock {
-    background-image: url("layout/assets/img/rock.jpg");
+    background-image: url("assets/img/rock.jpg");
 }
 
 .result {
@@ -540,7 +540,7 @@ button {
     width: 100%;
 }
 .rock-image {
-    background-image: url('./layout/assets/img/rock.jpg');
+    background-image: url('assets/img/rock.jpg');
     width: 200px;
     height: 200px;
     background-size: contain;
@@ -557,7 +557,7 @@ button {
     }
 }
 .scissors-image {
-    background-image: url('./layout/assets/img/scissors.jpg');
+    background-image: url('assets/img/scissors.jpg');
     width: 200px;
     height: 200px;
     background-size: contain;
@@ -574,7 +574,7 @@ button {
     }
 }
 .paper-image {
-    background-image: url('./layout/assets/img/paper.jpg');
+    background-image: url('assets/img/paper.jpg');
     width: 200px;
     height: 200px;
     background-size: contain;
@@ -718,15 +718,15 @@ button {
         flex-direction: column;
     }
     .rock-image {
-        background-image: url('./layout/assets/img/rock.jpg');
+        background-image: url('assets/img/rock.jpg');
         width: 120px;
     }
     .scissors-image {
-        background-image: url('./layout/assets/img/scissors.jpg');
+        background-image: url('assets/img/scissors.jpg');
         width: 120px;
     }
     .paper-image {
-        background-image: url('./layout/assets/img/paper.jpg');
+        background-image: url('assets/img/paper.jpg');
         width: 120px;
     }
 }
