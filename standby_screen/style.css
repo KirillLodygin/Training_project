@@ -77,7 +77,7 @@ body {
 }
 
 .header_text {
-  color: #e07d48;
+  color: chartreuse;
 }
 .blink_text {
   display: flex;
@@ -169,6 +169,16 @@ body {
   border-radius: 15px;
   background: palegoldenrod;
 }
+.back_button_box-button{
+  color: white;
+  height: 50px;
+  background: brown;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  margin: 50px 0px 00px 10px;
+  padding-right: 10px;
+}
 
 @keyframes bigEntrance {
   0% {
@@ -200,3 +210,5 @@ body {
     opacity: 1;
   }
 }
+
+

@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1 class="header_text">Вы отправили вызов игроку <span class="gamer2">Пётр</span> </h1>
+            <h1 class="header_text">Ожидаем подключения игрока</h1>
         </header>
         <div class="main" >
             <div class="main_opponent_profile-block bigEntrance">
@@ -20,32 +20,32 @@
                     <h1 class="opponent_profile-name ">Пётр</h1>
                 </div>
                 <div class="opponent_profile_statistics-block">
-                    <h2 class="statistics-header">Статистика Противника</h2>
+                    <h2 class="statistics-header">Ваша статистика</h2>
                     <div class="statistic-items">
-                        <p class="win">Победы : 0</p>
-                        <p class="loose">Поражения : 0 </p>
-                        <p class="draw"> Ничьи : 0 </p>
-                        
+                        <h3 class="win">Победы : 0</h3>
+                        <h3 class="loose">Поражения : 0 </h3>
+                        <h3 class="draw"> Ничьи : 0 </h3>
                     </div>
-                    </ul>
+                
                 </div>
             </div>
 
            <div class="blink_text ">
                <p >Ожидаем подключение соперника...</p>
             </div> 
-            <div class="canceled draw hidden">
-                <h2> Противник отклонил заявку :( <br> Выбери другого соперника</h2>
+            <div class="back_button_box">
+                
+                <button class="back_button_box-button"><img src="/assets/img/back_arrow.png" alt=""> <h3>Вернуться в лобби</h3></button>
             </div>
         </div>
     </div>
     <script > 
    
-        setInterval(function(){
-        document.querySelector(".canceled").classList.remove("hidden")
-        document.querySelector(".blink_text").classList.add("hidden");
+        // setInterval(function(){
+        // document.querySelector(".canceled").classList.remove("hidden")
+        // document.querySelector(".blink_text").classList.add("hidden");
             
-        }, 1500);
+        // }, 1500);
        
   </script>      
 </body>
