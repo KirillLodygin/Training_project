@@ -158,12 +158,16 @@ body {
 
   visibility: visible !important;
 }
-.hidden{
+.hidden.hidden{
   display: none;
 }
+
 .canceled{
   display: flex;
   justify-content: center;
+  border: 2px solid red;
+  border-radius: 15px;
+  background: palegoldenrod;
 }
 
 @keyframes bigEntrance {
