@@ -1,4 +1,4 @@
-// import { loginScreen } from './login_screen';
+// import loginScreen from './login_screen';
 const app = document.querySelector('.app');
 const loginScreen = {
 	templateStructure: {
@@ -55,20 +55,20 @@ const loginScreen = {
 							{
 								block: 'figure',
 								cls: 'login',
-								content: [
-									{
-										block: 'input',
-										cls: ['login', 'login-input'],
-										attrs: {
-											placeholder: 'Введи свой nikname',
-										},
-									},
-									{
-										block: 'button',
-										cls: ['login', 'login-button'],
-										innerText: 'Войти',
-									},
-								],
+								// content: [
+								// 	{
+								// 		block: 'input',
+								// 		cls: ['login', 'login-input'],
+								// 		attrs: {
+								// 			placeholder: 'Введи свой nikname',
+								// 		},
+								// 	},
+								// 	{
+								// 		block: 'button',
+								// 		cls: ['login', 'login-button'],
+								// 		innerText: 'Войти',
+								// 	},
+								// ],
 							},
 						],
 					},
@@ -76,6 +76,19 @@ const loginScreen = {
 			},
 		],
 	},
+};
+
+//отрисовка блоков
+const renderLogin = () => {
+	const login = document.querySelector('.login');
+	const button = document.createElement('button');
+	const input = document.createElement('input');
+	input.className = 'login login-input';
+	input.setAttribute('placeholder', 'Введи свой nikname');
+	button.className = 'login login-button';
+	button.textContent = 'Войти';
+	login.appendChild(input);
+	login.appendChild(button);
 };
 
 //шаблонизатор
@@ -131,9 +144,8 @@ const createTemplate = () => {
 
 //формирует облик страницы
 const createPage = () => {
-	templateEngine;
 	createTemplate;
 	app.appendChild(createTemplate());
+	renderLogin();
 };
-
 document.addEventListener('DOMContentLoaded', createPage);

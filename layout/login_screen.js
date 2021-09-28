@@ -1,4 +1,4 @@
-export const loginScreen = {
+export default loginScreen = {
 	templateStructure: {
 		block: 'header',
 		cls: 'header',
@@ -37,54 +37,37 @@ export const loginScreen = {
 								cls: 'title-image',
 								content: [
 									{
-										block: 'img',
+										block: 'div',
 										cls: 'rock-image',
-										attrs: [
-											{
-												src: '/layout/assets/img/rock.jpg',
-											},
-										],
 									},
 									{
-										block: 'img',
+										block: 'div',
 										cls: 'scissors-image',
-										attrs: [
-											{
-												src: '/layout/assets/img/scissors.jpg',
-											},
-										],
 									},
 									{
-										block: 'img',
+										block: 'div',
 										cls: 'paper-image',
-										attrs: [
-											{
-												src: '/layout/assets/img/paper.jpg',
-											},
-										],
 									},
 								],
 							},
-							{
-								block: 'figure',
-								cls: 'login',
-								content: [
-									{
-										block: 'input',
-										cls: ['login', 'login login-input'],
-										attrs: [
-											{
-												placeholder: 'Введите свой nickname',
-											},
-										],
-									},
-									{
-										block: 'button',
-										cls: ['login', 'login login-button'],
-										innerText: 'Войти',
-									},
-								],
-							},
+							// {
+							// 	block: 'figure',
+							// 	cls: 'login',
+							// 	content: [
+							// 		{
+							// 			block: 'input',
+							// 			cls: ['login', 'login-input'],
+							// 			attrs: {
+							// 				placeholder: 'Введи свой nikname',
+							// 			},
+							// 		},
+							// 		{
+							// 			block: 'button',
+							// 			cls: ['login', 'login-button'],
+							// 			innerText: 'Войти',
+							// 		},
+							// 	],
+							// },
 						],
 					},
 				],

@@ -60,7 +60,7 @@ body {
 	height: 200px;
 	background-size: contain;
 	cursor: pointer;
-	animation: opacityRock 5s 1s 1 backwards;
+	animation: opacityRock 3s 1s 1 backwards;
 }
 @keyframes opacityRock {
 	from {
@@ -77,7 +77,7 @@ body {
 	height: 200px;
 	background-size: contain;
 	cursor: pointer;
-	animation: opacityScissors 5s 1.5s 1 backwards;
+	animation: opacityScissors 3s 1.5s 1 backwards;
 }
 @keyframes opacityScissors {
 	from {
@@ -94,7 +94,7 @@ body {
 	height: 200px;
 	background-size: contain;
 	cursor: pointer;
-	animation: opacityPaper 5s 2s 1 backwards;
+	animation: opacityPaper 3s 2s 1 backwards;
 }
 @keyframes opacityPaper {
 	from {
@@ -151,7 +151,11 @@ body {
 	font-weight: 700;
 	font-size: 20px;
 	cursor: pointer;
-	animation: slideRight 500ms 0s 1 backwards;
+	animation-name: slideRight;
+	animation-duration: 1s;
+	animation-delay: 0s;
+	animation-iteration-count: 1;
+	animation-fill-mode: backwards;
 }
 @keyframes slideRight {
 	from {
@@ -183,18 +187,13 @@ body {
 	color: var(--title-color);
 	transition: background-color 300ms;
 	cursor: pointer;
-	animation: slideLeft 500ms 0s 1 backwards;
-	animation: pulsarButton 1.5s 3s infinite forwards;
-}
-@keyframes slideLeft {
-	from {
-		margin-left: -750%;
-		margin-right: 700%;
-	}
-
-	to {
-		margin-left: 0%;
-	}
+	animation-name: pulsarButton, slideLeft;
+	animation-duration: 1.5s, 1s;
+	animation-delay: 3s, 0s;
+	animation-iteration-count: infinite, 1;
+	animation-fill-mode: forwards, backwards;
+	/* animation: pulsarButton 1.5s 3s infinite forwards;
+	animation: slideLeft 500ms 0s 1 backwards; */
 }
 @keyframes pulsarButton {
 	0% {
@@ -207,6 +206,17 @@ body {
 		border: 4px solid rgb(203, 255, 14);
 	}
 }
+@keyframes slideLeft {
+	from {
+		margin-left: -750%;
+		margin-right: 700%;
+	}
+
+	to {
+		margin-left: 0%;
+	}
+}
+
 .login-button:hover {
 	background: #aa75d6;
 	color: #e0e0ce;
