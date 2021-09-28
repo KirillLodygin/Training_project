@@ -34,7 +34,19 @@
            <div class="blink_text">
                <p >Ожидаем подключение соперника...</p>
             </div> 
+            <div class="canceled  draw hidden ">
+                <h2> Противник отклонил заявку :( <br> Выбери другого соперника</h2>
+            </div>
         </div>
     </div>
+    <script > 
+   
+        setInterval(function(){
+        document.querySelector(".canceled").classList.remove("hidden")
+        document.querySelector(".blink_text").classList.add("hidden");
+            
+        }, 1500);
+       
+  </script>      
 </body>
 </html>

@@ -158,6 +158,13 @@ body {
 
   visibility: visible !important;
 }
+.hidden{
+  display: none;
+}
+.canceled{
+  display: flex;
+  justify-content: center;
+}
 
 @keyframes bigEntrance {
   0% {
