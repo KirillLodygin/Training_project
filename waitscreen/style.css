@@ -29,7 +29,6 @@ body {
 
 /* header */
 .header-waitscreen {
-  position: relative;
   background-color: #e07d48;
 }
 .header-waitscreen__navi {
@@ -38,9 +37,6 @@ body {
 }
 
 .header-waitscreen__navibar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   list-style-type: none;
   padding: 10px 0;
 }
@@ -48,11 +44,12 @@ body {
   background-color: #d3e03d;
   border-radius: 15px;
   border: 1px solid #983de0;
+  padding: 0 10px;
   min-width: 140px;
   text-align: center;
-  font-size: 40px;
+  font-size: 25px;
   font-weight: 400;
-  line-height: 66px;
+  line-height: 35px;
   color: #983de0;
 }
 .header-waitscreen__navibar-item:hover {
@@ -63,25 +60,23 @@ body {
   color: #d3e03d;
   background-color: #983de0;
 }
-.header-waitscreen__versus-image {
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  top: 375%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  object-fit: contain;
-}
 
 /* main-content */
 .section-waitsceen {
   background: linear-gradient(to right, #69e0db 50%, #983de0);
 }
+
+.main-waitscreen__versus-image {
+  width: 250px;
+  height: 250px;
+
+  object-fit: contain;
+}
+
 .main-waitscreen__gameprocess-container {
   max-width: 1200px;
   height: calc(100vh - 150px);
   display: flex;
-  gap: 100px;
   margin: 0 auto;
 }
 .main-waitscreen__title {
@@ -160,7 +155,7 @@ body {
 .main-waitscreen__gameprocess-username,
 .main-waitscreen__gameprocess-statistic {
   font-size: 25px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 15px;
   letter-spacing: -0.3px;
 }
@@ -177,7 +172,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
-  color: #d3e03d;
+  color: #ff0000;
 
   margin-top: 15px;
 }
