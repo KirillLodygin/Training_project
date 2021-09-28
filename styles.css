@@ -669,7 +669,6 @@ button {
     transition: background-color 300ms;
     cursor: pointer;
     animation: slideLeft 500ms 0s 1 backwards;
-    animation: pulsarButton 1.5s 3s infinite forwards;
 }
 @keyframes slideLeft {
     from {
@@ -678,7 +677,7 @@ button {
     }
 
     to {
-        margin-left: 0%;
+        margin-left: 0;
     }
 }
 @keyframes pulsarButton {
