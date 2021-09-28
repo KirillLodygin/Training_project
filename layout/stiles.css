@@ -283,7 +283,7 @@ h2 {
 .rock-image {
 	width: 200px;
 	cursor: pointer;
-	animation: opacityRock 3s 1s 1 backwards;
+	animation: opacityRock 5s 1s 1 backwards;
 }
 @keyframes opacityRock {
 	from {
@@ -297,7 +297,7 @@ h2 {
 .scissors-image {
 	width: 200px;
 	cursor: pointer;
-	animation: opacityScissors 3s 1.5s 1 backwards;
+	animation: opacityScissors 5s 1.5s 1 backwards;
 }
 @keyframes opacityScissors {
 	from {
@@ -311,7 +311,7 @@ h2 {
 .paper-image {
 	width: 200px;
 	cursor: pointer;
-	animation: opacityPaper 3s 2s 1 backwards;
+	animation: opacityPaper 5s 2s 1 backwards;
 }
 @keyframes opacityPaper {
 	from {
@@ -398,6 +398,7 @@ h2 {
 	transition: background-color 300ms;
 	cursor: pointer;
 	animation: slideLeft 500ms 0s 1 backwards;
+	animation: pulsarButton 1.5s 3s infinite forwards;
 }
 @keyframes slideLeft {
 	from {
@@ -407,6 +408,17 @@ h2 {
 
 	to {
 		margin-left: 0%;
+	}
+}
+@keyframes pulsarButton {
+	0% {
+		font-size: 25px;
+		border: 2px solid var(--section-background-color);
+	}
+
+	100% {
+		font-size: 30px;
+		border: 4px solid rgb(203, 255, 14);
 	}
 }
 .login-button:hover {
