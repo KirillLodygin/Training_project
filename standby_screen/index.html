@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="header_text">Вы отправили вызов игроку <span class="gamer2">Пётр</span> </h1>
+        </header>
+        <div class="main" >
+            <div class="main_opponent_profile-block bigEntrance">
+                <div class="main_opponent_profile-block-header">
+                    <img class="opponent_profile-avatar" src="./assets/img/avatar.svg" alt="">
+                    <h1 class="opponent_profile-name ">Пётр</h1>
+                </div>
+                <div class="opponent_profile_statistics-block">
+                    <h2 class="statistics-header">Статистика Противника</h2>
+                    <div class="statistic-items">
+                        <p class="win">Победы : 0</p>
+                        <p class="loose">Поражения : 0 </p>
+                        <p class="draw"> Ничьи : 0 </p>
+                        
+                    </div>
+                    </ul>
+                </div>
+            </div>
+
+           <div class="blink_text ">
+               <p >Ожидаем подключение соперника...</p>
+            </div> 
+            <div class="canceled draw hidden">
+                <h2> Противник отклонил заявку :( <br> Выбери другого соперника</h2>
+            </div>
+        </div>
+    </div>
+    <script > 
+   
+        setInterval(function(){
+        document.querySelector(".canceled").classList.remove("hidden")
+        document.querySelector(".blink_text").classList.add("hidden");
+            
+        }, 1500);
+       
+  </script>      
+</body>
+</html>
