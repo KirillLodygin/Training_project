@@ -521,3 +521,210 @@ button {
 .display-none {
     display: none;
 }
+
+/***************Экран Авторизации*******************************/
+.header {
+    background: var(--section-background-color);
+}
+.title {
+    font-weight: 700;
+    font-size: 50px;
+    text-shadow: 1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000;
+}
+.title-image {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.rock-image {
+    background-image: url('./assets/img/rock.jpg');
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    cursor: pointer;
+    animation: opacityRock 5s 1s 1 backwards;
+}
+@keyframes opacityRock {
+    from {
+        opacity: -1;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+.scissors-image {
+    background-image: url('./assets/img/scissors.jpg');
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    cursor: pointer;
+    animation: opacityScissors 5s 1.5s 1 backwards;
+}
+@keyframes opacityScissors {
+    from {
+        opacity: -1;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+.paper-image {
+    background-image: url('./assets/img/paper.jpg');
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    cursor: pointer;
+    animation: opacityPaper 5s 2s 1 backwards;
+}
+@keyframes opacityPaper {
+    from {
+        opacity: -1;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+.rock-text {
+    margin-right: 10px;
+    color: var(--rock);
+    animation: opacityRock 2s 1s 1 backwards;
+}
+.scissors-text {
+    margin-right: 10px;
+    color: var(--scissors);
+    animation: opacityRock 2s 1.5s 1 backwards;
+}
+.paper-text {
+    margin-right: 10px;
+    color: var(--title-color);
+    animation: opacityRock 2s 2s 1 backwards;
+}
+.container {
+    max-width: 700px;
+    height: 100vh;
+    margin: 0 auto;
+    background: var(--game2-background-color);
+}
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 300px;
+    height: auto;
+    min-height: 50px;
+}
+.login-input {
+    margin-bottom: 20px;
+    border: 2px solid var(--section-background-color);
+    border-radius: 10px;
+    background: var(--title-color);
+    color: var(--game2-color);
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    animation: slideRight 500ms 0s 1 backwards;
+}
+@keyframes slideRight {
+    from {
+        margin-right: -750%;
+        margin-left: 700%;
+    }
+
+    to {
+        margin-left: 0%;
+    }
+}
+.login-input:hover {
+    background: white;
+}
+::-webkit-input-placeholder {
+    text-align: center;
+    color: var(--game2-color);
+    font-family: StratosSkyeng, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+}
+.login-button {
+    font-family: StratosSkyeng, Arial, sans-serif;
+    font-size: 25px;
+    align-items: center;
+    border: 2px solid var(--section-background-color);
+    border-radius: 10px;
+    background: var(--game2-color);
+    color: var(--title-color);
+    transition: background-color 300ms;
+    cursor: pointer;
+    animation: slideLeft 500ms 0s 1 backwards;
+    animation: pulsarButton 1.5s 3s infinite forwards;
+}
+@keyframes slideLeft {
+    from {
+        margin-left: -750%;
+        margin-right: 700%;
+    }
+
+    to {
+        margin-left: 0%;
+    }
+}
+@keyframes pulsarButton {
+    0% {
+        font-size: 25px;
+        border: 2px solid var(--section-background-color);
+    }
+
+    100% {
+        font-size: 30px;
+        border: 4px solid rgb(203, 255, 14);
+    }
+}
+.login-button:hover {
+    background: #aa75d6;
+    color: #e0e0ce;
+}
+@media (max-width: 480px) and (orientation: landscape) {
+    .title {
+        font-weight: 700;
+        font-size: 50px;
+    }
+    .rock-image {
+        width: 120px;
+    }
+    .scissors-image {
+        width: 120px;
+    }
+    .paper-image {
+        width: 120px;
+    }
+}
+@media (max-width: 480px) and (orientation: portrait) {
+    .title {
+        font-weight: 700;
+        font-size: 50px;
+        display: flex;
+        flex-direction: column;
+    }
+    .rock-image {
+        background-image: url('./assets/img/rock.jpg');
+        width: 120px;
+    }
+    .scissors-image {
+        background-image: url('./assets/img/scissors.jpg');
+        width: 120px;
+    }
+    .paper-image {
+        background-image: url('./assets/img/paper.jpg');
+        width: 120px;
+    }
+}
