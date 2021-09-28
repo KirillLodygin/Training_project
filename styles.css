@@ -1,20 +1,20 @@
 @font-face {
     font-family: StratosSkyeng;
-    src: url(./assets/fonts/stratosskyengweb-light.woff2) format("woff2");
+    src: url(layout/assets/fonts/stratosskyengweb-light.woff2) format("woff2");
     font-weight: 300;
     font-style: normal;
     font-display: fallback;
 }
 @font-face {
     font-family: StratosSkyeng;
-    src: url(./assets/fonts/stratosskyengweb-regular.woff2) format("woff2");
+    src: url(layout/assets/fonts/stratosskyengweb-regular.woff2) format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: fallback;
 }
 @font-face{
     font-family: StratosSkyeng;
-    src: url(./assets/fonts/stratosskyengweb-bold.woff2) format("woff2");
+    src: url(layout/assets/fonts/stratosskyengweb-bold.woff2) format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display:fallback;
@@ -37,7 +37,7 @@ body {
     --game2-background-color: #E07D48;
 }
 
-section {
+.game-field {
     position: fixed;
     top: 0;
     left: 0;
@@ -231,15 +231,15 @@ h2 {
 }
 
 .scissors {
-    background-image: url("./assets/img/scissors.jpg");
+    background-image: url("layout/assets/img/scissors.jpg");
 }
 
 .paper {
-    background-image: url("./assets/img/paper.jpg");
+    background-image: url("layout/assets/img/paper.jpg");
 }
 
 .rock {
-    background-image: url("./assets/img/rock.jpg");
+    background-image: url("layout/assets/img/rock.jpg");
 }
 
 .result {
