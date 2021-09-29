@@ -40,10 +40,6 @@ body {
     --scissors: rgb(211, 24, 24);
 }
 
-.display-none {
-    display: none;
-}
-
 .game-field {
     position: fixed;
     top: 0;
@@ -772,4 +768,8 @@ button {
     cursor: pointer;
     background-color: #228B22;
     border: 1px solid #228B22;
+}
+
+.display-none {
+    display: none;
 }
