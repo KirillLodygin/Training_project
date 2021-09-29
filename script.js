@@ -271,6 +271,8 @@ const templateEngine = block => {
 
   if (block.innerText) element.innerText = block.innerText;
 
+  if (block.method) element.addEventListener(block.method.eventName, block.method.methodFunc);
+
   element.appendChild(templateEngine(block.content));
 
   return element;
