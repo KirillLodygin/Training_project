@@ -1,99 +1,97 @@
-// import loginScreen from './login_screen';
 const app = document.querySelector('.app');
-const loginScreen = {
-	templateStructure: {
-		block: 'header',
-		cls: 'header',
-		content: [
-			{
-				block: 'div',
-				cls: 'container',
-				content: [
-					{
-						block: 'div',
-						cls: 'main',
-						content: [
-							{
-								block: 'h1',
-								cls: 'title',
-								content: [
-									{
-										block: 'span',
-										cls: 'rock-text',
-										innerText: 'Камень',
-									},
-									{
-										block: 'span',
-										cls: 'scissors-text',
-										innerText: 'Ножницы',
-									},
-									{
-										block: 'span',
-										cls: 'paper-text',
-										innerText: 'Бумага',
-									},
-								],
-							},
-							{
-								block: 'figure',
-								cls: 'title-image',
-								content: [
-									{
-										block: 'div',
-										cls: 'rock-image',
-									},
-									{
-										block: 'div',
-										cls: 'scissors-image',
-									},
-									{
-										block: 'div',
-										cls: 'paper-image',
-									},
-								],
-							},
-							{
-								block: 'figure',
-								cls: 'login',
-								// content: [
-								// 	{
-								// 		block: 'input',
-								// 		cls: ['login', 'login-input'],
-								// 		attrs: {
-								// 			placeholder: 'Введи свой nikname',
-								// 		},
-								// 	},
-								// 	{
-								// 		block: 'button',
-								// 		cls: ['login', 'login-button'],
-								// 		innerText: 'Войти',
-								// 	},
-								// ],
-							},
-						],
-					},
-				],
-			},
-		],
-	},
-};
+function clickButton() {
+	console.log('click');
+}
 
-//отрисовка блоков
-const renderLogin = () => {
-	const login = document.querySelector('.login');
-	const button = document.createElement('button');
-	const input = document.createElement('input');
-	input.className = 'login login-input';
-	input.setAttribute('placeholder', 'Введи свой nikname');
-	button.className = 'login login-button';
-	button.textContent = 'Войти';
-	login.appendChild(input);
-	login.appendChild(button);
+const application = {
+	block: {
+		loginButton: {
+			block: 'button',
+			cls: ['login', 'login-button'],
+			innerText: 'Войти',
+			method: {
+				eventName: 'click',
+				methodFunc: () => {
+					clickButton();
+				},
+			},
+		},
+		loginInput: {
+			block: 'input',
+			cls: ['login', 'login-input'],
+			attrs: {
+				placeholder: 'Введи свой nikname',
+			},
+		},
+	},
+	screen: {
+		loginScreen: {
+			block: 'header',
+			cls: 'header',
+			content: [
+				{
+					block: 'div',
+					cls: 'container',
+					content: [
+						{
+							block: 'div',
+							cls: 'main',
+							content: [
+								{
+									block: 'h1',
+									cls: 'title',
+									content: [
+										{
+											block: 'span',
+											cls: 'rock-text',
+											innerText: 'Камень',
+										},
+										{
+											block: 'span',
+											cls: 'scissors-text',
+											innerText: 'Ножницы',
+										},
+										{
+											block: 'span',
+											cls: 'paper-text',
+											innerText: 'Бумага',
+										},
+									],
+								},
+								{
+									block: 'figure',
+									cls: 'title-image',
+									content: [
+										{
+											block: 'div',
+											cls: 'rock-image',
+										},
+										{
+											block: 'div',
+											cls: 'scissors-image',
+										},
+										{
+											block: 'div',
+											cls: 'paper-image',
+										},
+									],
+								},
+								{
+									block: 'figure',
+									cls: 'login',
+								},
+							],
+						},
+					],
+				},
+			],
+		},
+	},
 };
 
 //шаблонизатор
 const templateEngine = (block) => {
-	if (block === undefined || block === null || block === false) {
+	if (!block) {
 		return document.createTextNode('');
 	}
 
@@ -132,20 +130,33 @@ const templateEngine = (block) => {
 
 	if (block.innerText) element.innerText = block.innerText;
 
+	if (block.method)
+		element.addEventListener(block.method.eventName, block.method.methodFunc);
+
 	element.appendChild(templateEngine(block.content));
 
 	return element;
 };
 
+//вставка блоков
+const createBlock = (arrObj, parentNode) => {
+	parentNode.appendChild(templateEngine(arrObj));
+};
+
 //формирует стартовую страницу
-const createTemplate = () => {
-	return templateEngine(loginScreen.templateStructure);
+const createScreen = (obj) => {
+	while (app.firstChild) {
+		app.firstChild.remove();
+	}
+	app.appendChild(templateEngine(obj));
 };
 
 //формирует облик страницы
 const createPage = () => {
-	createTemplate;
-	app.appendChild(createTemplate());
-	renderLogin();
+	createScreen(application.screen.loginScreen);
 };
-document.addEventListener('DOMContentLoaded', createPage);
+// document.addEventListener('DOMContentLoaded', createPage);
+
+createPage();
+createBlock(application.block.loginInput, document.querySelector('.login'));
+createBlock(application.block.loginButton, app.querySelector('.login'));

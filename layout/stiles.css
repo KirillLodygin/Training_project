@@ -106,17 +106,17 @@ body {
 	}
 }
 .rock-text {
-	margin-right: 10px;
+	margin-right: 20px;
 	color: var(--rock);
 	animation: opacityRock 2s 1s 1 backwards;
 }
 .scissors-text {
-	margin-right: 10px;
+	margin-right: 20px;
 	color: var(--scissors);
 	animation: opacityRock 2s 1.5s 1 backwards;
 }
 .paper-text {
-	margin-right: 10px;
+	margin-right: 20px;
 	color: var(--title-color);
 	animation: opacityRock 2s 2s 1 backwards;
 }
