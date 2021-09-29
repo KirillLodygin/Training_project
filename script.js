@@ -4,7 +4,7 @@ const gameState = {
   statistic: {
     games: 0,
     victories: 0,
-    defeats: 0
+    defeats: 0,
   },
 
   rivalName: '',
@@ -18,7 +18,7 @@ const gameState = {
     ['#E0B353', '#E0AC3D', '#6CE069', '#2D6FE0', '#E04899'],
     ['#E07053', '#E05E3D', '#E0D869', '#39E0AA', '#7548E0'],
     ['#E05364', '#E03D50', '#E0C469', '#3BE05E', '#485FE0'],
-    ['#536FE0', '#3D5DE0', '#E06982', '#E0B63A', '#79E08B']
+    ['#536FE0', '#3D5DE0', '#E06982', '#E0B63A', '#79E08B'],
   ],
   invitationsToGame: [],
   comments: [],
@@ -111,9 +111,9 @@ const gameField = {
         {
           block: 'div',
           cls: ['fadeIn', 'invisible'],
-          innerText: `Раунд ${gameState.rounds}`
-        }
-      ]
+          innerText: `Раунд ${gameState.rounds}`,
+        },
+      ],
     },
 
     {
@@ -126,7 +126,7 @@ const gameField = {
           content: [
             {
               block: 'h2',
-              innerText: `${gameState.gamerName}`
+              innerText: `${gameState.gamerName}`,
             },
             {
               block: 'div',
@@ -134,13 +134,13 @@ const gameField = {
               content: [
                 {
                   block: 'div',
-                  cls: ['result', 'display-none']
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  cls: ['result', 'display-none'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
 
     {
@@ -153,7 +153,7 @@ const gameField = {
           content: [
             {
               block: 'h2',
-              innerText: `${gameState.rivalName}`
+              innerText: `${gameState.rivalName}`,
             },
             {
               block: 'div',
@@ -161,13 +161,13 @@ const gameField = {
               content: [
                 {
                   block: 'div',
-                  cls: ['result', 'display-none']
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  cls: ['result', 'display-none'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
 
     {
@@ -188,17 +188,17 @@ const gameField = {
                   content: [
                     {
                       block: 'p',
-                      cls: 'comment'
+                      cls: 'comment',
                     },
                     {
                       block: 'p',
-                      cls: 'statistic'
+                      cls: 'statistic',
                     },
                     {
                       block: 'p',
-                      cls: 'offer'
-                    }
-                  ]
+                      cls: 'offer',
+                    },
+                  ],
                 },
                 {
                   block: 'div',
@@ -207,31 +207,31 @@ const gameField = {
                     {
                       block: 'button',
                       cls: 'ok-button',
-                      innerText: 'Ok'
+                      innerText: 'Ok',
                     },
                     {
                       block: 'button',
                       cls: 'no-button',
-                      innerText: 'No!!!'
-                    }
-                  ]
-                }
-              ]
+                      innerText: 'No!!!',
+                    },
+                  ],
+                },
+              ],
             },
             {
               block: 'div',
-              cls: 'round-result-frame'
-            }
-          ]
-        }
-      ]
-    }
-  ]
+              cls: 'round-result-frame',
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };
 
 const app = document.querySelector('.app');
 
-const startTemplateEngine = block => {
+const templateEngine = block => {
   if (!block) {
     return document.createTextNode('');
   }
@@ -248,7 +248,7 @@ const startTemplateEngine = block => {
     const fragment = document.createDocumentFragment();
 
     block.forEach(contentItem => {
-      const el = startTemplateEngine(contentItem);
+      const el = templateEngine(contentItem);
 
       fragment.appendChild(el);
     });
@@ -271,16 +271,27 @@ const startTemplateEngine = block => {
 
   if (block.innerText) element.innerText = block.innerText;
 
-  element.appendChild(startTemplateEngine(block.content));
+  element.appendChild(templateEngine(block.content));
 
   return element;
 };
 
 gameState.gamerName = 'A';
-gameState.rivalName = 'B'
+gameState.rivalName = 'B';
 
-const createTemplate = (templateStructure) => {
-  return startTemplateEngine(templateStructure);
+const createScreen = (obj) => {
+  const node = app.firstChild;
+  node.remove();
+
+  app.appendChild(templateEngine(obj));
 };
 
-app.appendChild(createTemplate(loginScreen));
+const createBlock = (clear, arrObj, parentNode) => {
+  if (clear) {
+    while (parentNode.firstChild) {
+      parentNode.firstChild.remove();
+    }
+  }
+
+  arrObj.forEach(obj => parentNode.add(templateEngine(obj)));
+};
