@@ -22,8 +22,8 @@ const gameState = {
     'no game id': 'Id игры не передан',
     'wrong game id': 'Id игры некорректный/бой не существует/бой закончен',
     'player is not in this game': 'Игрок не в этой игре',
-    'no move': 'Ход не передан'
-  }
+    'no move': 'Ход не передан',
+  },
 
 };
 
@@ -113,17 +113,17 @@ window.application = {
 
     rockDiv: {
       block: 'div',
-      cls: 'rock'
+      cls: 'rock',
     },
 
     paperDiv: {
       block: 'div',
-      cls: 'paper'
+      cls: 'paper',
     },
 
     scissorsDiv: {
       block: 'div',
-      cls: 'scissors'
+      cls: 'scissors',
     },
 
     errorButton: {
@@ -132,13 +132,15 @@ window.application = {
       innerText: 'Вернуться в лобби',
       method: {
         eventName: 'click',
-        methodFunc: () => { createScreen(window.application.screens.loginScreen) }
-      }
-    }
+        methodFunc: () => {
+          createScreen(window.application.screens.loginScreen);
+        },
+      },
+    },
   },
 
   screens: {
-    loginScreen:  {
+    loginScreen: {
       block: 'header',
       cls: 'header',
       content: [
@@ -336,45 +338,43 @@ window.application = {
       content: [
         {
           block: 'div',
-          cls: ['rock', 'error-rock']
+          cls: ['rock', 'error-rock'],
         },
         {
           block: 'p',
           cls: 'error-message',
-          innerText: gameState.errors['token doesn\'t exist']
+          innerText: gameState.errors['token doesn\'t exist'],
         },
-      ]
-    }
+      ],
+    },
   },
 
   renderScreen: createScreen,
   renderBlock: createBlock,
-  timers: []
-}
+  timers: [],
+};
 
-/*
 const disassemblyJSON = objJSON => {
   return JSON.parse(objJSON);
 };
 
 let objJSON = {
-  "status": "ok",
-  "game-status": {
-    "status": "lose",
-    "enemy": {
-      "login": "ВладБумага",
-      "wins": 47,
-      "loses": 33,
-      "rocks": 22,
-      "papers": 202,
-      "scissors": 13,
-    }
-  }
+  status: 'ok',
+  game_status: {
+    status: 'lose',
+    enemy: {
+      login: 'ВладБумага',
+      wins: 47,
+      loses: 33,
+      rocks: 22,
+      papers: 202,
+      scissors: 13,
+    },
+  },
 };
 
-gameState.objFromJSON = disassemblyJSON(objJSON);
+gameState.objFromJSON = objJSON;
 
- */
 
 const selectPlayerChoiceBlock = (choice) => {
   switch (choice) {
@@ -388,9 +388,10 @@ const selectPlayerChoiceBlock = (choice) => {
       return window.application.blocks.scissorsDiv;
   }
 
-}
+};
 
 //window.application.renderScreen(window.application.screens.errorScreen);
 //window.application.renderBlock(false, [window.application.blocks.errorButton], app.querySelector('.error-field'));
 window.application.renderScreen(window.application.screens.gameFieldScreen);
 window.application.renderBlock(false, [selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
+
