@@ -13,6 +13,8 @@ const gameState = {
     defeats: 0,
   },
 
+  objFromJSON: null,
+
   errors: {
     ' ': 'Игрок не зарегистрирован',
     'token doesn\'t exist': 'Нет игрока или игры с таким токеном',
@@ -350,10 +352,45 @@ window.application = {
   timers: []
 }
 
+/*
 const disassemblyJSON = objJSON => {
-  const obj = JSON.parse(objJSON);
+  return JSON.parse(objJSON);
 };
+
+let objJSON = {
+  "status": "ok",
+  "game-status": {
+    "status": "lose",
+    "enemy": {
+      "login": "ВладБумага",
+      "wins": 47,
+      "loses": 33,
+      "rocks": 22,
+      "papers": 202,
+      "scissors": 13,
+    }
+  }
+};
+
+gameState.objFromJSON = disassemblyJSON(objJSON);
+
+ */
+
+const selectPlayerChoiceBlock = (choice) => {
+  switch (choice) {
+    case 'rock':
+      return window.application.blocks.rockDiv;
+
+    case 'paper':
+      return window.application.blocks.paperDiv;
+
+    default:
+      return window.application.blocks.scissorsDiv;
+  }
+
+}
 
 //window.application.renderScreen(window.application.screens.errorScreen);
 //window.application.renderBlock(false, [window.application.blocks.errorButton], app.querySelector('.error-field'));
 window.application.renderScreen(window.application.screens.gameFieldScreen);
+window.application.renderBlock(false, [selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
