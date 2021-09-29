@@ -4,27 +4,20 @@ const standbyScreen = {
     cls: 'container',
     content: [
       {
-        block: 'header',
-        cls: 'header',
-        content: [
-          {
-            block: 'h1',
-            cls: 'header_text',
-            innerText: 'Вы отправили вызов игроку',
-            content: [
-              {
-                block: 'span',
-                cls: 'gamer2',
-                innerText: 'Пётр',
-              },
-            ],
-          },
-        ],
-      },
-      {
         block: 'div',
         cls: 'main',
         content: [
+          {
+            block: 'header',
+            cls: 'header',
+            content: [
+              {
+                block: 'h1',
+                cls: 'header_text',
+                innerText: 'Вы создали комнату',
+              },
+            ],
+          },
           {
             block: 'div',
             cls: ['main_opponent_profile-block', 'bigEntrance'],
@@ -37,11 +30,11 @@ const standbyScreen = {
                     block: 'img',
                     cls: 'opponent_profile-avatar',
                     attrs: {
-                      src: './assets/img/avatar.svg',
+                      src: './assets/img/avatar.png',
                     },
                   },
                   {
-                    block: 'h2',
+                    block: 'h1',
                     cls: 'opponent_profile-name',
                     innerText: 'Пётр',
                   },
@@ -54,25 +47,25 @@ const standbyScreen = {
                   {
                     block: 'h2',
                     cls: 'statistics-header',
-                    innerText: 'Статистика Противника',
+                    innerText: 'Ваша Статистика ',
                   },
                   {
                     block: 'div',
                     cls: 'statistic-items',
                     content: [
                       {
-                        block: 'p',
+                        block: 'h3',
                         cls: 'win',
                         innerText: 'Победы : 0',
                       },
                       {
-                        block: 'p',
+                        block: 'h3',
                         cls: 'loose',
                         innerText: 'Поражения : 0',
                       },
                       ,
                       {
-                        block: 'p',
+                        block: 'h3',
                         cls: 'draw',
                         innerText: 'Ничьи : 0 ',
                       },
@@ -84,22 +77,39 @@ const standbyScreen = {
           },
           {
             block: 'div',
-            cls: 'blink_text',
+            cls: 'undercard',
             content: [
               {
-                block: 'p',
+                block: 'h1',
+                cls: 'undercard_text',
                 innerText: 'Ожидаем подключение соперника...',
+              },
+              {
+                block: 'div',
+                cls: 'lds-hourglass',
               },
             ],
           },
           {
             block: 'div',
-            cls: ['canceled', 'draw', 'hidden'],
+            cls: 'back_button_box',
             content: [
               {
-                block: 'h2',
-                innerText:
-                  'Противник отклонил заявку :( <br> Выбери другого соперника',
+                block: 'button',
+                cls: 'back_button_box-button',
+                content:[{
+                  
+                    block: 'img',
+                    cls: 'arrow',
+                    attrs: {
+                      src: './assets/img/back_arrow.png',
+                    },
+                  },
+                  {
+                    block: 'h3',
+                    innerText: 'Вернуться в лобби',
+                  },          
+                ],
               },
             ],
           },
