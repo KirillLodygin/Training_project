@@ -40,6 +40,10 @@ body {
     --scissors: rgb(211, 24, 24);
 }
 
+.display-none {
+    display: none;
+}
+
 .game-field {
     position: fixed;
     top: 0;
@@ -521,9 +525,6 @@ button {
     visibility: hidden;
 }
 
-.display-none {
-    display: none;
-}
 
 /***************Экран Авторизации*******************************/
 .header {

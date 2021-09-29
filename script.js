@@ -1,9 +1,11 @@
 const app = document.querySelector('.app');
 
 const gameState = {
-  gamerName: 'Gtnhd',
+  gamerName: 'Петр',
 
-  rivalName: 'Gfdtk',
+  rivalName: 'Павел',
+
+  turn: 'rock',
 
   statistic: {
     rounds: 1,
@@ -269,7 +271,7 @@ window.application = {
 
         {
           block: 'div',
-          cls: 'round-result-field',
+          cls: ['round-result-field', 'display-none'],
           content: [
             {
               block: 'div',
@@ -342,10 +344,16 @@ window.application = {
       ]
     }
   },
+
   renderScreen: createScreen,
   renderBlock: createBlock,
   timers: []
 }
 
-window.application.renderScreen(window.application.screens.errorScreen);
-window.application.renderBlock(false, [window.application.blocks.errorButton], app.querySelector('.error-field'));
+const disassemblyJSON = objJSON => {
+  const obj = JSON.parse(objJSON);
+};
+
+//window.application.renderScreen(window.application.screens.errorScreen);
+//window.application.renderBlock(false, [window.application.blocks.errorButton], app.querySelector('.error-field'));
+window.application.renderScreen(window.application.screens.gameFieldScreen);
