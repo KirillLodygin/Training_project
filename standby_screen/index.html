@@ -10,13 +10,14 @@
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1 class="header_text">Ожидаем подключения игрока</h1>
-        </header>
+        
         <div class="main" >
+            <header class="main_header">
+                <h1>Вы создали комнату</h1>
+            </header>
             <div class="main_opponent_profile-block bigEntrance">
                 <div class="main_opponent_profile-block-header">
-                    <img class="opponent_profile-avatar" src="./assets/img/avatar.svg" alt="">
+                    <img class="opponent_profile-avatar" src="./assets/img/avatar.png" alt="">
                     <h1 class="opponent_profile-name ">Пётр</h1>
                 </div>
                 <div class="opponent_profile_statistics-block">
@@ -24,17 +25,21 @@
                     <div class="statistic-items">
                         <h3 class="win">Победы : 0</h3>
                         <h3 class="loose">Поражения : 0 </h3>
-                        <h3 class="draw"> Ничьи : 0 </h3>
+                        <h3 class="draw"> Ничьи : 0 </h3> 
                     </div>
-                
+                   
+
                 </div>
             </div>
-
-           <div class="blink_text ">
-               <p >Ожидаем подключение соперника...</p>
-            </div> 
-            <div class="back_button_box">
+            <div class="undercard">
+                <h1 class="undercard_text">Ожидаем подключения игрока</h1>
+                <div class="lds-hourglass"></div>
+            </div>
                 
+
+            
+            
+            <div class="back_button_box">
                 <button class="back_button_box-button"><img src="/assets/img/back_arrow.png" alt=""> <h3>Вернуться в лобби</h3></button>
             </div>
         </div>
