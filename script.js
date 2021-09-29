@@ -7,21 +7,16 @@ const gameState = {
     defeats: 0,
   },
 
-  rivalName: '',
+  errors: {
+    ' ': 'Игрок не зарегистрирован',
+    'token doesn\'t exist': 'Нет игрока или игры с таким токеном',
+    'player is already in game': 'Игрок уже в игре, нельзя начать две игры одновременно',
+    'no game id': 'Id игры не передан',
+    'wrong game id': 'Id игры некорректный/бой не существует/бой закончен',
+    'player is not in this game': 'Игрок не в этой игре',
+    'no move': 'Ход не передан'
+  }
 
-  rounds: 0,
-  victories: 0,
-  defeats: 0,
-
-  colorMap: [
-    ['#D5E052', '#D3E03D', '#69E0DB', '#983DE0', '#E07D48'],
-    ['#E0B353', '#E0AC3D', '#6CE069', '#2D6FE0', '#E04899'],
-    ['#E07053', '#E05E3D', '#E0D869', '#39E0AA', '#7548E0'],
-    ['#E05364', '#E03D50', '#E0C469', '#3BE05E', '#485FE0'],
-    ['#536FE0', '#3D5DE0', '#E06982', '#E0B63A', '#79E08B'],
-  ],
-  invitationsToGame: [],
-  comments: [],
 };
 
 const loginScreen = {
@@ -277,9 +272,6 @@ const templateEngine = block => {
 
   return element;
 };
-
-gameState.gamerName = 'A';
-gameState.rivalName = 'B';
 
 const createScreen = (obj) => {
   const node = app.firstChild;
