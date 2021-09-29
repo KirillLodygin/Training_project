@@ -15,6 +15,21 @@ const gameState = {
 
   objFromJSON: null,
 
+  obliqueCross: '&#128942;',
+  greenTick: '&#10004;',
+
+  loseMessages: {
+    'rock': 'Противник завернул ваш камушек в бумагу!',
+    'paper': 'Ножницы разрезают ваш лист бумаги! Не повезло!',
+    'scissors': 'Вы извлекли ножницы, но противник заготовил камень! Увы!',
+  },
+
+  winMessages: {
+    'rock': 'Камнем по нижницам! Это был удачный ход!',
+    'paper': 'Что может камень противника против вашего бумажного листа?! Ничего!',
+    'scissors': 'Ножницами вы орудуете умело! Лист противника разрезан!',
+  },
+
   errors: {
     ' ': 'Игрок не зарегистрирован',
     'token doesn\'t exist': 'Нет игрока или игры с таким токеном',
@@ -24,7 +39,6 @@ const gameState = {
     'player is not in this game': 'Игрок не в этой игре',
     'no move': 'Ход не передан',
   },
-
 };
 
 const templateEngine = block => {
@@ -96,6 +110,7 @@ const createBlock = (clear, arrObj, parentNode) => {
 };
 
 window.application = {
+
   blocks: {
     registrationInput: {
       block: 'input',
@@ -237,7 +252,7 @@ window.application = {
                   content: [
                     {
                       block: 'div',
-                      cls: ['result', 'display-none'],
+                      cls: 'result',
                     },
                   ],
                 },
@@ -264,7 +279,7 @@ window.application = {
                   content: [
                     {
                       block: 'div',
-                      cls: ['result', 'display-none'],
+                      cls: 'result',
                     },
                   ],
                 },
@@ -296,10 +311,12 @@ window.application = {
                         {
                           block: 'p',
                           cls: 'statistic',
+                          innerText: `Побед: ${gameState.statistic.victories}, поражений: ${gameState.statistic.defeats}, вничью: ${gameState.statistic.rounds - gameState.statistic.victories - gameState.statistic.defeats}`,
                         },
                         {
                           block: 'p',
                           cls: 'offer',
+                          innerText: 'Еще раунд?',
                         },
                       ],
                     },
@@ -358,6 +375,7 @@ const disassemblyJSON = objJSON => {
   return JSON.parse(objJSON);
 };
 
+// Тут пока имитация
 let objJSON = {
   status: 'ok',
   game_status: {
@@ -372,7 +390,7 @@ let objJSON = {
     },
   },
 };
-
+// Тут пока имитация
 gameState.objFromJSON = objJSON;
 
 
@@ -387,11 +405,72 @@ const selectPlayerChoiceBlock = (choice) => {
     default:
       return window.application.blocks.scissorsDiv;
   }
+};
 
+const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
+  if (roundStatus === 'lose') {
+    switch (gamerChoice) {
+      case 'rock':
+        return window.application.blocks.paperDiv;
+
+      case 'paper':
+        return window.application.blocks.scissorsDiv;
+
+      default:
+        return window.application.blocks.rockDiv;
+    }
+  }
+
+  switch (gamerChoice) {
+    case 'rock':
+      return window.application.blocks.scissorsDiv;
+
+    case 'paper':
+      return window.application.blocks.rockDiv;
+
+    default:
+      return window.application.blocks.paperDiv;
+  }
+};
+
+const drawCrossAndCheckMark = (roundStatus) => {
+  const results = app.querySelectorAll('.result');
+  if (roundStatus === 'lose') {
+    results[0].innerHTML = gameState.obliqueCross;
+    results[0].classList.add('oblique-cross');
+    results[0].classList.add('opacity');
+    results[1].innerHTML = gameState.greenTick;
+    results[1].classList.add('green-tick');
+    results[1].classList.add('opacity');
+  } else {
+    results[1].innerHTML = gameState.obliqueCross;
+    results[1].classList.add('oblique-cross');
+    results[1].classList.add('opacity');
+    results[0].innerHTML = gameState.greenTick;
+    results[0].classList.add('green-tick');
+    results[0].classList.add('opacity');
+  }
+};
+
+const showRoundResultWindow = (roundStatus, gamerChoice) => {
+  if (roundStatus === 'lose') {
+    app.querySelector('.comment').innerHTML = gameState.loseMessages[gamerChoice];
+  } else {
+    app.querySelector('.comment').innerHTML = gameState.winMessages[gamerChoice];
+  }
+
+  app.querySelector('.round-result-field').classList.remove('display-none');
+}
+
+const startGameFieldScreen = () => {
+  window.application.renderScreen(window.application.screens.gameFieldScreen);
+  window.application.renderBlock(false, [selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
+  window.application.renderBlock(false, [selectEnemyChoiceBlock(gameState.turn, gameState.objFromJSON.game_status.status)], app.querySelectorAll('.choice-wrapper')[1]);
+  setTimeout(drawCrossAndCheckMark, 4300, gameState.objFromJSON.game_status.status);
+  setTimeout(showRoundResultWindow, 5500, gameState.objFromJSON.game_status.status, gameState.turn);
 };
 
 //window.application.renderScreen(window.application.screens.errorScreen);
 //window.application.renderBlock(false, [window.application.blocks.errorButton], app.querySelector('.error-field'));
-window.application.renderScreen(window.application.screens.gameFieldScreen);
-window.application.renderBlock(false, [selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
 
+startGameFieldScreen();
