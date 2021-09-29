@@ -1,8 +1,12 @@
+const app = document.querySelector('.app');
+
 const gameState = {
-  gamerName: '',
+  gamerName: 'Gtnhd',
+
+  rivalName: 'Gfdtk',
 
   statistic: {
-    games: 0,
+    rounds: 1,
     victories: 0,
     defeats: 0,
   },
@@ -18,213 +22,6 @@ const gameState = {
   }
 
 };
-
-const loginScreen = {
-  block: 'header',
-  cls: 'header',
-  content: [
-    {
-      block: 'div',
-      cls: 'container',
-      content: [
-        {
-          block: 'div',
-          cls: 'main',
-          content: [
-            {
-              block: 'h1',
-              cls: 'title',
-              content: [
-                {
-                  block: 'span',
-                  cls: 'rock-text',
-                  innerText: 'Камень',
-                },
-                {
-                  block: 'span',
-                  cls: 'scissors-text',
-                  innerText: 'Ножницы',
-                },
-                {
-                  block: 'span',
-                  cls: 'paper-text',
-                  innerText: 'Бумага',
-                },
-              ],
-            },
-            {
-              block: 'figure',
-              cls: 'title-image',
-              content: [
-                {
-                  block: 'div',
-                  cls: 'rock-image',
-                },
-                {
-                  block: 'div',
-                  cls: 'scissors-image',
-                },
-                {
-                  block: 'div',
-                  cls: 'paper-image',
-                },
-              ],
-            },
-            {
-              block: 'figure',
-              cls: 'login',
-              content: [
-                {
-                  block: 'input',
-                  cls: ['login', 'login-input'],
-                  attrs: {
-                    placeholder: 'Введи свой nikname',
-                  },
-                },
-                {
-                  block: 'button',
-                  cls: ['login', 'login-button'],
-                  innerText: 'Войти',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
-
-const gameField = {
-  block: 'section',
-  cls: 'game-field',
-  content: [
-    {
-      block: 'div',
-      cls: 'round-number',
-      content: [
-        {
-          block: 'div',
-          cls: ['fadeIn', 'invisible'],
-          innerText: `Раунд ${gameState.rounds}`,
-        },
-      ],
-    },
-
-    {
-      block: 'div',
-      cls: 'gamer1',
-      content: [
-        {
-          block: 'div',
-          cls: 'content-wrapper',
-          content: [
-            {
-              block: 'h2',
-              innerText: `${gameState.gamerName}`,
-            },
-            {
-              block: 'div',
-              cls: 'choice-wrapper',
-              content: [
-                {
-                  block: 'div',
-                  cls: ['result', 'display-none'],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      block: 'div',
-      cls: 'gamer2',
-      content: [
-        {
-          block: 'div',
-          cls: 'content-wrapper',
-          content: [
-            {
-              block: 'h2',
-              innerText: `${gameState.rivalName}`,
-            },
-            {
-              block: 'div',
-              cls: 'choice-wrapper',
-              content: [
-                {
-                  block: 'div',
-                  cls: ['result', 'display-none'],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      block: 'div',
-      cls: 'round-result-field',
-      content: [
-        {
-          block: 'div',
-          cls: ['round-result-wrapper', 'bigEntrance'],
-          content: [
-            {
-              block: 'div',
-              cls: 'round-result-window',
-              content: [
-                {
-                  block: 'div',
-                  cls: 'result-declaration',
-                  content: [
-                    {
-                      block: 'p',
-                      cls: 'comment',
-                    },
-                    {
-                      block: 'p',
-                      cls: 'statistic',
-                    },
-                    {
-                      block: 'p',
-                      cls: 'offer',
-                    },
-                  ],
-                },
-                {
-                  block: 'div',
-                  cls: 'btns-block',
-                  content: [
-                    {
-                      block: 'button',
-                      cls: 'ok-button',
-                      innerText: 'Ok',
-                    },
-                    {
-                      block: 'button',
-                      cls: 'no-button',
-                      innerText: 'No!!!',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              block: 'div',
-              cls: 'round-result-frame',
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
-
-const app = document.querySelector('.app');
 
 const templateEngine = block => {
   if (!block) {
@@ -274,18 +71,281 @@ const templateEngine = block => {
 };
 
 const createScreen = (obj) => {
-  const node = app.firstChild;
-  node.remove();
+  if (app.hasChildNodes()) {
+    while (app.firstChild) {
+      app.removeChild(app.lastChild);
+    }
+  }
 
   app.appendChild(templateEngine(obj));
 };
 
 const createBlock = (clear, arrObj, parentNode) => {
+
   if (clear) {
     while (parentNode.firstChild) {
       parentNode.firstChild.remove();
     }
   }
 
-  arrObj.forEach(obj => parentNode.add(templateEngine(obj)));
+  arrObj.forEach(obj => parentNode.append(templateEngine(obj)));
 };
+
+window.application = {
+  blocks: {
+    registrationInput: {
+      block: 'input',
+      cls: ['login', 'login-input'],
+      attrs: {
+        placeholder: 'Введи свой nikname',
+      },
+    },
+
+    registrationBtn: {
+      block: 'button',
+      cls: ['login', 'login-button'],
+      innerText: 'Войти',
+    },
+
+    rockDiv: {
+      block: 'div',
+      cls: 'rock'
+    },
+
+    paperDiv: {
+      block: 'div',
+      cls: 'paper'
+    },
+
+    scissorsDiv: {
+      block: 'div',
+      cls: 'scissors'
+    },
+
+    errorButton: {
+      block: 'button',
+      cls: 'error-button',
+      innerText: 'Вернуться в лобби',
+      method: {
+        eventName: 'click',
+        methodFunc: () => { createScreen(window.application.screens.loginScreen) }
+      }
+    }
+  },
+
+  screens: {
+    loginScreen:  {
+      block: 'header',
+      cls: 'header',
+      content: [
+        {
+          block: 'div',
+          cls: 'container',
+          content: [
+            {
+              block: 'div',
+              cls: 'main',
+              content: [
+                {
+                  block: 'h1',
+                  cls: 'title',
+                  content: [
+                    {
+                      block: 'span',
+                      cls: 'rock-text',
+                      innerText: 'Камень',
+                    },
+                    {
+                      block: 'span',
+                      cls: 'scissors-text',
+                      innerText: 'Ножницы',
+                    },
+                    {
+                      block: 'span',
+                      cls: 'paper-text',
+                      innerText: 'Бумага',
+                    },
+                  ],
+                },
+                {
+                  block: 'figure',
+                  cls: 'title-image',
+                  content: [
+                    {
+                      block: 'div',
+                      cls: 'rock-image',
+                    },
+                    {
+                      block: 'div',
+                      cls: 'scissors-image',
+                    },
+                    {
+                      block: 'div',
+                      cls: 'paper-image',
+                    },
+                  ],
+                },
+                {
+                  block: 'figure',
+                  cls: 'login',
+                  content: [],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    gameFieldScreen: {
+      block: 'section',
+      cls: 'game-field',
+      content: [
+        {
+          block: 'div',
+          cls: 'round-number',
+          content: [
+            {
+              block: 'p',
+              cls: ['fadeIn', 'invisible'],
+              innerText: `Раунд ${gameState.statistic.rounds}`,
+            },
+          ],
+        },
+
+        {
+          block: 'div',
+          cls: 'gamer1',
+          content: [
+            {
+              block: 'div',
+              cls: 'content-wrapper',
+              content: [
+                {
+                  block: 'h2',
+                  innerText: `${gameState.gamerName}`,
+                },
+                {
+                  block: 'div',
+                  cls: 'choice-wrapper',
+                  content: [
+                    {
+                      block: 'div',
+                      cls: ['result', 'display-none'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+
+        {
+          block: 'div',
+          cls: 'gamer2',
+          content: [
+            {
+              block: 'div',
+              cls: 'content-wrapper',
+              content: [
+                {
+                  block: 'h2',
+                  innerText: `${gameState.rivalName}`,
+                },
+                {
+                  block: 'div',
+                  cls: 'choice-wrapper',
+                  content: [
+                    {
+                      block: 'div',
+                      cls: ['result', 'display-none'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+
+        {
+          block: 'div',
+          cls: 'round-result-field',
+          content: [
+            {
+              block: 'div',
+              cls: ['round-result-wrapper', 'bigEntrance'],
+              content: [
+                {
+                  block: 'div',
+                  cls: 'round-result-window',
+                  content: [
+                    {
+                      block: 'div',
+                      cls: 'result-declaration',
+                      content: [
+                        {
+                          block: 'p',
+                          cls: 'comment',
+                        },
+                        {
+                          block: 'p',
+                          cls: 'statistic',
+                        },
+                        {
+                          block: 'p',
+                          cls: 'offer',
+                        },
+                      ],
+                    },
+                    {
+                      block: 'div',
+                      cls: 'btns-block',
+                      content: [
+                        {
+                          block: 'button',
+                          cls: 'ok-button',
+                          innerText: 'Ok',
+                        },
+                        {
+                          block: 'button',
+                          cls: 'no-button',
+                          innerText: 'No!!!',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  block: 'div',
+                  cls: 'round-result-frame',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    errorScreen: {
+      block: 'section',
+      cls: 'error-field',
+      content: [
+        {
+          block: 'div',
+          cls: ['rock', 'error-rock']
+        },
+        {
+          block: 'p',
+          cls: 'error-message',
+          innerText: gameState.errors['token doesn\'t exist']
+        },
+      ]
+    }
+  },
+  renderScreen: createScreen,
+  renderBlock: createBlock,
+  timers: []
+}
+
+window.application.renderScreen(window.application.screens.errorScreen);
+window.application.renderBlock(false, [window.application.blocks.errorButton], app.querySelector('.error-field'));
