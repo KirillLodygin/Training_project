@@ -513,18 +513,12 @@ function getPlayerStatus(data) {
 	if (parseStatus['player-status'].status === 'error') {
 		createScreen(application.screen.loginScreen);
 	}
-	console.log(namePlayer);
-	console.log(gameState.gamerToken);
-	console.log(parseStatus['player-status'].status);
 }
 
 function getTokenGetPlayerStatus(data) {
 	const parseToken = JSON.parse(data);
 	gameState.gamerToken = parseToken.token;
-	console.log(gameState.gamerToken);
-	// if (namePlayer.length !== 0) {
-	// 	createScreen(application.screen.lobbyScreen);
-	// }
+	gameState.gamerName = namePlayer;
 	request(
 		`http://localhost:3000/player-status?token=${gameState.gamerToken}`,
 		getPlayerStatus
