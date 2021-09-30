@@ -42,6 +42,12 @@ const gameState = {
     'scissors': 'Ножницами вы орудуете умело! Лист противника разрезан!',
   },
 
+  drawMessages: {
+    'rock': 'Противник припас для тебя камешек. Но у тебя был камешек для него. Ничья!',
+    'paper': 'Бумага против бумаги. Результат очевиден. Ничья!',
+    'scissors': 'Ты показал ножницы. Противник насупился и показал свои. Ничья!',
+  },
+
   errors: {
     ' ': 'Игрок не зарегистрирован',
     'token doesn\'t exist': 'Нет игрока или игры с таким токеном',
@@ -439,15 +445,28 @@ const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
     }
   }
 
+  if (roundStatus === 'win') {
+    switch (gamerChoice) {
+      case 'rock':
+        return window.application.blocks.scissorsDiv;
+
+      case 'paper':
+        return window.application.blocks.rockDiv;
+
+      default:
+        return window.application.blocks.paperDiv;
+    }
+  }
+
   switch (gamerChoice) {
     case 'rock':
-      return window.application.blocks.scissorsDiv;
-
-    case 'paper':
       return window.application.blocks.rockDiv;
 
-    default:
+    case 'paper':
       return window.application.blocks.paperDiv;
+
+    default:
+      return window.application.blocks.scissorsDiv;
   }
 };
 
@@ -460,7 +479,9 @@ const drawCrossAndCheckMark = (roundStatus) => {
     results[1].innerHTML = gameState.greenTick;
     results[1].classList.add('green-tick');
     results[1].classList.add('opacity');
-  } else {
+  }
+
+  if (roundStatus === 'win') {
     results[1].innerHTML = gameState.obliqueCross;
     results[1].classList.add('oblique-cross');
     results[1].classList.add('opacity');
@@ -473,8 +494,12 @@ const drawCrossAndCheckMark = (roundStatus) => {
 const showRoundResultWindow = (roundStatus, gamerChoice) => {
   if (roundStatus === 'lose') {
     app.querySelector('.comment').innerHTML = gameState.loseMessages[gamerChoice];
-  } else {
+  }
+  if (roundStatus === 'lose') {
     app.querySelector('.comment').innerHTML = gameState.winMessages[gamerChoice];
+  }
+  if (roundStatus === 'waiting-for-your-move') {
+    app.querySelector('.comment').innerHTML = gameState.drawMessages[gamerChoice];
   }
 
   app.querySelector('.round-result-field').classList.remove('display-none');
