@@ -26,6 +26,9 @@
 body {
   font-family: StratosSkyeng, "Helvetica Neue", sans-serif;
 }
+.hidden.hidden {
+  display: none;
+}
 
 /* header */
 .header-waitscreen {
@@ -76,7 +79,12 @@ body {
   display: flex;
   justify-content: space-around;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 20px auto;
+}
+.choice-button {
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
 .choice-image {
   border-radius: 30%;
@@ -139,7 +147,9 @@ body {
   width: 600px;
   height: 520px;
 }
-.main-waitscreen__gameprocess-choiceimage {
+.main-waitscreen__gameprocess-choiceimage-rock,
+.main-waitscreen__gameprocess-choiceimage-paper,
+.main-waitscreen__gameprocess-choiceimage-scissors {
   align-self: center;
   width: 400px;
   height: 400px;
@@ -183,6 +193,16 @@ body {
   }
 }
 
+.main-waitscreen__gameprocess-text {
+  margin-top: 40%;
+  text-align: center;
+  justify-self: center;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: -0.3px;
+  color: aquamarine;
+}
 .main-waitscreen__gameprocess-userinfo {
   display: flex;
   gap: 20px;

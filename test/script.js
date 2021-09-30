@@ -8,7 +8,69 @@
 //     method: { eventName: "", methodFunc: () =>{}},
 //     innerText: "",
 // }
+
 const app = document.querySelector(".app");
+
+const gameState = {
+  gamerName: "Петр",
+
+  rivalName: "Павел",
+
+  turn: "rock",
+
+  gameStatistic: {
+    rounds: 1,
+    victories: 0,
+    defeats: 0,
+  },
+
+  gamerStatistic: {
+    games: 1,
+    victories: 0,
+    defeats: 0,
+  },
+
+  rivalStatistic: {
+    games: 1,
+    victories: 0,
+    defeats: 0,
+  },
+
+  objFromJSON: null,
+
+  obliqueCross: "&#128942;",
+  greenTick: "&#10004;",
+
+  loseMessages: {
+    rock: "Противник завернул ваш камушек в бумагу!",
+    paper: "Ножницы разрезают ваш лист бумаги! Не повезло!",
+    scissors: "Вы извлекли ножницы, но противник заготовил камень! Увы!",
+  },
+
+  winMessages: {
+    rock: "Камнем по нижницам! Это был удачный ход!",
+    paper:
+      "Что может камень противника против вашего бумажного листа?! Ничего!",
+    scissors: "Ножницами вы орудуете умело! Лист противника разрезан!",
+  },
+
+  drawMessages: {
+    rock: "Противник припас для тебя камешек. Но у тебя был камешек для него. Ничья!",
+    paper: "Бумага против бумаги. Результат очевиден. Ничья!",
+    scissors: "Ты показал ножницы. Противник насупился и показал свои. Ничья!",
+  },
+
+  errors: {
+    " ": "Игрок не зарегистрирован",
+    "token doesn't exist": "Нет игрока или игры с таким токеном",
+    "player is already in game":
+      "Игрок уже в игре, нельзя начать две игры одновременно",
+    "no game id": "Id игры не передан",
+    "wrong game id": "Id игры некорректный/бой не существует/бой закончен",
+    "player is not in this game": "Игрок не в этой игре",
+    "no move": "Ход не передан",
+  },
+};
 
 const waitscreen = {
   block: "div",
@@ -25,6 +87,14 @@ const waitscreen = {
               block: "button",
               cls: "header-waitscreen__navibar-item",
               innerText: "Закончить игру досрочно",
+              method: {
+                eventName: "click",
+                methodFunc: () => {
+                  createScreen(
+                    window.application.screens.lobbyscreen
+                  ); /*дописать название экрана лобби */
+                },
+              },
             },
           ],
         },
@@ -48,31 +118,79 @@ const waitscreen = {
               cls: "main-waitscreen__choicescreen-container",
               content: [
                 {
-                  block: "img",
-                  cls: ["main-waitscreen__choicescreen-paper", "choice-image"],
-                  attrs: {
-                    src: "assets/images/paper.jpg",
-                    alt: "paper fighter",
+                  block: "button",
+                  cls: ["main-waitscreen__choicescreen-paper", "choice-button"],
+                  method: {
+                    eventName: "click",
+                    methodFunc: () => {
+                      yourSideSpinner.classList.add("hidden");
+                      paperImage.classList.remove("hidden");
+                      choiceScreen.classList.add("hidden");
+                      gameState.turn = "paper";
+                      gameState.gameStatistic.rounds += 1;
+                    },
                   },
+                  content: [
+                    {
+                      block: "img",
+                      cls: "choice-image",
+                      attrs: {
+                        src: "assets/images/paper.jpg",
+                        alt: "paper fighter",
+                      },
+                    },
+                  ],
                 },
                 {
-                  block: "img",
-                  cls: ["main-waitscreen__choicescreen-rock", "choice-image"],
-                  attrs: {
-                    src: "assets/images/rock.jpg",
-                    alt: "rock fighter",
+                  block: "button",
+                  cls: ["main-waitscreen__choicescreen-rock", "choice-button"],
+                  method: {
+                    eventName: "click",
+                    methodFunc: () => {
+                      yourSideSpinner.classList.add("hidden");
+                      rockImage.classList.remove("hidden");
+                      choiceScreen.classList.add("hidden");
+                      gameState.turn = "rock";
+                      gameState.gameStatistic.rounds += 1;
+                    },
                   },
+                  content: [
+                    {
+                      block: "img",
+                      cls: "choice-image",
+                      attrs: {
+                        src: "assets/images/rock.jpg",
+                        alt: "rock fighter",
+                      },
+                    },
+                  ],
                 },
                 {
-                  block: "img",
+                  block: "button",
                   cls: [
                     "main-waitscreen__choicescreen-scissors",
-                    "choice-image",
+                    "choice-button",
                   ],
-                  attrs: {
-                    src: "assets/images/scissors.jpg",
-                    alt: "scissors fighter",
+                  method: {
+                    eventName: "click",
+                    methodFunc: () => {
+                      yourSideSpinner.classList.add("hidden");
+                      scissorsImage.classList.remove("hidden");
+                      choiceScreen.classList.add("hidden");
+                      gameState.turn = "scissors";
+                      gameState.gameStatistic.rounds += 1;
+                    },
                   },
+                  content: [
+                    {
+                      block: "img",
+                      cls: "choice-image",
+                      attrs: {
+                        src: "assets/images/scissors.jpg",
+                        alt: "scissors fighter",
+                      },
+                    },
+                  ],
                 },
               ],
             },
@@ -96,10 +214,39 @@ const waitscreen = {
                   cls: "main-waitscreen__gameprocess-playerzone",
                   content: [
                     {
+                      block: "div",
+                      cls: ["lds-hourglass", "your-side-spinner"],
+                    },
+                    {
                       block: "img",
-                      cls: "main-waitscreen__gameprocess-choiceimage",
+                      cls: [
+                        "main-waitscreen__gameprocess-choiceimage-rock",
+                        "hidden",
+                      ],
                       attrs: {
                         src: "assets/images/rock.jpg",
+                        alt: "choice",
+                      },
+                    },
+                    {
+                      block: "img",
+                      cls: [
+                        "main-waitscreen__gameprocess-choiceimage-paper",
+                        "hidden",
+                      ],
+                      attrs: {
+                        src: "assets/images/paper.jpg",
+                        alt: "choice",
+                      },
+                    },
+                    {
+                      block: "img",
+                      cls: [
+                        "main-waitscreen__gameprocess-choiceimage-scissors",
+                        "hidden",
+                      ],
+                      attrs: {
+                        src: "assets/images/scissors.jpg",
                         alt: "choice",
                       },
                     },
@@ -120,7 +267,10 @@ const waitscreen = {
                           content: [
                             {
                               block: "p",
-                              cls: "main-waitscreen__gameprocess-username",
+                              cls: [
+                                "main-waitscreen__gameprocess-username",
+                                "your-name",
+                              ],
                               innerText: "Олег Иванов",
                             },
                             {
@@ -129,9 +279,14 @@ const waitscreen = {
                               content: [
                                 {
                                   block: "span",
+                                  cls: "your-wins",
                                   innerText: "Побед:",
                                 },
-                                { block: "span", innerText: "Поражений:" },
+                                {
+                                  block: "span",
+                                  cls: "your-defeats",
+                                  innerText: "Поражений:",
+                                },
                               ],
                             },
                           ],
@@ -154,6 +309,11 @@ const waitscreen = {
                   content: [
                     { block: "div", cls: "lds-hourglass" },
                     {
+                      block: "p",
+                      cls: ["main-waitscreen__gameprocess-text", "hidden"],
+                      innerText: "Противник ожидает ваш ход",
+                    },
+                    {
                       block: "div",
                       cls: "main-waitscreen__gameprocess-userinfo",
                       content: [
@@ -171,8 +331,22 @@ const waitscreen = {
                           content: [
                             {
                               block: "p",
-                              cls: "main-waitscreen__gameprocess-username",
+                              cls: [
+                                "main-waitscreen__gameprocess-username",
+                                "enemy-name",
+                              ],
                               innerText: "Олег Иванов",
+                              method: {
+                                // вот здесь не работает. остальное все работает. с бекендом еще не общался
+                          
+                                eventName: "onload",
+                                methodFunc: () => {
+                                  let text =
+                                    document.querySelector(".enemy-name");
+
+                                  text.innerHTML = gameState.rivalName;
+                                },
+                              },
                             },
                             {
                               block: "p",
@@ -180,9 +354,14 @@ const waitscreen = {
                               content: [
                                 {
                                   block: "span",
+                                  cls: "enemy-wins",
                                   innerText: "Побед:",
                                 },
-                                { block: "span", innerText: "Поражений:" },
+                                {
+                                  block: "span",
+                                  cls: "enemy-defeats",
+                                  innerText: "Поражений:",
+                                },
                               ],
                             },
                           ],
@@ -199,6 +378,7 @@ const waitscreen = {
     },
   ],
 };
+
 const templateEngine = (block) => {
   if (!block) {
     return document.createTextNode("");
@@ -266,3 +446,43 @@ const createBlock = (clear, arrObj, parentNode) => {
 };
 
 createScreen(waitscreen);
+
+const rockButton = document.querySelector(
+  ".main-waitscreen__choicescreen-rock"
+);
+const paperButton = document.querySelector(
+  ".main-waitscreen__choicescreen-paper"
+);
+const scissorsButton = document.querySelector(
+  ".main-waitscreen__choicescreen-scissors"
+);
+
+const yourSideSpinner = document.querySelector(".your-side-spinner");
+
+const rockImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-rock"
+);
+const paperImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-paper"
+);
+const scissorsImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-scissors"
+);
+
+const choiceScreen = document.querySelector(".main-waitscreen__choicescreen");
+
+// window.application.timers.push();
+
+// когда ты выбрал ход
+// setInterval(async () => {
+//   const gameStatusJSON = await fetch(
+//     "/game-status?token=gberibgitehbgie&id=gnetrbgthi"
+//   );
+//   const gameStatus = await gameStatusJSON.json();
+
+//   const currentGameState = gameStatus["game-status"].status;
+
+//   /** */
+// }, 1000);
+
+// Ты еще не выбрал ход

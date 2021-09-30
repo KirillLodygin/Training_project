@@ -9,246 +9,127 @@
 //     innerText: "",
 // }
 
-const waitscreen = {
-  block: "header",
-  cls: "header-waitscreen",
-  content: [
-    {
-      block: "nav",
-      cls: "header-waitscreen__navi",
-      content: [
-        {
-          block: "button",
-          cls: "header-waitscreen__navibar-item",
-          innerText: "Закончить игру досрочно",
-        },
-      ],
-    },
-  ],
-  block: "main",
-  cls: "main-waitscreen",
-  content: [
-    {
-      block: "section",
-      cls: "main-waitscreen__choicescreen",
-      content: [
-        {
-          block: "h2",
-          cls: "main-waitscreen__choicescreen-title",
-          innerText: "Choose your fighter",
-        },
-        {
-          block: "div",
-          cls: "main-waitscreen__choicescreen-container",
-          content: [
-            {
-              block: "img",
-              cls: ["main-waitscreen__choicescreen-paper ", "choice-image"],
-              attrs: {
-                src: "assets/images/paper.jpg",
-                alt: "paper fighter",
-              },
-            },
-            {
-              block: "img",
-              cls: ["main-waitscreen__choicescreen-rock", "choice-image"],
-              attrs: {
-                src: "assets/images/rock.jpg",
-                alt: "rock fighter",
-              },
-            },
-            {
-              block: "img",
-              cls: ["main-waitscreen__choicescreen-scissors ", "choice-image"],
-              attrs: {
-                src: "assets/images/scissors.jpg",
-                alt: "scissors fighter",
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      block: "section",
-      cls: "section-waitsceen",
-      content: [
-        {
-          block: "h2",
-          cls: "main-waitscreen__title",
-          innerText: "Идет великая битва",
-        },
-        {
-          block: "div",
-          cls: "main-waitscreen__gameprocess-container",
-          content: [
-            {
-              block: "div",
-              cls: "main-waitscreen__gameprocess-playerzone",
-              content: [
-                {
-                  block: "img",
-                  cls: "main-waitscreen__gameprocess-choiceimage",
-                  attrs: {
-                    src: "assets/images/rock.jpg",
-                    alt: "choice",
-                  },
-                },
-                {
-                  block: "div",
-                  cls: "main-waitscreen__gameprocess-userinfo",
-                  content: [
-                    {
-                      block: "img",
-                      cls: "main-waitscreen__gameprocess-avatar",
-                      attrs: {
-                        src: "./assets/images/userimage.jpg",
-                        alt: "feedback",
-                      },
-                    },
-                    {
-                      block: "div",
-                      content: [
-                        {
-                          block: "p",
-                          cls: "main-waitscreen__gameprocess-username",
-                          innerText: "Олег Иванов",
-                        },
-                        {
-                          block: "p",
-                          cls: "main-waitscreen__gameprocess-statistic",
-                          content: [
-                            {
-                              block: "span",
-                              innerText: "Побед:",
-                            },
-                            { block: "span", innerText: "Поражений:" },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              block: "img",
-              cls: "main-waitscreen__versus-image",
-              attrs: {
-                src: "assets/images/versus.png",
-                alt: "vsimage",
-              },
-            },
-            {
-              block: "div",
-              cls: "main-waitscreen__gameprocess-waiting-another-player",
-              content: [
-                { block: "div", cls: "lds-hourglass" },
-                {
-                  block: "div",
-                  cls: "main-waitscreen__gameprocess-userinfo",
-                  content: [
-                    {
-                      block: "img",
-                      cls: "main-waitscreen__gameprocess-avatar",
-                      attrs: {
-                        src: "./assets/images/userimage.jpg",
-                        alt: "feedback",
-                      },
-                    },
-                    {
-                      block: "div",
-                      content: [
-                        {
-                          block: "p",
-                          cls: "main-waitscreen__gameprocess-username",
-                          innerText: "Олег Иванов",
-                        },
-                        {
-                          block: "p",
-                          cls: "main-waitscreen__gameprocess-statistic",
-                          content: [
-                            {
-                              block: "span",
-                              innerText: "Побед:",
-                            },
-                            { block: "span", innerText: "Поражений:" },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
-const templateEngine = (block) => {
-  if (!block) {
-    return document.createTextNode("");
-  }
+const gameState = {
+  gamerName: "Петр",
 
-  if (
-    typeof block === "string" ||
-    typeof block === "number" ||
-    block === true
-  ) {
-    return document.createTextNode(String(block));
-  }
+  rivalName: "Павел",
 
-  if (Array.isArray(block)) {
-    const fragment = document.createDocumentFragment();
+  turn: "rock",
 
-    block.forEach((contentItem) => {
-      const el = templateEngine(contentItem);
+  gameStatistic: {
+    rounds: 1,
+    victories: 0,
+    defeats: 0,
+  },
 
-      fragment.appendChild(el);
-    });
+  gamerStatistic: {
+    games: 1,
+    victories: 0,
+    defeats: 0,
+  },
 
-    return fragment;
-  }
+  rivalStatistic: {
+    games: 1,
+    victories: 0,
+    defeats: 0,
+  },
 
-  const element = document.createElement(block.block);
+  objFromJSON: null,
 
-  []
-    .concat(block.cls)
-    .filter(Boolean)
-    .forEach((className) => element.classList.add(className));
+  obliqueCross: "&#128942;",
+  greenTick: "&#10004;",
 
-  if (block.attrs) {
-    Object.keys(block.attrs).forEach((key) => {
-      element.setAttribute(key, block.attrs[key]);
-    });
-  }
+  loseMessages: {
+    rock: "Противник завернул ваш камушек в бумагу!",
+    paper: "Ножницы разрезают ваш лист бумаги! Не повезло!",
+    scissors: "Вы извлекли ножницы, но противник заготовил камень! Увы!",
+  },
 
-  if (block.innerText) element.innerText = block.innerText;
+  winMessages: {
+    rock: "Камнем по нижницам! Это был удачный ход!",
+    paper:
+      "Что может камень противника против вашего бумажного листа?! Ничего!",
+    scissors: "Ножницами вы орудуете умело! Лист противника разрезан!",
+  },
 
-  if (block.method)
-    element.addEventListener(block.method.eventName, block.method.methodFunc);
+  drawMessages: {
+    rock: "Противник припас для тебя камешек. Но у тебя был камешек для него. Ничья!",
+    paper: "Бумага против бумаги. Результат очевиден. Ничья!",
+    scissors: "Ты показал ножницы. Противник насупился и показал свои. Ничья!",
+  },
 
-  element.appendChild(templateEngine(block.content));
-
-  return element;
+  errors: {
+    " ": "Игрок не зарегистрирован",
+    "token doesn't exist": "Нет игрока или игры с таким токеном",
+    "player is already in game":
+      "Игрок уже в игре, нельзя начать две игры одновременно",
+    "no game id": "Id игры не передан",
+    "wrong game id": "Id игры некорректный/бой не существует/бой закончен",
+    "player is not in this game": "Игрок не в этой игре",
+    "no move": "Ход не передан",
+  },
 };
 
-const createScreen = (obj) => {
-  const node = app.firstChild;
-  node.remove();
+const rockButton = document.querySelector(
+  ".main-waitscreen__choicescreen-rock"
+);
+const paperButton = document.querySelector(
+  ".main-waitscreen__choicescreen-paper"
+);
+const scissorsButton = document.querySelector(
+  ".main-waitscreen__choicescreen-scissors"
+);
 
-  app.appendChild(templateEngine(obj));
-};
+const yourSideSpinner = document.querySelector(".your-side-spinner");
 
-const createBlock = (clear, arrObj, parentNode) => {
-  if (clear) {
-    while (parentNode.firstChild) {
-      parentNode.firstChild.remove();
+const rockImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-rock"
+);
+const paperImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-paper"
+);
+const scissorsImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-scissors"
+);
+
+const choiceScreen = document.querySelector(".main-waitscreen__choicescreen");
+
+rockButton.addEventListener("click", () => {
+  yourSideSpinner.classList.add("hidden");
+  rockImage.classList.remove("hidden");
+  choiceScreen.classList.add("hidden");
+  gameState.turn = "rock";
+  gameState.gameStatistic.rounds += 1;
+});
+
+paperButton.addEventListener("click", () => {
+  yourSideSpinner.classList.add("hidden");
+  paperImage.classList.remove("hidden");
+  choiceScreen.classList.add("hidden");
+  gameState.turn = "paper";
+  gameState.gameStatistic.rounds += 1;
+});
+scissorsButton.addEventListener("click", () => {
+  yourSideSpinner.classList.add("hidden");
+  scissorsImage.classList.remove("hidden");
+  choiceScreen.classList.add("hidden");
+  gameState.turn = "scissors";
+  gameState.gameStatistic.rounds += 1;
+});
+
+function request(url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url + "namePlayer");
+  xhr.addEventListener("readystatechange", function (e) {
+    if (e.target.readyState !== 4) {
+      return;
     }
-  }
-
-  arrObj.forEach((obj) => parentNode.add(templateEngine(obj)));
-};
-templateEngine(waitscreen);
+    if (e.target.status !== 200) {
+      console.log("Ошибка");
+      return;
+    }
+    const responseText = e.target.responseText;
+    callback(responseText);
+  });
+  xhr.send();
+}

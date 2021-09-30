@@ -19,21 +19,28 @@
       <section class="main-waitscreen__choicescreen">
         <h2 class="main-waitscreen__choicescreen-title">Choose your fighter</h2>
         <div class="main-waitscreen__choicescreen-container">
-          <img
-            class="main-waitscreen__choicescreen-paper choice-image"
-            src="assets/images/paper.jpg"
-            alt="paper fighter"
-          />
-          <img
-            class="main-waitscreen__choicescreen-rock choice-image"
-            src="assets/images/rock.jpg"
-            alt="rock fighter"
-          />
-          <img
-            class="main-waitscreen__choicescreen-scissors choice-image"
-            src="assets/images/scissors.jpg"
-            alt="scissors fighter"
-          />
+          <button class="main-waitscreen__choicescreen-paper choice-button">
+            <img
+              class="choice-image"
+              src="assets/images/paper.jpg"
+              alt="paper fighter"
+            />
+          </button>
+          <button class="main-waitscreen__choicescreen-rock choice-button">
+            <img
+              class="choice-image"
+              src="assets/images/rock.jpg"
+              alt="rock fighter"
+            />
+          </button>
+
+          <button class="main-waitscreen__choicescreen-scissors choice-button">
+            <img
+              class="choice-image"
+              src="assets/images/scissors.jpg"
+              alt="scissors fighter"
+            />
+          </button>
         </div>
       </section>
       <section class="section-waitsceen">
@@ -41,11 +48,23 @@
 
         <div class="main-waitscreen__gameprocess-container">
           <div class="main-waitscreen__gameprocess-playerzone">
+            <div class="lds-hourglass your-side-spinner"></div>
             <img
-              class="main-waitscreen__gameprocess-choiceimage"
+              class="main-waitscreen__gameprocess-choiceimage-rock hidden"
               src="assets/images/rock.jpg"
               alt="choice"
             />
+            <img
+              class="main-waitscreen__gameprocess-choiceimage-paper hidden"
+              src="assets/images/paper.jpg"
+              alt="choice"
+            />
+            <img
+              class="main-waitscreen__gameprocess-choiceimage-scissors hidden"
+              src="assets/images/scissors.jpg"
+              alt="choice"
+            />
+
             <div class="main-waitscreen__gameprocess-userinfo">
               <img
                 class="main-waitscreen__gameprocess-avatar"
@@ -53,9 +72,9 @@
                 alt="feedback"
               />
               <div>
-                <p class="main-waitscreen__gameprocess-username">Олег Иванов</p>
+                <p class="main-waitscreen__gameprocess-username your-name">Олег Иванов</p>
                 <p class="main-waitscreen__gameprocess-statistic">
-                  <span>Побед:</span><span>Поражений:</span>
+                  <span class="your-wins">Побед:</span><span class="your-defeats">Поражений:</span>
                 </p>
               </div>
             </div>
@@ -67,6 +86,9 @@
           />
           <div class="main-waitscreen__gameprocess-waiting-another-player">
             <div class="lds-hourglass"></div>
+            <p class="main-waitscreen__gameprocess-text hidden">
+              Противник ожидает ваш ход...
+            </p>
             <div class="main-waitscreen__gameprocess-userinfo">
               <img
                 class="main-waitscreen__gameprocess-avatar"
