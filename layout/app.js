@@ -1,5 +1,7 @@
 const app = document.querySelector('.app');
 const gameState = {
+	gamerToken: '',
+
 	gamerName: '',
 
 	statistic: {
@@ -498,10 +500,9 @@ const application = {
 		},
 	},
 };
-gameState.gamerName = 'A';
-gameState.rivalName = 'B';
 let namePlayer = document.querySelector('.login-input');
 const button = document.querySelector('.login-button');
+const getLogin = `http://localhost:3000/login?login=${namePlayer}`;
 
 function test(data) {
 	console.log(data);
@@ -510,7 +511,7 @@ function test(data) {
 //функция get запроса
 function request(url, callback) {
 	const xhr = new XMLHttpRequest();
-	xhr.open('GET', url + 'namePlayer');
+	xhr.open('GET', url);
 	xhr.addEventListener('readystatechange', function (e) {
 		if (e.target.readyState !== 4) {
 			return;
@@ -531,8 +532,7 @@ function clickButton() {
 	if (namePlayer.length !== 0) {
 		createScreen(application.screen.lobbyScreen);
 	}
-	console.log(button);
-	request('http://localhost:3000/login?login=', test);
+	request(getLogin, test);
 	console.log(responseText);
 }
 
@@ -608,6 +608,6 @@ const createPageLoginScreen = () => {
 	createScreen(application.screen.loginScreen);
 	createBlock(application.block.loginInput, app.querySelector('.login'));
 	createBlock(application.block.loginButton, app.querySelector('.login'));
-	console.log(button);
+	console.log(namePlayer.value);
 };
 document.addEventListener('DOMContentLoaded', createPageLoginScreen);
