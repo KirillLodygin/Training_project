@@ -69,6 +69,7 @@ const createBlock = (clear, arrObj, parentNode) => {
     arrObj.forEach(obj => parentNode.append(templateEngine(obj)));
 };
 
+
 window.application = {
 
     blocks: {
@@ -178,111 +179,56 @@ window.application = {
             ],
         },
 
-const lobbyScreen = {
-  block: 'div',
-  cls: 'wrapper',
-  content: [
-    {
-      block: 'div',
-      cls: 'header',
-      content: [
-        {
-          block: 'h1',
-          innerText: 'Добро пожаловать в лобби',
-        },
-      ],
-    },
-    {
-      block: 'div',
-      cls: 'columnHeaders',
-      content: [
-        {
-          block: 'div',
-          cls: 'columnHeader',
-          content: [
-            {
-              block: 'h2',
-              innerText: 'Вы',
-            },
-            {
-              block: 'div',
-              cls: 'columnHeader2',
-              content: {
-                block: 'h2',
-                innerText: 'Доступные игры',
-              },
-
-            },
-            {
-              block: 'div',
-              cls: 'popUpWaitingScreen',
-              content: [
-                {
-                  block: 'p',
-                  cls: 'loadingStatus',
-                  innertext: 'Получение данных от сервера. Подождите',
-                },
-                {
-                  block: 'div',
-                  cls: 'loader',
-                  innerText: 'Loading...',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};// JavaScript source code
-const lobbyScreen = {
-    block: 'div',
-    cls: 'wrapper',
-    content: [
-        {
+        lobbyScreen: {
             block: 'div',
-            cls: 'header',
-            content: [
-                {
-                    block: 'h1',
-                    innerText: 'Добро пожаловать в лобби',
-                },
-            ],
-        },
-        {
-            block: 'div',
-            cls: 'columnHeaders',
+            cls: 'wrapper',
             content: [
                 {
                     block: 'div',
-                    cls: 'columnHeader',
+                    cls: 'header',
                     content: [
                         {
-                            block: 'h2',
-                            innerText: 'Вы',
+                            block: 'h1',
+                            innerText: 'Добро пожаловать в лобби',
                         },
+                    ],
+                },
+                {
+                    block: 'div',
+                    cls: 'columnHeaders',
+                    content: [
                         {
                             block: 'div',
-                            cls: 'columnHeader2',
-                            content: {
-                                block: 'h2',
-                                innerText: 'Доступные игры',
-                            },
-
-                        },
-                        {
-                            block: 'div',
-                            cls: 'popUpWaitingScreen',
+                            cls: 'columnHeader',
                             content: [
                                 {
-                                    block: 'p',
-                                    cls: 'loadingStatus',
-                                    innertext: 'Получение данных от сервера. Подождите',
+                                    block: 'h2',
+                                    innerText: 'Вы',
                                 },
                                 {
                                     block: 'div',
-                                    cls: 'loader',
-                                    innerText: 'Loading...',
+                                    cls: 'columnHeader2',
+                                    content: {
+                                        block: 'h2',
+                                        innerText: 'Доступные игры',
+                                    },
+
+                                },
+                                {
+                                    block: 'div',
+                                    cls: 'popUpWaitingScreen',
+                                    content: [
+                                        {
+                                            block: 'p',
+                                            cls: 'loadingStatus',
+                                            innertext: 'Получение данных от сервера. Подождите',
+                                        },
+                                        {
+                                            block: 'div',
+                                            cls: 'loader',
+                                            innerText: 'Loading...',
+                                        },
+                                    ],
                                 },
                             ],
                         },
@@ -290,5 +236,167 @@ const lobbyScreen = {
                 },
             ],
         },
-    ],
+
+        gameFieldScreen: {
+            block: 'section',
+            cls: 'game-field',
+            content: [
+                {
+                    block: 'div',
+                    cls: 'round-number',
+                    content: [
+                        {
+                            block: 'p',
+                            cls: ['fadeIn', 'invisible'],
+                            innerText: `Раунд ${gameState.gameStatistic.rounds}`,
+                        },
+                    ],
+                },
+
+                {
+                    block: 'div',
+                    cls: 'gamer1',
+                    content: [
+                        {
+                            block: 'div',
+                            cls: 'content-wrapper',
+                            content: [
+                                {
+                                    block: 'h2',
+                                    innerText: `${gameState.gamerName}`,
+                                },
+                                {
+                                    block: 'div',
+                                    cls: 'choice-wrapper',
+                                    content: [
+                                        {
+                                            block: 'div',
+                                            cls: 'result',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+
+                {
+                    block: 'div',
+                    cls: 'gamer2',
+                    content: [
+                        {
+                            block: 'div',
+                            cls: 'content-wrapper',
+                            content: [
+                                {
+                                    block: 'h2',
+                                    innerText: `${gameState.rivalName}`,
+                                },
+                                {
+                                    block: 'div',
+                                    cls: 'choice-wrapper',
+                                    content: [
+                                        {
+                                            block: 'div',
+                                            cls: 'result',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+
+                {
+                    block: 'div',
+                    cls: ['round-result-field', 'display-none'],
+                    content: [
+                        {
+                            block: 'div',
+                            cls: ['round-result-wrapper', 'bigEntrance'],
+                            content: [
+                                {
+                                    block: 'div',
+                                    cls: 'round-result-window',
+                                    content: [
+                                        {
+                                            block: 'div',
+                                            cls: 'result-declaration',
+                                            content: [
+                                                {
+                                                    block: 'p',
+                                                    cls: 'comment',
+                                                },
+                                                {
+                                                    block: 'p',
+                                                    cls: 'statistic',
+                                                    innerText: `Побед: ${gameState.gameStatistic.victories}, поражений: ${gameState.gameStatistic.defeats}, вничью: ${gameState.gameStatistic.rounds - gameState.gameStatistic.victories - gameState.gameStatistic.defeats}`,
+                                                },
+                                                {
+                                                    block: 'p',
+                                                    cls: 'offer',
+                                                    innerText: 'Еще раунд?',
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            block: 'div',
+                                            cls: 'btns-block',
+                                            content: [
+                                                {
+                                                    block: 'button',
+                                                    cls: 'ok-button',
+                                                    innerText: 'Ok',
+                                                },
+                                                {
+                                                    block: 'button',
+                                                    cls: 'no-button',
+                                                    innerText: 'No!!!',
+                                                    method: {
+                                                        eventName: 'click',
+                                                        methodFunc: () => {
+                                                            createScreen(window.application.screens.loginScreen);
+                                                        },
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                                {
+                                    block: 'div',
+                                    cls: 'round-result-frame',
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+
+        errorScreen: {
+            block: 'section',
+            cls: 'error-field',
+            content: [
+                {
+                    block: 'div',
+                    cls: ['rock', 'error-rock'],
+                },
+                {
+                    block: 'p',
+                    cls: 'error-message',
+                    innerText: gameState.errors['token doesn\'t exist'],
+                },
+            ],
+        },
+    },
+
+    renderScreen: createScreen,
+    renderBlock: createBlock,
+    timers: [],
 };
+
+
+window.application.renderScreen(window.application.screens.lobbyScreen);
+
+
