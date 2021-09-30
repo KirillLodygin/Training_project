@@ -43,6 +43,12 @@ const application = {
 			attrs: {
 				placeholder: 'Введи свой nikname',
 			},
+			method: {
+				eventName: 'input',
+				methodFunc: () => {
+					inputName();
+				},
+			},
 		},
 		showedAvailableGame: {
 			block: 'div',
@@ -494,11 +500,47 @@ const application = {
 };
 gameState.gamerName = 'A';
 gameState.rivalName = 'B';
+let namePlayer = document.querySelector('.login-input');
+const button = document.querySelector('.login-button');
+
+function test(data) {
+	console.log(data);
+}
+
+//функция get запроса
+function request(url, callback) {
+	const xhr = new XMLHttpRequest();
+	xhr.open('GET', url + 'namePlayer');
+	xhr.addEventListener('readystatechange', function (e) {
+		if (e.target.readyState !== 4) {
+			return;
+		}
+		if (e.target.status !== 200) {
+			console.log('Ошибка');
+			return;
+		}
+		const responseText = e.target.responseText;
+
+		callback(responseText);
+	});
+	xhr.send();
+}
 
 //работа кнопки залогиниться
 function clickButton() {
-	createScreen(application.screen.lobbyScreen);
+	if (namePlayer.length !== 0) {
+		createScreen(application.screen.lobbyScreen);
+	}
+	console.log(button);
+	request('http://localhost:3000/login?login=', test);
+	console.log(responseText);
 }
+
+//получение никнэйма
+function inputName() {
+	namePlayer = document.querySelector('.login-input').value;
+}
+
 //шаблонизатор
 const templateEngine = (block) => {
 	if (!block) {
@@ -548,12 +590,12 @@ const templateEngine = (block) => {
 	return element;
 };
 
-//вставка блоков
+//вставляет блок
 const createBlock = (arrObj, parentNode) => {
 	parentNode.appendChild(templateEngine(arrObj));
 };
 
-//формирует стартовую страницу
+//отрисовывает страницу
 const createScreen = (obj) => {
 	while (app.firstChild) {
 		app.firstChild.remove();
@@ -561,10 +603,11 @@ const createScreen = (obj) => {
 	app.appendChild(templateEngine(obj));
 };
 
-//формирует облик страницы
-const createPage = () => {
+//функция-обертка для моей страницы
+const createPageLoginScreen = () => {
 	createScreen(application.screen.loginScreen);
 	createBlock(application.block.loginInput, app.querySelector('.login'));
 	createBlock(application.block.loginButton, app.querySelector('.login'));
+	console.log(button);
 };
-document.addEventListener('DOMContentLoaded', createPage);
+document.addEventListener('DOMContentLoaded', createPageLoginScreen);
