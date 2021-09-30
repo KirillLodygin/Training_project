@@ -271,7 +271,7 @@ const waitscreen = {
                                 "main-waitscreen__gameprocess-username",
                                 "your-name",
                               ],
-                              innerText: "Олег Иванов",
+                              innerText: gameState.gamerName,
                             },
                             {
                               block: "p",
@@ -280,12 +280,12 @@ const waitscreen = {
                                 {
                                   block: "span",
                                   cls: "your-wins",
-                                  innerText: "Побед:",
+                                  innerText: `Побед: ${gameState.gamerStatistic.victories}`,
                                 },
                                 {
                                   block: "span",
                                   cls: "your-defeats",
-                                  innerText: "Поражений:",
+                                  innerText: `Поражений: ${gameState.gamerStatistic.defeats}`,
                                 },
                               ],
                             },
@@ -335,18 +335,7 @@ const waitscreen = {
                                 "main-waitscreen__gameprocess-username",
                                 "enemy-name",
                               ],
-                              innerText: "Олег Иванов",
-                              method: {
-                                // вот здесь не работает. остальное все работает. с бекендом еще не общался
-                          
-                                eventName: "onload",
-                                methodFunc: () => {
-                                  let text =
-                                    document.querySelector(".enemy-name");
-
-                                  text.innerHTML = gameState.rivalName;
-                                },
-                              },
+                              innerText: gameState.rivalName,
                             },
                             {
                               block: "p",
@@ -355,12 +344,12 @@ const waitscreen = {
                                 {
                                   block: "span",
                                   cls: "enemy-wins",
-                                  innerText: "Побед:",
+                                  innerText: `Побед: ${gameState.rivalStatistic.victories}`,
                                 },
                                 {
                                   block: "span",
                                   cls: "enemy-defeats",
-                                  innerText: "Поражений:",
+                                  innerText: `Поражений: ${gameState.rivalStatistic.defeats}`,
                                 },
                               ],
                             },
