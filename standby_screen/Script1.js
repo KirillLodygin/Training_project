@@ -1,22 +1,23 @@
-﻿//Отрисовываем Карточку по токену
+﻿const enterGame = document.querySelector('.enterButton')
 
+const goToStandByScreen = function () {
+    enterGame.addEventListener('click', () => {
+        createScreen(application.screen.standByScreen);
+    })
+};
 
-let player = {
-    'name': 'Vasiliy',
-    'avatar':'',
-    'statistics': {
-        'win': 1,
-        'lose':2,
-        'even': 3,
-    }
-                   
-
-}
-const getOnlinePlayer = function (token) {
-
-}
-
-//Отрисовываем Карточку по токену
-const addPlayer = function (token) {
-
+const popUpWaitingScreen = {
+    block: 'div',
+    cls: 'popUpWaitingScreen',
+    content: [
+        {
+            block: 'p',
+            cls: 'loadingStatus',
+            innerText='Получение данных от сервера. Подождите'
+        },
+        {
+            block='div',
+            cls='loader',
+            innerText='Loading'
+        }]
 }
