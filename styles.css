@@ -1,0 +1,366 @@
+@font-face {
+    font-family: StratosSkyeng;
+    src: url(./assets/fonts/stratosskyengweb-light.woff2) format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: StratosSkyeng;
+    src: url(./assets/fonts/stratosskyengweb-regular.woff2) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: StratosSkyeng;
+    src: url(./assets/fonts/stratosskyengweb-bold.woff2) format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: fallback;
+}
+
+body {
+    background-color: #cc7722;
+    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+}
+
+.wrapper {
+    background-color: goldenrod;
+    height: auto;
+    width: 80%;
+    position: absolute;
+    margin: 0 50px 0 150px;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+    -webkit-text-stroke: 1px;
+    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+}
+
+.header {
+    color: aquamarine;
+    width: auto;
+    height: 60px;
+    text-align: center;
+}
+
+.columnHeaders {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.columnHeader {
+    width: 50%;
+    text-align: center;
+    float: left;
+}
+
+.columnHeader2 {
+    width: 50%;
+    text-align: center;
+    float: right;
+}
+
+audio {
+    display: none;
+}
+
+.yourself {
+    height: 300px;
+    float: left;
+    width: 45%;
+    display: flex;
+    padding: 0 0 0 10px;
+}
+
+.opponents {
+    overflow: scroll;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    float: right;
+    height: 500px;
+    justify-content: flex-start;
+}
+
+.avatar {
+    height: 100%;
+    width: 30%;
+}
+
+.opponent {
+    width: 300px;
+    height: 300px;
+    padding: 0 0 0 0;
+}
+
+.popUp {
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    padding: 15px;
+    border: 3px solid #0000cc;
+    border-radius: 10px;
+    color: #0000cc;
+    background-color: white;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+.main_opponent_profile-block {
+    margin: 50px 10px 20px 100px;
+    padding: 0 0 0 0;
+    width: 350px;
+    border: 2px solid;
+    border-radius: 15px;
+    background: antiquewhite;
+    align-content: center;
+    float: right;
+}
+
+.main_opponent_profile-block-header {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.opponent_profile-avatar {
+    max-width: 75px;
+    max-height: 75px;
+    border-radius: 25px;
+}
+
+.opponent_profile-name {
+    color: #983de0;
+}
+
+.opponent_profile_statistics-block {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.win {
+    color: seagreen;
+}
+
+.loose {
+    color: red;
+}
+
+.draw {
+    color: yellow;
+}
+
+.statistics-header {
+    align-self: center;
+    margin-bottom: 20px;
+    color: #e07d48;
+}
+
+.statistic-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.main_yourself_profile-block {
+    margin: 40px 10px 20px 50px;
+    padding: 0 0 0 0;
+    width: 350px;
+    border: 2px solid;
+    border-radius: 15px;
+    background: antiquewhite;
+    align-content: center;
+    float: left;
+}
+
+.main_yourself_profile-block-header {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.yourself_profile-avatar {
+    max-width: 75px;
+    max-height: 75px;
+    border-radius: 25px;
+}
+
+.yourself_profile-name {
+    color: #983de0;
+}
+
+.yourself_profile_statistics-block {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.popup_opponent_profile-block {
+    margin: 27px -23px 11px -18px;
+    padding: 0 0 0 0;
+    width: 350px;
+    border: 2px solid;
+    border-radius: 15px;
+    background: antiquewhite;
+    align-content: center;
+    float: right;
+}
+
+.announce {
+    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+    font-size: medium;
+}
+
+
+.accept {
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+}
+
+.deny {
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+}
+
+.createGame {
+    float: left;
+    margin: 300px 0 0 -300px;
+    border-radius: 5px;
+    width: 100px;
+    height: 50px;
+}
+
+.create {
+    color: darkgoldenrod;
+    border-radius: 5px;
+    width: 200px;
+    height: 70px;
+    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+    font-size: 1em;
+    float: left;
+}
+
+.availableGame {
+    display: flex;
+    flex-direction: row;
+}
+
+.enterButton {
+    margin: 0 0 0 120px;
+    border-radius: 5px;
+    width: 110px;
+    height: 50px;
+    font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
+    color: darkgoldenrod;
+    font-size: 1em;
+    float: left;
+}
+
+.popUpWaitingScreen {
+    margin: 20% 0% 0% 40%;
+    display: compact;
+    position: absolute
+}
+
+.loader,
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+}
+
+.loader {
+    color: #ffffff;
+    font-size: 11px;
+    text-indent: -99999em;
+    margin: 55px auto;
+    position: relative;
+    width: 10em;
+    height: 10em;
+    box-shadow: inset 0 0 0 1em;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+    .loader:before,
+    .loader:after {
+        position: absolute;
+        content: '';
+    }
+
+    .loader:before {
+        width: 5.2em;
+        height: 10.2em;
+        background: #0dc5c1;
+        border-radius: 10.2em 0 0 10.2em;
+        top: -0.1em;
+        left: -0.1em;
+        -webkit-transform-origin: 5.1em 5.1em;
+        transform-origin: 5.1em 5.1em;
+        -webkit-animation: load2 2s infinite ease 1.5s;
+        animation: load2 2s infinite ease 1.5s;
+    }
+
+    .loader:after {
+        width: 5.2em;
+        height: 10.2em;
+        background: #0dc5c1;
+        border-radius: 0 10.2em 10.2em 0;
+        top: -0.1em;
+        left: 4.9em;
+        -webkit-transform-origin: 0.1em 5.1em;
+        transform-origin: 0.1em 5.1em;
+        -webkit-animation: load2 2s infinite ease;
+        animation: load2 2s infinite ease;
+    }
+
+@-webkit-keyframes load2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
