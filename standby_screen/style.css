@@ -64,6 +64,7 @@ body {
   justify-content: center;
   overflow: auto;
   background: sandybrown;
+  
 }
 .container {
   height: 100%;
@@ -73,6 +74,10 @@ body {
   margin-top: 25%;
   margin-left: 25%;
   color: azure;
+}
+.header_text{
+  color: white;
+  margin-left: 25%;
 }
 .undercard_text {
   color: chartreuse;
