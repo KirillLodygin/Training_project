@@ -26,7 +26,7 @@ const gameState = {
 	invitationsToGame: [],
 	comments: [],
 };
-const application = {
+window.application = {
 	block: {
 		loginButton: {
 			block: 'button',
@@ -331,7 +331,7 @@ const application = {
 					content: [
 						{
 							block: 'h1',
-							innerText: 'Добро пожаловать в Лобби',
+							innerText: 'Добро пожаловать в лобби',
 						},
 					],
 				},
@@ -347,148 +347,27 @@ const application = {
 									block: 'h2',
 									innerText: 'Вы',
 								},
-							],
-						},
-						{
-							block: 'div',
-							cls: 'columnHeader2',
-							content: [
-								{
-									block: 'h2',
-									innerText: 'Доступные игры',
-								},
-							],
-						},
-					],
-				},
-				{
-					block: 'div',
-					cls: 'players',
-					content: [
-						{
-							block: 'div',
-							cls: 'main_yourself_profile-block',
-							content: [
 								{
 									block: 'div',
-									cls: 'main_yourself_profile-block-header',
-									content: [
-										{
-											block: 'img',
-											cls: 'yourself_profile-avatar',
-											attrs: {
-												src: 'assets/img/avatar.png',
-											},
-										},
-										{
-											block: 'h2',
-											cls: 'yourself_profile-name',
-											innerText: 'UserName',
-										},
-									],
+									cls: 'columnHeader2',
+									content: {
+										block: 'h2',
+										innerText: 'Доступные игры',
+									},
 								},
 								{
 									block: 'div',
-									cls: 'yourself_profile_statistics-block',
+									cls: 'popUpWaitingScreen',
 									content: [
 										{
-											block: 'h3',
-											cls: 'statistics-header',
-											innerText: 'Статистика',
+											block: 'p',
+											cls: 'loadingStatus',
+											innertext: 'Получение данных от сервера. Подождите',
 										},
 										{
 											block: 'div',
-											cls: 'statistic-items',
-											content: [
-												{
-													block: 'p',
-													cls: 'win',
-													innerText: 'Победы : 0',
-												},
-												{
-													block: 'p',
-													cls: 'loose',
-													innerText: 'Поражения : 0 ',
-												},
-												{
-													block: 'p',
-													cls: 'draw',
-													innerText: 'Ничьи : 0',
-												},
-											],
-										},
-									],
-								},
-							],
-						},
-						{
-							block: 'div',
-							cls: 'opponents',
-							content: [
-								{
-									block: 'div',
-									cls: 'main_opponent_profile-block',
-									content: [
-										{
-											block: 'div',
-											cls: 'main_opponent_profile-block-header',
-											content: [
-												{
-													block: 'img',
-													cls: 'opponent_profile-avatar',
-													attrs: {
-														src: 'assets/img/avatar.png',
-													},
-												},
-												{
-													block: 'h3',
-													cls: 'opponent_profile-name',
-													innerText: 'Пётр',
-												},
-											],
-										},
-										{
-											block: 'div',
-											cls: 'opponent_profile_statistics-block',
-											content: [
-												{
-													block: 'h3',
-													cls: 'statistics-header',
-													innerText: 'Статистика Противника',
-												},
-												{
-													block: 'div',
-													cls: 'statistic-items',
-													content: [
-														{
-															block: 'p',
-															cls: 'win',
-															innerText: 'Победы : 0',
-														},
-														{
-															block: 'p',
-															cls: 'loose',
-															innerText: 'Поражения : 0',
-														},
-														{
-															block: 'p',
-															cls: 'draw',
-															innerText: 'Ничьи : 0',
-														},
-													],
-												},
-											],
-										},
-										{
-											block: 'div',
-											cls: 'enterBlock',
-											content: [
-												{
-													block: 'button',
-													cls: 'enterButton',
-													innerText: 'Войти в игру',
-												},
-											],
+											cls: 'loader',
+											innerText: 'Loading...',
 										},
 									],
 								},
@@ -505,20 +384,23 @@ let namePlayer = '';
 function getPlayerStatus(data) {
 	const parseStatus = JSON.parse(data);
 	if (parseStatus['player-status'].status === 'lobby') {
-		createScreen(application.screen.lobbyScreen);
+		// debugger;
+		createScreen(createPageLobbyScreen());
 	}
 	if (parseStatus['player-status'].status === 'game') {
 		console.log('вы в игре');
 	}
 	if (parseStatus['player-status'].status === 'error') {
-		createScreen(application.screen.loginScreen);
+		createScreen(createPageLoginScreen());
 	}
+	return;
 }
 
 function getTokenGetPlayerStatus(data) {
 	const parseToken = JSON.parse(data);
 	gameState.gamerToken = parseToken.token;
 	gameState.gamerName = namePlayer;
+	// debugger;
 	request(
 		`http://localhost:3000/player-status?token=${gameState.gamerToken}`,
 		getPlayerStatus
@@ -616,13 +498,23 @@ const createScreen = (obj) => {
 	while (app.firstChild) {
 		app.firstChild.remove();
 	}
+	console.log('страница очищена формируй новую');
+	// debugger;
 	app.appendChild(templateEngine(obj));
 };
 
 //функция-обертка для моей страницы
 const createPageLoginScreen = () => {
-	createScreen(application.screen.loginScreen);
-	createBlock(application.block.loginInput, app.querySelector('.login'));
-	createBlock(application.block.loginButton, app.querySelector('.login'));
+	createScreen(window.application.screen.loginScreen);
+	createBlock(window.application.block.loginInput, app.querySelector('.login'));
+	createBlock(
+		window.application.block.loginButton,
+		app.querySelector('.login')
+	);
+};
+const createPageLobbyScreen = () => {
+	console.log(window.application.screen.lobbyScreen);
+	createScreen(window.application.screen.lobbyScreen);
+	console.log('сценарий лобби загрузился');
 };
 document.addEventListener('DOMContentLoaded', createPageLoginScreen);
