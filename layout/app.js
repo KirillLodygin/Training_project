@@ -500,12 +500,35 @@ const application = {
 		},
 	},
 };
-let namePlayer = document.querySelector('.login-input');
-const button = document.querySelector('.login-button');
-const getLogin = `http://localhost:3000/login?login=${namePlayer}`;
+let namePlayer = '';
 
-function test(data) {
-	console.log(data);
+function getPlayerStatus(data) {
+	const parseStatus = JSON.parse(data);
+	if (parseStatus['player-status'].status === 'lobby') {
+		createScreen(application.screen.lobbyScreen);
+	}
+	if (parseStatus['player-status'].status === 'game') {
+		console.log('вы в игре');
+	}
+	if (parseStatus['player-status'].status === 'error') {
+		createScreen(application.screen.loginScreen);
+	}
+	console.log(namePlayer);
+	console.log(gameState.gamerToken);
+	console.log(parseStatus['player-status'].status);
+}
+
+function getTokenGetPlayerStatus(data) {
+	const parseToken = JSON.parse(data);
+	gameState.gamerToken = parseToken.token;
+	console.log(gameState.gamerToken);
+	// if (namePlayer.length !== 0) {
+	// 	createScreen(application.screen.lobbyScreen);
+	// }
+	request(
+		`http://localhost:3000/player-status?token=${gameState.gamerToken}`,
+		getPlayerStatus
+	);
 }
 
 //функция get запроса
@@ -529,11 +552,10 @@ function request(url, callback) {
 
 //работа кнопки залогиниться
 function clickButton() {
-	if (namePlayer.length !== 0) {
-		createScreen(application.screen.lobbyScreen);
-	}
-	request(getLogin, test);
-	console.log(responseText);
+	request(
+		`http://localhost:3000/login?login=${namePlayer}`,
+		getTokenGetPlayerStatus
+	);
 }
 
 //получение никнэйма
@@ -608,6 +630,5 @@ const createPageLoginScreen = () => {
 	createScreen(application.screen.loginScreen);
 	createBlock(application.block.loginInput, app.querySelector('.login'));
 	createBlock(application.block.loginButton, app.querySelector('.login'));
-	console.log(namePlayer.value);
 };
 document.addEventListener('DOMContentLoaded', createPageLoginScreen);
