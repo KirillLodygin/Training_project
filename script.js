@@ -7,8 +7,20 @@ const gameState = {
 
   turn: 'rock',
 
-  statistic: {
+  gameStatistic: {
     rounds: 1,
+    victories: 0,
+    defeats: 0,
+  },
+
+  gamerStatistic: {
+    games: 1,
+    victories: 0,
+    defeats: 0,
+  },
+
+  rivalStatistic: {
+    games: 1,
     victories: 0,
     defeats: 0,
   },
@@ -229,7 +241,7 @@ window.application = {
             {
               block: 'p',
               cls: ['fadeIn', 'invisible'],
-              innerText: `Раунд ${gameState.statistic.rounds}`,
+              innerText: `Раунд ${gameState.gameStatistic.rounds}`,
             },
           ],
         },
@@ -311,7 +323,7 @@ window.application = {
                         {
                           block: 'p',
                           cls: 'statistic',
-                          innerText: `Побед: ${gameState.statistic.victories}, поражений: ${gameState.statistic.defeats}, вничью: ${gameState.statistic.rounds - gameState.statistic.victories - gameState.statistic.defeats}`,
+                          innerText: `Побед: ${gameState.gameStatistic.victories}, поражений: ${gameState.gameStatistic.defeats}, вничью: ${gameState.gameStatistic.rounds - gameState.gameStatistic.victories - gameState.gameStatistic.defeats}`,
                         },
                         {
                           block: 'p',
@@ -333,6 +345,12 @@ window.application = {
                           block: 'button',
                           cls: 'no-button',
                           innerText: 'No!!!',
+                          method: {
+                            eventName: 'click',
+                            methodFunc: () => {
+                              createScreen(window.application.screens.loginScreen);
+                            },
+                          },
                         },
                       ],
                     },
