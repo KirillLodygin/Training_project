@@ -1118,10 +1118,10 @@ audio {
     }
 }
 
-.display-none {
+.display-none.display-none {
     display: none;
 }
 
-.opacity {
+.opacity.opacity {
     opacity: 1;
 }

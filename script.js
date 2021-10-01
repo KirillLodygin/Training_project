@@ -106,7 +106,7 @@ window.application = {
               block: 'img',
               cls: 'opponent_profile-avatar',
               attrs: {
-                src: 'assets/img/avatar.png',
+                src: './assets/img/avatar.png',
               },
             },
             {
@@ -192,7 +192,7 @@ window.application = {
               block: 'img',
               cls: 'yourself_profile-avatar',
               attrs: {
-                src: 'assets/img/avatar.png',
+                src: './assets/img/avatar.png',
               },
             },
             {
@@ -438,7 +438,7 @@ window.application = {
       ],
     },
 
-    standbyScreen:  {
+    standByScreen: {
       block: 'div',
       cls: 'container',
       content: [
@@ -496,15 +496,14 @@ window.application = {
                           block: 'h3',
                           cls: 'win',
                           innerText:
-                            'Победы : ' + `${gameState.gamerStatistic.wins}`,
+                            `Победы : ${gameState.gamerStatistic.wins}`,
                         },
                         {
                           block: 'h3',
                           cls: 'loose',
                           innerText:
-                            'Поражения : ' + `${gameState.gamerStatistic.loses}`,
+                            `Поражения : ${gameState.gamerStatistic.loses}`,
                         },
-                        ,
                         {
                           block: 'h3',
                           cls: 'draw',
@@ -554,7 +553,7 @@ window.application = {
                   method: {
                     eventName: "click",
                     methodFunc: () => {
-                      createScreen(lobbyscreen);
+                      createPageLobbyScreen();
                     },
                   },
                 },
@@ -593,7 +592,7 @@ window.application = {
                           choiceScreen.classList.add("hidden");
                           gameState.move = "paper";
                           gameState.gameStatistic.rounds += 1;
-                          window.application.request(
+                          Window.application.request(
                             `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
                             switchToGameFieldScreen
                           );
@@ -604,7 +603,7 @@ window.application = {
                           block: "img",
                           cls: "choice-image",
                           attrs: {
-                            src: "assets/images/paper.jpg",
+                            src: "./assets/images/paper.jpg",
                             alt: "paper fighter",
                           },
                         },
@@ -624,7 +623,7 @@ window.application = {
                           choiceScreen.classList.add("hidden");
                           gameState.move = "rock";
                           gameState.gameStatistic.rounds += 1;
-                          window.application.request(
+                          Window.application.request(
                             `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
                             switchToGameFieldScreen
                           );
@@ -635,7 +634,7 @@ window.application = {
                           block: "img",
                           cls: "choice-image",
                           attrs: {
-                            src: "assets/images/rock.jpg",
+                            src: "./assets/images/rock.jpg",
                             alt: "rock fighter",
                           },
                         },
@@ -655,7 +654,7 @@ window.application = {
                           choiceScreen.classList.add("hidden");
                           gameState.move = "scissors";
                           gameState.gameStatistic.rounds += 1;
-                          window.application.request(
+                          Window.application.request(
                             `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
                             switchToGameFieldScreen
                           );
@@ -666,7 +665,7 @@ window.application = {
                           block: "img",
                           cls: "choice-image",
                           attrs: {
-                            src: "assets/images/scissors.jpg",
+                            src: "./assets/images/scissors.jpg",
                             alt: "scissors fighter",
                           },
                         },
@@ -704,7 +703,7 @@ window.application = {
                             "hidden",
                           ],
                           attrs: {
-                            src: "assets/images/rock.jpg",
+                            src: "./assets/images/rock.jpg",
                             alt: "choice",
                           },
                         },
@@ -715,7 +714,7 @@ window.application = {
                             "hidden",
                           ],
                           attrs: {
-                            src: "assets/images/paper.jpg",
+                            src: "./assets/images/paper.jpg",
                             alt: "choice",
                           },
                         },
@@ -726,7 +725,7 @@ window.application = {
                             "hidden",
                           ],
                           attrs: {
-                            src: "assets/images/scissors.jpg",
+                            src: "./assets/images/scissors.jpg",
                             alt: "choice",
                           },
                         },
@@ -760,12 +759,12 @@ window.application = {
                                     {
                                       block: "span",
                                       cls: "your-wins",
-                                      innerText: `Побед: ${gameState.gamerStatistic.victories}`,
+                                      innerText: `Побед: ${gameState.gamerStatistic.wins}`,
                                     },
                                     {
                                       block: "span",
                                       cls: "your-defeats",
-                                      innerText: `Поражений: ${gameState.gamerStatistic.defeats}`,
+                                      innerText: `Поражений: ${gameState.gamerStatistic.loses}`,
                                     },
                                   ],
                                 },
@@ -779,7 +778,7 @@ window.application = {
                       block: "img",
                       cls: "main-waitscreen__versus-image",
                       attrs: {
-                        src: "assets/images/versus.png",
+                        src: "./assets/images/versus.png",
                         alt: "vsimage",
                       },
                     },
@@ -827,12 +826,12 @@ window.application = {
                                     {
                                       block: "span",
                                       cls: "enemy-wins",
-                                      innerText: `Побед: ${gameState.enemyStatistic.victories}`,
+                                      innerText: `Побед: ${gameState.enemyStatistic.wins}`,
                                     },
                                     {
                                       block: "span",
                                       cls: "enemy-defeats",
-                                      innerText: `Поражений: ${gameState.enemyStatistic.defeats}`,
+                                      innerText: `Поражений: ${gameState.enemyStatistic.loses}`,
                                     },
                                   ],
                                 },
@@ -844,7 +843,10 @@ window.application = {
                       method: {
                         eventName: "DOMContentLoaded",
                         methodFunc: () => {
-                          window.application.timers.push(setInterval);
+                          Window.application.timers.push(setInterval(window.application.request,
+                            500,
+                            `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`,
+                            switchWaitScreen));
                         },
                       },
                     },
@@ -1077,6 +1079,10 @@ window.application = {
   },
 
   renderScreen: (obj) => {
+    window.application.timers.forEach(timer => clearInterval(timer));
+
+    window.application.timers.length = 0;
+
     if (app.hasChildNodes()) {
       while (app.firstChild) {
         app.removeChild(app.lastChild);
@@ -1093,25 +1099,222 @@ window.application = {
   timers: [],
 }
 
-// Тут пока имитация
-let objJSON = {
-  status: 'ok',
-  game_status: {
-    status: 'lose',
-    enemy: {
-      login: 'ВладБумага',
-      wins: 47,
-      loses: 33,
-      rocks: 22,
-      papers: 202,
-      scissors: 13,
-    },
-  },
-};
-// Тут пока имитация
-gameState.objFromJSON = objJSON;
+function disassemblyJSON(objJSON) {
+  return JSON.parse(objJSON);
+}
 
 
+//Login Screen
+
+function getPlayerStatus(data) {
+  const parseStatus = disassemblyJSON(data);
+
+  if (parseStatus['player-status'].status === 'lobby') {
+    createPageLobbyScreen();
+  }
+  if (parseStatus['player-status'].status === 'game') {
+    window.application.renderScreen(window.application.screens.waitScreen);
+  }
+  if (parseStatus['player-status'].status === 'error') {
+    startErrorScreen();
+  }
+}
+
+//получение токена и статуса
+function getTokenGetPlayerStatus(data) {
+  const parseToken = disassemblyJSON(data);
+  gameState.token = parseToken.token;
+  gameState.gamerName = inputName();
+
+  Window.application.request(
+    `${gameState.url}player-status?token=${gameState.gamerToken}`,
+    getPlayerStatus
+  );
+}
+
+//получение никнэйма
+function inputName() {
+  namePlayer = document.querySelector('.login-input').value;
+}
+
+//работа кнопки залогиниться
+function clickButton() {
+  Window.application.request(
+    `${gameState.url}login?login=${namePlayer}`,
+    getTokenGetPlayerStatus
+  );
+}
+
+//функция-обертка для логин-страницы
+function createPageLoginScreen () {
+  Window.application.renderScreen(Window.application.screen.loginScreen);
+  Window.application.renderBlock(
+    [Window.application.block.loginInput, Window.application.block.loginButton],
+    app.querySelector('.login')
+  );
+}
+
+
+//Lobby Screen
+//нажатие на кнопку 'создать игру'
+function clickPlayButton() {
+  createPageStandByScreen();
+}
+
+//получение информации об игроке
+function getStatisticPlayer(data) {
+  const parseStatisticPlayer = disassemblyJSON(data);
+  let obj = parseStatisticPlayer.list;
+  obj.forEach(function (obj) {
+    if (Object.keys(obj).includes('you')) {
+      gameState.gamerStatistic.wins = obj.wins;
+      gameState.gamerStatistic.loses = obj.loses;
+
+      window.application.renderBlock(
+        [window.application.block.playerInformation],
+        app.querySelector('.columnHeader')
+      );
+    }
+  });
+}
+
+//получение информации об актуальных играх
+function getAvailableGame(data) {
+  while (document.querySelector('.listGames').firstChild) {
+    document
+      .querySelector('.listGames')
+      .removeChild(document.querySelector('.listGames').lastChild);
+  }
+  const parseStatisticEnemy = JSON.parse(data);
+  for (let enemy of parseStatisticEnemy.list) {
+    Window.application.renderBlock(
+      [Window.application.block.showedAvailableGame],
+      document.querySelector('.listGames')
+    );
+  }
+}
+
+//функция-обертка для лобби-страницы
+function createPageLobbyScreen() {
+  Window.application.renderScreen(Window.application.screen.lobbyScreen);
+  Window.application.renderBlock(
+    [Window.application.block.playButton],
+    app.querySelector('.columnHeader')
+  );
+  Window.application.request(
+    `${gameState.url}player-list?token=${gameState.gamerToken}`,
+    getStatisticPlayer
+  );
+  setInterval(
+    Window.application.request,
+    1000,
+    `${gameState.url}player-list?token=${gameState.gamerToken}`,
+    getAvailableGame
+  );
+  Window.application.timers.push(
+    setInterval(
+      Window.application.request,
+      1000,
+      `${gameState.url}player-list?token=${gameState.gamerToken}`,
+      getAvailableGame
+    )
+  );
+}
+
+
+// standByScreen
+
+//переход на экран лобби
+function backToLobby() {
+  createPageLobbyScreen();
+}
+//переход на экран игры
+function toGame() {
+  createScreen(window.application.screens.waitScreen);
+}
+
+function checkOpponentConnection(data) {
+  const parsedData = disassemblyJSON(data);
+
+  if (parsedData['status'] === 'error') {
+    gameState.errorMessage = parsedData['message'];
+    startErrorScreen();
+    return;
+  }
+  gameState.enemyName = parsedData['game-status']['enemy']['login'];
+  gameState.enemyStatistic.wins = parsedData['game-status']['enemy']['wins'];
+  gameState.enemyStatistic.loses = parsedData['game-status']['enemy']['loses'];
+
+  if (parsedData['game-status'].status !== 'waiting-for-start') {
+    toGame();
+  }
+}
+
+function createPageStandByScreen() {
+  createScreen(window.application.screens.standbyScreen);
+  createBlock(window.application.blocks.backToLobbyButton, document.querySelector('.undercard'));
+  window.application.timers.push(setInterval(request, 1000, `${gameState.url}game-status?token=${gameState.token}`, checkOpponentConnection));
+}
+
+//waitScreen
+
+// фуекция для появления надписи Противник ожидает хода
+function switchWaitScreen(data) {
+  const parsedData = disassemblyJSON(data);
+  if (parsedData["game-status"].status === "waiting-for-your-move") {
+    waitingText.classList.remove("hidden");
+    enemyScroll.classList.add("hidden");
+  }
+}
+
+// запускает процесс ожидания статуса игры
+function switchToGameFieldScreen(jsonString) {
+  const serverAnswer = disassemblyJSON(jsonString);
+  if (serverAnswer.status === "ok") {
+    if (serverAnswer["game-status"].status === "waiting-for-enemy-move") {
+      return;
+    }
+    gameState.gameStatus = serverAnswer["game-status"].status;
+    startGameFieldScreen();
+    return;
+  }
+  gameState.errorMessage = serverAnswer.message;
+  startErrorScreen();
+}
+
+const rockButton = document.querySelector(
+  ".main-waitscreen__choicescreen-rock"
+);
+const paperButton = document.querySelector(
+  ".main-waitscreen__choicescreen-paper"
+);
+const scissorsButton = document.querySelector(
+  ".main-waitscreen__choicescreen-scissors"
+);
+
+const yourSideSpinner = document.querySelector(".your-side-spinner");
+
+const rockImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-rock"
+);
+const paperImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-paper"
+);
+const scissorsImage = document.querySelector(
+  ".main-waitscreen__gameprocess-choiceimage-scissors"
+);
+
+const waitingText = document.querySelector(
+  ".main-waitscreen__gameprocess-text"
+);
+
+const enemyScroll = document.querySelector(".enemy-scroll");
+
+const choiceScreen = document.querySelector(".main-waitscreen__choicescreen");
+
+
+
+// GameField Screen
 const selectPlayerChoiceBlock = (choice) => {
   switch (choice) {
     case 'rock':
@@ -1203,14 +1406,20 @@ const showRoundResultWindow = (roundStatus, gamerChoice) => {
   app.querySelector('.round-result-field').classList.remove('display-none');
 };
 
-const startGameFieldScreen = () => {
+function startGameFieldScreen() {
   window.application.renderScreen(window.application.screens.gameFieldScreen);
   window.application.renderBlock([selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
-  window.application.renderBlock([selectEnemyChoiceBlock(gameState.turn, gameState.objFromJSON.game_status.status)], app.querySelectorAll('.choice-wrapper')[1]);
-  setTimeout(drawCrossAndCheckMark, 4300, gameState.objFromJSON.game_status.status);
-  setTimeout(showRoundResultWindow, 5500, gameState.objFromJSON.game_status.status, gameState.turn);
-};
+  window.application.renderBlock([selectEnemyChoiceBlock(gameState.turn, gameState.objFromJSON['game-status'].status)], app.querySelectorAll('.choice-wrapper')[1]);
+  setTimeout(drawCrossAndCheckMark, 4300, gameState.objFromJSON['game-status'].status);
+  setTimeout(showRoundResultWindow, 5500, gameState.objFromJSON['game-status'], gameState.turn);
+}
 
-startGameFieldScreen();
+// Error Screen
+
+function startErrorScreen() {
+  window.application.renderScreen(window.application.screens.errorScreen);
+  window.application.renderBlock([window.application.blocks.errorButton], app.querySelector('.error-field'));
+}
 
 
+document.addEventListener('DOMContentLoaded', createPageLoginScreen);
