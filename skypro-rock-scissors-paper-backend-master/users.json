@@ -16,5 +16,50 @@
         "rocks": 3,
         "scissors": 0,
         "papers": 2
+    },
+    {
+        "login": "Гавно",
+        "wins": 0,
+        "loses": 0,
+        "rocks": 0,
+        "papers": 0,
+        "scissors": 0,
+        "token": "5ecde9bb-0e5e-4583-990d-955b11de9a10"
+    },
+    {
+        "login": "ГАВНО",
+        "wins": 0,
+        "loses": 0,
+        "rocks": 0,
+        "papers": 0,
+        "scissors": 0,
+        "token": "f732e59a-279d-481c-b9e3-281e38fd28da"
+    },
+    {
+        "login": "ufdyj",
+        "wins": 0,
+        "loses": 0,
+        "rocks": 0,
+        "papers": 0,
+        "scissors": 0,
+        "token": "a0e04809-b57b-423c-bebe-6f1709947c42"
+    },
+    {
+        "login": "fdsfsdf",
+        "wins": 0,
+        "loses": 0,
+        "rocks": 0,
+        "papers": 0,
+        "scissors": 0,
+        "token": "b8505cbb-bdfd-414d-9b29-a891c47a3b00"
+    },
+    {
+        "login": "sdfsdfsd",
+        "wins": 0,
+        "loses": 0,
+        "rocks": 0,
+        "papers": 0,
+        "scissors": 0,
+        "token": "8e72d3bb-e2d1-41b1-b704-0412caa4977e"
     }
 ]
