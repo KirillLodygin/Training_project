@@ -1,0 +1,39 @@
+[
+    {
+        "id": "kD90aiwL",
+        "status": "finished",
+        "players": [
+            {
+                "login": "dusty",
+                "move": "rock"
+            },
+            {
+                "login": "enemy",
+                "move": "paper"
+            }
+        ]
+    },
+    {
+        "id": "KBwcAFaK",
+        "status": "finished",
+        "players": [
+            {
+                "login": "enemy",
+                "move": "paper"
+            },
+            {
+                "login": "dusty",
+                "move": "rock"
+            }
+        ]
+    },
+    {
+        "id": "JSAPpP1h",
+        "status": "pending",
+        "players": [
+            {
+                "login": "enemy"
+            }
+        ]
+    }
+]

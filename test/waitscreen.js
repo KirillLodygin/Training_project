@@ -1132,7 +1132,7 @@ function switchWaitScreen(data) {
 setInterval(
   request,
   500,
-  `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}`,
+  `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`,
   switchWaitScreen
 );
 // setInterval(() => {
