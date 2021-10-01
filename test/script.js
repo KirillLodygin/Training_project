@@ -80,7 +80,7 @@ const gameState = {
   },
 };
 
-window.application = {
+Window.application = {
   blocks: {
     loginInput: {
       block: "input",
@@ -130,8 +130,8 @@ window.application = {
       method: {
         eventName: "click",
         methodFunc: () => {
-          window.application.createScreen(
-            window.application.screens.lobbyScreen
+          Window.application.createScreen(
+            Window.application.screens.lobbyScreen
           );
         },
       },
@@ -476,9 +476,7 @@ window.application = {
                   method: {
                     eventName: "click",
                     methodFunc: () => {
-                      createScreen(
-                        window.application.screens.lobbyscreen
-                      ); /*дописать название экрана лобби */
+                      createScreen(lobbyscreen);
                     },
                   },
                 },
@@ -517,8 +515,8 @@ window.application = {
                           choiceScreen.classList.add("hidden");
                           gameState.move = "paper";
                           gameState.gameStatistic.rounds += 1;
-                          window.application.request(
-                            `${gameState.url}play?token=${gameSate.token}&id=${gameState.gameId}&move=${gameState.move}`,
+                          Window.application.request(
+                            `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
                             switchToGameFieldScreen
                           );
                         },
@@ -548,8 +546,8 @@ window.application = {
                           choiceScreen.classList.add("hidden");
                           gameState.move = "rock";
                           gameState.gameStatistic.rounds += 1;
-                          window.application.request(
-                            `${gameState.url}play?token=${gameSate.token}&id=${gameState.gameId}&move=${gameState.move}`,
+                          Window.application.request(
+                            `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
                             switchToGameFieldScreen
                           );
                         },
@@ -579,8 +577,8 @@ window.application = {
                           choiceScreen.classList.add("hidden");
                           gameState.move = "scissors";
                           gameState.gameStatistic.rounds += 1;
-                          window.application.request(
-                            `${gameState.url}play?token=${gameSate.token}&id=${gameState.gameId}&move=${gameState.move}`,
+                          Window.application.request(
+                            `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
                             switchToGameFieldScreen
                           );
                         },
@@ -768,7 +766,7 @@ window.application = {
                       method: {
                         eventName: "DOMContentLoaded",
                         methodFunc: () => {
-                          window.application.timers.push(setInterval);
+                          Window.application.timers.push(setInterval);
                         },
                       },
                     },
@@ -907,7 +905,7 @@ window.application = {
                             eventName: "click",
                             methodFunc: () => {
                               createScreen(
-                                window.application.screens.loginScreen
+                                Window.application.screens.loginScreen
                               );
                             },
                           },
@@ -1019,7 +1017,7 @@ const createBlock = (clear, arrObj, parentNode) => {
   arrObj.forEach((obj) => parentNode.add(templateEngine(obj)));
 };
 
-createScreen(window.application.screens.waitScreen);
+createScreen(Window.application.screens.waitScreen);
 
 const rockButton = document.querySelector(
   ".main-waitscreen__choicescreen-rock"
@@ -1094,12 +1092,12 @@ function switchToGameFieldScreen(jsonString) {
 //
 //
 function startGameFieldScreen() {
-  window.application.renderScreen(window.application.screens.gameFieldScreen);
-  window.application.renderBlock(
+  Window.application.renderScreen(Window.application.screens.gameFieldScreen);
+  Window.application.renderBlock(
     [selectPlayerChoiceBlock(gameState.turn)],
     app.querySelectorAll(".choice-wrapper")[0]
   );
-  window.application.renderBlock(
+  Window.application.renderBlock(
     [
       selectEnemyChoiceBlock(
         gameState.turn,
@@ -1123,20 +1121,31 @@ function startGameFieldScreen() {
 //
 //
 //
-function switchWaitScreen() {
-  waitingText.classList.remove("hidden");
-  enemyScroll.classList.add("hidden");
+function switchWaitScreen(data) {
+  const parsedData = JSON.parse(data);
+  if (parsedData["game-status"].status === "waiting-for-your-move") {
+    waitingText.classList.remove("hidden");
+    enemyScroll.classList.add("hidden");
+  }
 }
 
-setInterval(() => {
-  const serverAnswer = disassemblyJSON(jsonString);
-  serverAnswer = request(
-    `${gameState.url}play?token=${gameSate.token}&id=${gameState.gameId}`
-  ); // тут функция получения статуск
-  if (serverAnswer["game-status"].status !== "waiting-for-your-move") {
-    switchWaitScreen();
-  }
-}, 500);
+setInterval(
+  request,
+  500,
+  `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}`,
+  switchWaitScreen
+);
+// setInterval(() => {
+//   const serverAnswer = disassemblyJSON();
+//   console.log(serverAnswer);
+//   serverAnswer = request(
+//     `${gameState.url}play?token=${gameSate.token}&id=${gameState.gameId}`,
+//     switchWaitScreen()
+//   );
+//   if (serverAnswer["game-status"].status !== "waiting-for-your-move") {
+//     switchWaitScreen();
+//   }
+// }, 500);
 
 // когда waiting for your move прекращаем посылать справа запросы и рисуем соперник ожидает ваш ход. в запросе мой токе и айди
 //  id `${gameState.url}play?token=${gameSate.token}&id=${gameState.gameId}
