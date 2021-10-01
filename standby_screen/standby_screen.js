@@ -1,3 +1,57 @@
+const gameState = {
+  url: "http://localhost:3000/",
+  token: "",
+  gamerName: "Игрок",
+  enemyName: "Противник",
+  move: "",
+  roundStatus: "",
+  gameId: "",
+  gameStatistic: {
+    rounds: "",
+    wins: "",
+    defeats: "",
+  },
+  gamerStatistic: {
+    games: "",
+    wins: "",
+    loses: "",
+  },
+  enemyStatistic: {
+    games: "",
+    wins: "",
+    loses: "",
+  },
+  obliqueCross: "&#128942;",
+  greenTick: "&#10004;",
+  loseMessages: {
+    rock: "Противник завернул ваш камушек в бумагу!",
+    paper: "Ножницы разрезают ваш лист бумаги! Не повезло!",
+    scissors: "Вы извлекли ножницы, но противник заготовил камень! Увы!",
+  },
+  winMessages: {
+    rock: "Камнем по нижницам! Это был удачный ход!",
+    paper:
+      "Что может камень противника против вашего бумажного листа?! Ничего!",
+    scissors: "Ножницами вы орудуете умело! Лист противника разрезан!",
+  },
+  drawMessages: {
+    rock: "Противник припас для тебя камешек. Но у тебя был камешек для него. Ничья!",
+    paper: "Бумага против бумаги. Результат очевиден. Ничья!",
+    scissors: "Ты показал ножницы. Противник насупился и показал свои. Ничья!",
+  },
+  errorMessage: " ",
+  errors: {
+    error: "Что-то пошло не так",
+    " ": "Игрок не зарегистрирован",
+    "token doesn't exist": "Нет игрока или игры с таким токеном",
+    "player is already in game":
+      "Игрок уже в игре, нельзя начать две игры одновременно",
+    "no game id": "Id игры не передан",
+    "wrong game id": "Id игры некорректный/бой не существует/бой закончен",
+    "player is not in this game": "Игрок не в этой игре",
+    "no move": "Ход не передан",
+  },
+};
 const standbyScreen = {
   
     block: 'div',
@@ -36,7 +90,8 @@ const standbyScreen = {
                   {
                     block: 'h1',
                     cls: 'opponent_profile-name',
-                    innerText: 'Пётр',
+                    innerText: `${gameState.gamerName}`,
+                    
                   },
                 ],
               },
@@ -56,18 +111,18 @@ const standbyScreen = {
                       {
                         block: 'h3',
                         cls: 'win',
-                        innerText: 'Победы : 0',
+                        innerText: 'Победы : ' + `${gameState.gamerStatistic.wins}`,
                       },
                       {
                         block: 'h3',
                         cls: 'loose',
-                        innerText: 'Поражения : 0',
+                        innerText: 'Поражения : ' + `${gameState.gamerStatistic.loses}`,
                       },
                       ,
                       {
                         block: 'h3',
                         cls: 'draw',
-                        innerText: 'Ничьи : 0 ',
+                        innerText: 'Ничьи :  ' ,
                       },
                     ],
                   },
@@ -97,6 +152,7 @@ const standbyScreen = {
     ],
   
 };
+
 const backToLobbyButton ={
   block: 'div',
   cls: 'back_button_box',
@@ -110,8 +166,8 @@ const backToLobbyButton ={
     {
       block: 'button',
       cls: 'back_button_box-button',
-      content:[{
-        
+      content:[
+        {        
           block: 'img',
           cls: 'arrow',
           attrs: {
@@ -365,32 +421,31 @@ const createScreen = (obj) => {
 const createBlock = (arrObj, parentNode) => {
 	parentNode.appendChild(templateEngine(arrObj));
 };
-const gameStatus = "http://localhost:3000/game-status"
  
 function createPageStandByScreen() {
 createScreen(standbyScreen);
 createBlock(backToLobbyButton, document.querySelector(".undercard"))
 
-let timer = setInterval(checkOpponentConnection, 2000);
-
 };
+let timer = setInterval(request, 3000,'index.json', checkOpponentConnection );
 
-function test (data){
-  alert(data)
-}
+// `http://localhost:3000/game-status?token=${gameState.gamerToken}`
+
+
 //переход на экран лобби
-
 function backToLobby() {
-createScreen(lobby)  
-clearTimeout  (timer)
+  createScreen(lobby)  
+  clearInterval  (timer)
 }
 //переход на экран игры
 function toGame(){
   createScreen(gameScreen)
+  clearInterval  (timer)
+
 }
 
 
-function request(url, callback) {
+function request( url,callback) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url );
   xhr.addEventListener('readystatechange', function (e) {
@@ -401,29 +456,28 @@ function request(url, callback) {
           console.log('Ошибка');
           return;
       }
-      const responseText = e.target.responseText;
+      const responseText = e.target.response;
       callback(responseText);
   });
   xhr.send();
 }
-//Будет вызывать get player list и парсить его
-function getUserInfo(){}
 
-//Запрос данных с сервера
- function checkOpponentConnection(){
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', "http://localhost:3000/game-status" );
-  xhr.addEventListener('readystatechange', function (e) {
-      if (e.target.readyState !== 4) {
-          return;
-      }
-      if (e.target.status !== 200) {
-          console.log('Ошибка');
-          return;
-      }
-      const responseText = e.target.responseText;
-      test(responseText);
-  });
-  xhr.send();
+
+function checkOpponentConnection(data) {
+  const parsedData = JSON.parse(data)
+  if (parsedData['status'] === 'error') {
+    gameState.errorMessage = parsedData['message'] 
+    startErrorScreen();
+    return;
+  }
+  gameState.enemyName = parsedData['game-status']['enemy']['login'];
+  gameState.enemyStatistic.wins = parsedData['game-status']['enemy']['wins'];
+  gameState.enemyStatistic.loses = parsedData['game-status']['enemy']['loses'];
+
+   if (parsedData['game-status'].status !== 'waiting-for-start' ) {
+    toGame()
+    }
+  
+ 
 }
 document.addEventListener("DOMContentLoaded", createPageStandByScreen)
