@@ -1093,17 +1093,6 @@ window.application = {
   timers: [],
 }
 
-
-
-
-
- /*
-const disassemblyJSON = objJSON => {
-  return JSON.parse(objJSON);
-};
-
- */
-
 // Тут пока имитация
 let objJSON = {
   status: 'ok',
