@@ -1,30 +1,59 @@
 const app = document.querySelector('.app');
 const gameState = {
+	url: 'http://localhost:3000/',
 	gamerToken: '',
 
 	gamerName: '',
 
-	statistic: {
-		games: 0,
-		victories: 0,
-		defeats: 0,
+	enemyName: 'Противник',
+	move: '',
+	roundStatus: '',
+	gameId: '',
+	gameStatistic: {
+		rounds: '',
+		wins: '',
+		defeats: '',
 	},
-
-	rivalName: '',
-
-	rounds: 0,
-	victories: 0,
-	defeats: 0,
-
-	colorMap: [
-		['#D5E052', '#D3E03D', '#69E0DB', '#983DE0', '#E07D48'],
-		['#E0B353', '#E0AC3D', '#6CE069', '#2D6FE0', '#E04899'],
-		['#E07053', '#E05E3D', '#E0D869', '#39E0AA', '#7548E0'],
-		['#E05364', '#E03D50', '#E0C469', '#3BE05E', '#485FE0'],
-		['#536FE0', '#3D5DE0', '#E06982', '#E0B63A', '#79E08B'],
-	],
-	invitationsToGame: [],
-	comments: [],
+	gamerStatistic: {
+		games: '',
+		wins: '',
+		loses: '',
+	},
+	enemyStatistic: {
+		games: '',
+		wins: '',
+		loses: '',
+	},
+	obliqueCross: '&#128942;',
+	greenTick: '&#10004;',
+	loseMessages: {
+		rock: 'Противник завернул ваш камушек в бумагу!',
+		paper: 'Ножницы разрезают ваш лист бумаги! Не повезло!',
+		scissors: 'Вы извлекли ножницы, но противник заготовил камень! Увы!',
+	},
+	winMessages: {
+		rock: 'Камнем по нижницам! Это был удачный ход!',
+		paper:
+			'Что может камень противника против вашего бумажного листа?! Ничего!',
+		scissors: 'Ножницами вы орудуете умело! Лист противника разрезан!',
+	},
+	drawMessages: {
+		rock: 'Противник припас для тебя камешек. Но у тебя был камешек для него. Ничья!',
+		paper: 'Бумага против бумаги. Результат очевиден. Ничья!',
+		scissors: 'Ты показал ножницы. Противник насупился и показал свои. Ничья!',
+	},
+	errorMessage: ' ',
+	errors: {
+		error: 'Что-то пошло не так',
+		' ': 'Игрок не зарегистрирован',
+		"token doesn't exist": 'Нет игрока или игры с таким токеном',
+		'player is already in game':
+			'Игрок уже в игре, нельзя начать две игры одновременно',
+		'no game id': 'Id игры не передан',
+		'wrong game id': 'Id игры некорректный/бой не существует/бой закончен',
+		'player is not in this game': 'Игрок не в этой игре',
+		'no move': 'Ход не передан',
+	},
 };
 let namePlayer = '';
 Window.application = {
@@ -128,6 +157,12 @@ Window.application = {
 					block: 'button',
 					cls: 'create',
 					innerText: 'Создать игру',
+					method: {
+						eventName: 'click',
+						methodFunc: () => {
+							clickPlayButton();
+						},
+					},
 				},
 			],
 		},
@@ -456,15 +491,141 @@ Window.application = {
 				// },
 			],
 		},
+		standbyScreen: {
+			block: 'div',
+			cls: '',
+			content: [
+				{
+					block: 'div',
+					cls: 'container',
+					content: [
+						{
+							block: 'div',
+							cls: 'main',
+							content: [
+								{
+									block: 'header',
+									cls: 'header',
+									content: [
+										{
+											block: 'h1',
+											cls: 'header_text',
+											innerText: 'Вы создали комнату',
+										},
+									],
+								},
+								{
+									block: 'div',
+									cls: ['main_opponent_profile-block', 'bigEntrance'],
+									content: [
+										{
+											block: 'div',
+											cls: 'main_opponent_profile-block-header',
+											content: [
+												{
+													block: 'img',
+													cls: 'opponent_profile-avatar',
+													attrs: {
+														src: './assets/img/avatar.png',
+													},
+												},
+												{
+													block: 'h1',
+													cls: 'opponent_profile-name',
+													innerText: `${gameState.gamerName}`,
+												},
+											],
+										},
+										{
+											block: 'div',
+											cls: 'opponent_profile_statistics-block',
+											content: [
+												{
+													block: 'h2',
+													cls: 'statistics-header',
+													innerText: 'Ваша Статистика ',
+												},
+												{
+													block: 'div',
+													cls: 'statistic-items',
+													content: [
+														{
+															block: 'h3',
+															cls: 'win',
+															innerText:
+																'Победы : ' +
+																`${gameState.gamerStatistic.wins}`,
+														},
+														{
+															block: 'h3',
+															cls: 'loose',
+															innerText:
+																'Поражения : ' +
+																`${gameState.gamerStatistic.loses}`,
+														},
+														,
+														{
+															block: 'h3',
+															cls: 'draw',
+															innerText: 'Ничьи :  ',
+														},
+													],
+												},
+											],
+										},
+									],
+								},
+								{
+									block: 'div',
+									cls: 'undercard',
+									content: [
+										{
+											block: 'h1',
+											cls: 'undercard_text',
+											innerText: 'Ожидаем подключение соперника...',
+										},
+										{
+											block: 'div',
+											cls: 'lds-hourglass',
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+			],
+		},
 	},
 	renderScreen: function (obj) {
 		while (app.firstChild) {
 			app.removeChild(app.lastChild);
 		}
 		app.appendChild(templateEngine(obj));
+		for (let i of Window.application.timers) {
+			clearInterval(i);
+			Window.application.timers = [];
+		}
 	},
 	renderBlock: function (arrObj, parentNode) {
 		arrObj.forEach((obj) => parentNode.append(templateEngine(obj)));
+	},
+	request: function (url, callback) {
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', url);
+		xhr.addEventListener('readystatechange', function (e) {
+			if (e.target.readyState !== 4) {
+				return;
+			}
+			if (e.target.status !== 200) {
+				console.log('Ошибка');
+				return;
+			}
+			const responseText = e.target.responseText;
+
+			callback(responseText);
+		});
+		xhr.send();
 	},
 	timers: [],
 };
@@ -481,16 +642,22 @@ function getPlayerStatus(data) {
 		createScreen(createPageLoginScreen());
 	}
 }
+
 //получение токена и статуса
 function getTokenGetPlayerStatus(data) {
 	const parseToken = JSON.parse(data);
 	gameState.gamerToken = parseToken.token;
 	gameState.gamerName = namePlayer;
 	// debugger;
-	request(
-		`http://localhost:3000/player-status?token=${gameState.gamerToken}`,
+	Window.application.request(
+		`${gameState.url}player-status?token=${gameState.gamerToken}`,
 		getPlayerStatus
 	);
+}
+
+//нажатие на кнопку 'создать игру'
+function clickPlayButton() {
+	Window.application.renderScreen(Window.application.standbyScreen);
 }
 
 //получение информации об игроке
@@ -502,12 +669,6 @@ const getStatisticPlayer = (data) => {
 			Window.application.renderBlock(
 				[Window.application.block.playerInformation],
 				app.querySelector('.columnHeader')
-				// setInterval(
-				// 	request,
-				// 	1000,
-				// 	`http://localhost:3000/game-status?token=${gameState.gamerToken}`,
-
-				// 	)
 			);
 		}
 	});
@@ -529,29 +690,10 @@ const getAvailableGame = (data) => {
 	}
 };
 
-//функция get запроса
-function request(url, callback) {
-	const xhr = new XMLHttpRequest();
-	xhr.open('GET', url);
-	xhr.addEventListener('readystatechange', function (e) {
-		if (e.target.readyState !== 4) {
-			return;
-		}
-		if (e.target.status !== 200) {
-			console.log('Ошибка');
-			return;
-		}
-		const responseText = e.target.responseText;
-
-		callback(responseText);
-	});
-	xhr.send();
-}
-
 //работа кнопки залогиниться
 function clickButton() {
-	request(
-		`http://localhost:3000/login?login=${namePlayer}`,
+	Window.application.request(
+		`${gameState.url}login?login=${namePlayer}`,
 		getTokenGetPlayerStatus
 	);
 }
@@ -626,15 +768,24 @@ const createPageLobbyScreen = () => {
 		[Window.application.block.playButton],
 		app.querySelector('.columnHeader')
 	);
-	request(
-		`http://localhost:3000/player-list?token=${gameState.gamerToken}`,
+	Window.application.request(
+		`${gameState.url}player-list?token=${gameState.gamerToken}`,
 		getStatisticPlayer
 	);
 	setInterval(
-		request,
+		Window.application.request,
 		1000,
-		`http://localhost:3000/player-list?token=${gameState.gamerToken}`,
+		`${gameState.url}player-list?token=${gameState.gamerToken}`,
 		getAvailableGame
 	);
+	Window.application.timers.push(
+		setInterval(
+			Window.application.request,
+			1000,
+			`${gameState.url}player-list?token=${gameState.gamerToken}`,
+			getAvailableGame
+		)
+	);
+	console.log(Window.application.timers);
 };
 document.addEventListener('DOMContentLoaded', createPageLoginScreen);
