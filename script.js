@@ -12,21 +12,19 @@ const gameState = {
   turn: '',
 
   gameStatistic: {
-    rounds: '',
-    victories: '',
-    defeats: '',
+    rounds: 0,
+    wins: 0,
+    loses: 0,
   },
 
   gamerStatistic: {
-    games: '',
-    victories: '',
-    defeats: '',
+    wins: '',
+    loses: '',
   },
 
   enemyStatistic: {
-    games: '',
-    victories: '',
-    defeats: '',
+    wins: '',
+    loses: '',
   },
 
   obliqueCross: '&#128942;',
@@ -542,7 +540,7 @@ window.application = {
               content: [
                 {
                   block: 'h2',
-                  innerText: `${gameState.rivalName}`,
+                  innerText: `${gameState.enemyName}`,
                 },
                 {
                   block: 'div',
@@ -582,7 +580,7 @@ window.application = {
                         {
                           block: 'p',
                           cls: 'statistic',
-                          innerText: `Побед: ${gameState.gameStatistic.victories}, поражений: ${gameState.gameStatistic.defeats}, вничью: ${gameState.gameStatistic.rounds - gameState.gameStatistic.victories - gameState.gameStatistic.defeats}`,
+                          innerText: `Побед: ${gameState.gameStatistic.wins}, поражений: ${gameState.gameStatistic.loses}, вничью: ${gameState.gameStatistic.rounds - gameState.gameStatistic.wins - gameState.gameStatistic.loses}`,
                         },
                         {
                           block: 'p',
@@ -739,6 +737,8 @@ const selectPlayerChoiceBlock = (choice) => {
 
 const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
   if (roundStatus === 'lose') {
+    gameState.gameStatistic.loses += 1;
+
     switch (gamerChoice) {
       case 'rock':
         return window.application.blocks.paperDiv;
@@ -752,6 +752,8 @@ const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
   }
 
   if (roundStatus === 'win') {
+    gameState.gameStatistic.wins += 1;
+
     switch (gamerChoice) {
       case 'rock':
         return window.application.blocks.scissorsDiv;
