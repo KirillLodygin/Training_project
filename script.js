@@ -1417,6 +1417,9 @@ function startGameFieldScreen() {
 // Error Screen
 
 function startErrorScreen() {
+  gameState.gameStatistic.rounds = 0;
+  gameState.gameStatistic.wins = 0;
+  gameState.gameStatistic.loses = 0;
   window.application.renderScreen(window.application.screens.errorScreen);
   window.application.renderBlock([window.application.blocks.errorButton], app.querySelector('.error-field'));
 }
