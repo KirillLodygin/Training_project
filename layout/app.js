@@ -420,13 +420,17 @@ Window.application = {
 									block: 'h2',
 									innerText: 'Вы',
 								},
+							],
+						},
+						{
+							block: 'div',
+							cls: 'columnHeader2',
+							content: [
 								{
-									block: 'div',
-									cls: 'columnHeader2',
-									content: {
-										block: 'h2',
-										innerText: 'Доступные игры',
-									},
+									block: 'h2',
+									innerText: ['Доступные игры'],
+								},
+								{
 									block: 'div',
 									cls: 'listGames',
 								},
@@ -434,6 +438,22 @@ Window.application = {
 						},
 					],
 				},
+				// {
+				// 	block: 'div',
+				// 	cls: 'popUpWaitingScreen',
+				// 	content: [
+				// 		{
+				// 			block: 'p',
+				// 			cls: 'loadingStatus',
+				// 			innertext: 'Получение данных от сервера. Подождите',
+				// 		},
+				// 		{
+				// 			block: 'div',
+				// 			cls: 'loader',
+				// 			innerText: 'Loading...',
+				// 		},
+				// 	],
+				// },
 			],
 		},
 	},
@@ -481,7 +501,7 @@ const getStatisticPlayer = (data) => {
 		if (Object.keys(obj).includes('you')) {
 			Window.application.renderBlock(
 				[Window.application.block.playerInformation],
-				app.querySelector('.columnHeaders')
+				app.querySelector('.columnHeader')
 				// setInterval(
 				// 	request,
 				// 	1000,
