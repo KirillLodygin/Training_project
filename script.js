@@ -9,7 +9,11 @@ const gameState = {
 
   enemyName: '',
 
-  turn: '',
+  move: '',
+
+  roundStatus: '',
+
+  gameId: '',
 
   gameStatistic: {
     rounds: 0,
@@ -62,56 +66,20 @@ const gameState = {
   },
 };
 
-const templateEngine = block => {
-  if (!block) {
-    return document.createTextNode('');
-  }
-
-  if (
-    typeof block === 'string' ||
-    typeof block === 'number' ||
-    block === true
-  ) {
-    return document.createTextNode(String(block));
-  }
-
-  if (Array.isArray(block)) {
-    const fragment = document.createDocumentFragment();
-
-    block.forEach(contentItem => {
-      const el = templateEngine(contentItem);
-
-      fragment.appendChild(el);
-    });
-
-    return fragment;
-  }
-
-  const element = document.createElement(block.block);
-
-  []
-    .concat(block.cls)
-    .filter(Boolean)
-    .forEach(className => element.classList.add(className));
-
-  if (block.attrs) {
-    Object.keys(block.attrs).forEach(key => {
-      element.setAttribute(key, block.attrs[key]);
-    });
-  }
-
-  if (block.innerText) element.innerText = block.innerText;
-
-  if (block.method) element.addEventListener(block.method.eventName, block.method.methodFunc);
-
-  element.appendChild(templateEngine(block.content));
-
-  return element;
-};
-
 window.application = {
-
   blocks: {
+    loginButton: {
+      block: 'button',
+      cls: ['login', 'login-button'],
+      innerText: 'Войти',
+      method: {
+        eventName: 'click',
+        methodFunc: () => {
+          clickButton();
+        },
+      },
+    },
+
     loginInput: {
       block: 'input',
       cls: ['login', 'login-input'],
@@ -126,46 +94,7 @@ window.application = {
       },
     },
 
-    loginButton: {
-      block: 'button',
-      cls: ['login', 'login-button'],
-      innerText: 'Войти',
-      method: {
-        eventName: 'click',
-        methodFunc: () => {
-          clickButton();
-        },
-      },
-    },
-
-    rockDiv: {
-      block: 'div',
-      cls: 'rock',
-    },
-
-    paperDiv: {
-      block: 'div',
-      cls: 'paper',
-    },
-
-    scissorsDiv: {
-      block: 'div',
-      cls: 'scissors',
-    },
-
-    errorButton: {
-      block: 'button',
-      cls: 'error-button',
-      innerText: 'Вернуться на страницу регистрации',
-      method: {
-        eventName: 'click',
-        methodFunc: () => {
-          window.application.renderScreen(window.application.screens.loginScreen);
-        },
-      },
-    },
-
-    availableGameBlock: {
+    showedAvailableGame: {
       block: 'div',
       cls: 'main_opponent_profile-block',
       content: [
@@ -241,9 +170,146 @@ window.application = {
           block: 'button',
           cls: 'create',
           innerText: 'Создать игру',
+          method: {
+            eventName: 'click',
+            methodFunc: () => {
+              clickPlayButton();
+            },
+          },
         },
       ],
-    }
+    },
+
+    playerInformation: {
+      block: 'div',
+      cls: 'main_yourself_profile-block',
+      content: [
+        {
+          block: 'div',
+          cls: 'main_yourself_profile-block-header',
+          content: [
+            {
+              block: 'img',
+              cls: 'yourself_profile-avatar',
+              attrs: {
+                src: 'assets/img/avatar.png',
+              },
+            },
+            {
+              block: 'h2',
+              cls: 'yourself_profile-name',
+              innerText: `${gameState.gamerName}`,
+            },
+          ],
+        },
+        {
+          block: 'div',
+          cls: 'yourself_profile_statistics-block',
+          content: [
+            {
+              block: 'h3',
+              cls: 'statistics-header',
+              innerText: 'Статистика',
+            },
+            {
+              block: 'div',
+              cls: 'statistic-items',
+              content: [
+                {
+                  block: 'p',
+                  cls: 'win',
+                  innerText: 'Победы : 0',
+                },
+                {
+                  block: 'p',
+                  cls: 'loose',
+                  innerText: 'Поражения : 0 ',
+                },
+                {
+                  block: 'p',
+                  cls: 'draw',
+                  innerText: 'Ничьи : 0',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    waitingAnswerServer: {
+      block: 'div',
+      cls: 'popUpWaitingScreen',
+      content: [
+        {
+          block: 'p',
+          cls: 'loadingStatus',
+          innertext: 'Получение данных от сервера. Подождите',
+        },
+        {
+          block: 'div',
+          cls: 'loader',
+          innerText: 'Loading...',
+        },
+      ],
+    },
+
+    rockDiv: {
+      block: 'div',
+      cls: 'rock',
+    },
+
+    paperDiv: {
+      block: 'div',
+      cls: 'paper',
+    },
+
+    scissorsDiv: {
+      block: 'div',
+      cls: 'scissors',
+    },
+
+    errorButton: {
+      block: 'button',
+      cls: 'error-button',
+      innerText: 'Вернуться на страницу регистрации',
+      method: {
+        eventName: 'click',
+        methodFunc: () => {
+          window.application.renderScreen(window.application.screens.loginScreen);
+        },
+      },
+    },
+
+    backToLobbyButton: {
+      block: 'div',
+      cls: 'back_button_box',
+      method: {
+        eventName: 'click',
+        methodFunc: () => {
+          backToLobby();
+        },
+      },
+      content: [
+        {
+          block: 'button',
+          cls: 'back_button_box-button',
+          content: [
+            {
+              block: 'img',
+              cls: 'arrow',
+              attrs: {
+                src: './assets/img/back_arrow.png',
+              },
+            },
+            {
+              block: 'h3',
+              innerText: 'Вернуться в лобби',
+            },
+          ],
+        },
+      ],
+    },
   },
 
   screens: {
@@ -319,7 +385,7 @@ window.application = {
           content: [
             {
               block: 'h1',
-              innerText: 'Добро пожаловать в Лобби',
+              innerText: 'Добро пожаловать в лобби',
             },
           ],
         },
@@ -343,65 +409,106 @@ window.application = {
               content: [
                 {
                   block: 'h2',
-                  innerText: 'Доступные игры',
+                  innerText: ['Доступные игры'],
+                },
+                {
+                  block: 'div',
+                  cls: 'listGames',
                 },
               ],
             },
           ],
         },
+        // {
+        // 	block: 'div',
+        // 	cls: 'popUpWaitingScreen',
+        // 	content: [
+        // 		{
+        // 			block: 'p',
+        // 			cls: 'loadingStatus',
+        // 			innertext: 'Получение данных от сервера. Подождите',
+        // 		},
+        // 		{
+        // 			block: 'div',
+        // 			cls: 'loader',
+        // 			innerText: 'Loading...',
+        // 		},
+        // 	],
+        // },
+      ],
+    },
+
+    standbyScreen:  {
+      block: 'div',
+      cls: 'container',
+      content: [
         {
           block: 'div',
-          cls: 'players',
+          cls: 'main',
           content: [
             {
+              block: 'header',
+              cls: 'header',
+              content: [
+                {
+                  block: 'h1',
+                  cls: 'header_text',
+                  innerText: 'Вы создали комнату',
+                },
+              ],
+            },
+            {
               block: 'div',
-              cls: 'main_yourself_profile-block',
+              cls: ['main_opponent_profile-block', 'bigEntrance'],
               content: [
                 {
                   block: 'div',
-                  cls: 'main_yourself_profile-block-header',
+                  cls: 'main_opponent_profile-block-header',
                   content: [
                     {
                       block: 'img',
-                      cls: 'yourself_profile-avatar',
+                      cls: 'opponent_profile-avatar',
                       attrs: {
-                        src: 'assets/img/avatar.png',
+                        src: './assets/img/avatar.png',
                       },
                     },
                     {
-                      block: 'h2',
-                      cls: 'yourself_profile-name',
-                      innerText: 'UserName',
+                      block: 'h1',
+                      cls: 'opponent_profile-name',
+                      innerText: `${gameState.gamerName}`,
                     },
                   ],
                 },
                 {
                   block: 'div',
-                  cls: 'yourself_profile_statistics-block',
+                  cls: 'opponent_profile_statistics-block',
                   content: [
                     {
-                      block: 'h3',
+                      block: 'h2',
                       cls: 'statistics-header',
-                      innerText: 'Статистика',
+                      innerText: 'Ваша Статистика ',
                     },
                     {
                       block: 'div',
                       cls: 'statistic-items',
                       content: [
                         {
-                          block: 'p',
+                          block: 'h3',
                           cls: 'win',
-                          innerText: 'Победы : 0',
+                          innerText:
+                            'Победы : ' + `${gameState.gamerStatistic.wins}`,
                         },
                         {
-                          block: 'p',
+                          block: 'h3',
                           cls: 'loose',
-                          innerText: 'Поражения : 0 ',
+                          innerText:
+                            'Поражения : ' + `${gameState.gamerStatistic.loses}`,
                         },
+                        ,
                         {
-                          block: 'p',
+                          block: 'h3',
                           cls: 'draw',
-                          innerText: 'Ничьи : 0',
+                          innerText: 'Ничьи :  ',
                         },
                       ],
                     },
@@ -411,72 +518,335 @@ window.application = {
             },
             {
               block: 'div',
-              cls: 'opponents',
+              cls: 'undercard',
               content: [
                 {
+                  block: 'h1',
+                  cls: 'undercard_text',
+                  innerText: 'Ожидаем подключение соперника...',
+                },
+                {
                   block: 'div',
-                  cls: 'main_opponent_profile-block',
+                  cls: 'lds-hourglass',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    waitScreen: {
+      block: "div",
+      content: [
+        {
+          block: "header",
+          cls: "header-waitscreen",
+          content: [
+            {
+              block: "nav",
+              cls: "header-waitscreen__navi",
+              content: [
+                {
+                  block: "button",
+                  cls: "header-waitscreen__navibar-item",
+                  innerText: "Закончить игру досрочно",
+                  method: {
+                    eventName: "click",
+                    methodFunc: () => {
+                      createScreen(lobbyscreen);
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          block: "main",
+          cls: "main-waitscreen",
+          content: [
+            {
+              block: "section",
+              cls: "main-waitscreen__choicescreen",
+              content: [
+                {
+                  block: "h2",
+                  cls: "main-waitscreen__choicescreen-title",
+                  innerText: "Choose your fighter",
+                },
+                {
+                  block: "div",
+                  cls: "main-waitscreen__choicescreen-container",
                   content: [
                     {
-                      block: 'div',
-                      cls: 'main_opponent_profile-block-header',
+                      block: "button",
+                      cls: [
+                        "main-waitscreen__choicescreen-paper",
+                        "choice-button",
+                      ],
+                      method: {
+                        eventName: "click",
+                        methodFunc: () => {
+                          yourSideSpinner.classList.add("hidden");
+                          paperImage.classList.remove("hidden");
+                          choiceScreen.classList.add("hidden");
+                          gameState.move = "paper";
+                          gameState.gameStatistic.rounds += 1;
+                          window.application.request(
+                            `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
+                            switchToGameFieldScreen
+                          );
+                        },
+                      },
                       content: [
                         {
-                          block: 'img',
-                          cls: 'opponent_profile-avatar',
+                          block: "img",
+                          cls: "choice-image",
                           attrs: {
-                            src: 'assets/img/avatar.png',
+                            src: "assets/images/paper.jpg",
+                            alt: "paper fighter",
                           },
-                        },
-                        {
-                          block: 'h3',
-                          cls: 'opponent_profile-name',
-                          innerText: 'Пётр',
                         },
                       ],
                     },
                     {
-                      block: 'div',
-                      cls: 'opponent_profile_statistics-block',
+                      block: "button",
+                      cls: [
+                        "main-waitscreen__choicescreen-rock",
+                        "choice-button",
+                      ],
+                      method: {
+                        eventName: "click",
+                        methodFunc: () => {
+                          yourSideSpinner.classList.add("hidden");
+                          rockImage.classList.remove("hidden");
+                          choiceScreen.classList.add("hidden");
+                          gameState.move = "rock";
+                          gameState.gameStatistic.rounds += 1;
+                          window.application.request(
+                            `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
+                            switchToGameFieldScreen
+                          );
+                        },
+                      },
                       content: [
                         {
-                          block: 'h3',
-                          cls: 'statistics-header',
-                          innerText: 'Статистика Противника',
+                          block: "img",
+                          cls: "choice-image",
+                          attrs: {
+                            src: "assets/images/rock.jpg",
+                            alt: "rock fighter",
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      block: "button",
+                      cls: [
+                        "main-waitscreen__choicescreen-scissors",
+                        "choice-button",
+                      ],
+                      method: {
+                        eventName: "click",
+                        methodFunc: () => {
+                          yourSideSpinner.classList.add("hidden");
+                          scissorsImage.classList.remove("hidden");
+                          choiceScreen.classList.add("hidden");
+                          gameState.move = "scissors";
+                          gameState.gameStatistic.rounds += 1;
+                          window.application.request(
+                            `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
+                            switchToGameFieldScreen
+                          );
+                        },
+                      },
+                      content: [
+                        {
+                          block: "img",
+                          cls: "choice-image",
+                          attrs: {
+                            src: "assets/images/scissors.jpg",
+                            alt: "scissors fighter",
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              block: "section",
+              cls: "section-waitsceen",
+              content: [
+                {
+                  block: "h2",
+                  cls: "main-waitscreen__title",
+                  innerText: "Идет великая битва",
+                },
+                {
+                  block: "div",
+                  cls: "main-waitscreen__gameprocess-container",
+                  content: [
+                    {
+                      block: "div",
+                      cls: "main-waitscreen__gameprocess-playerzone",
+                      content: [
+                        {
+                          block: "div",
+                          cls: ["lds-hourglass", "your-side-spinner"],
                         },
                         {
-                          block: 'div',
-                          cls: 'statistic-items',
+                          block: "img",
+                          cls: [
+                            "main-waitscreen__gameprocess-choiceimage-rock",
+                            "hidden",
+                          ],
+                          attrs: {
+                            src: "assets/images/rock.jpg",
+                            alt: "choice",
+                          },
+                        },
+                        {
+                          block: "img",
+                          cls: [
+                            "main-waitscreen__gameprocess-choiceimage-paper",
+                            "hidden",
+                          ],
+                          attrs: {
+                            src: "assets/images/paper.jpg",
+                            alt: "choice",
+                          },
+                        },
+                        {
+                          block: "img",
+                          cls: [
+                            "main-waitscreen__gameprocess-choiceimage-scissors",
+                            "hidden",
+                          ],
+                          attrs: {
+                            src: "assets/images/scissors.jpg",
+                            alt: "choice",
+                          },
+                        },
+                        {
+                          block: "div",
+                          cls: "main-waitscreen__gameprocess-userinfo",
                           content: [
                             {
-                              block: 'p',
-                              cls: 'win',
-                              innerText: 'Победы : 0',
+                              block: "img",
+                              cls: "main-waitscreen__gameprocess-avatar",
+                              attrs: {
+                                src: "./assets/images/userimage.jpg",
+                                alt: "feedback",
+                              },
                             },
                             {
-                              block: 'p',
-                              cls: 'loose',
-                              innerText: 'Поражения : 0',
-                            },
-                            {
-                              block: 'p',
-                              cls: 'draw',
-                              innerText: 'Ничьи : 0',
+                              block: "div",
+                              content: [
+                                {
+                                  block: "p",
+                                  cls: [
+                                    "main-waitscreen__gameprocess-username",
+                                    "your-name",
+                                  ],
+                                  innerText: gameState.gamerName,
+                                },
+                                {
+                                  block: "p",
+                                  cls: "main-waitscreen__gameprocess-statistic",
+                                  content: [
+                                    {
+                                      block: "span",
+                                      cls: "your-wins",
+                                      innerText: `Побед: ${gameState.gamerStatistic.victories}`,
+                                    },
+                                    {
+                                      block: "span",
+                                      cls: "your-defeats",
+                                      innerText: `Поражений: ${gameState.gamerStatistic.defeats}`,
+                                    },
+                                  ],
+                                },
+                              ],
                             },
                           ],
                         },
                       ],
                     },
                     {
-                      block: 'div',
-                      cls: 'enterBlock',
+                      block: "img",
+                      cls: "main-waitscreen__versus-image",
+                      attrs: {
+                        src: "assets/images/versus.png",
+                        alt: "vsimage",
+                      },
+                    },
+                    {
+                      block: "div",
+                      cls: "main-waitscreen__gameprocess-waiting-another-player",
                       content: [
                         {
-                          block: 'button',
-                          cls: 'enterButton',
-                          innerText: 'Войти в игру',
+                          block: "div",
+                          cls: ["lds-hourglass", "enemy-scroll"],
+                        },
+                        {
+                          block: "p",
+                          cls: ["main-waitscreen__gameprocess-text", "hidden"],
+                          innerText: "Противник ожидает ваш ход",
+                        },
+                        {
+                          block: "div",
+                          cls: "main-waitscreen__gameprocess-userinfo",
+                          content: [
+                            {
+                              block: "img",
+                              cls: "main-waitscreen__gameprocess-avatar",
+                              attrs: {
+                                src: "./assets/images/userimage.jpg",
+                                alt: "feedback",
+                              },
+                            },
+                            {
+                              block: "div",
+                              cls: "",
+                              content: [
+                                {
+                                  block: "p",
+                                  cls: [
+                                    "main-waitscreen__gameprocess-username",
+                                    "enemy-name",
+                                  ],
+                                  innerText: gameState.enemyName,
+                                },
+                                {
+                                  block: "p",
+                                  cls: "main-waitscreen__gameprocess-statistic",
+                                  content: [
+                                    {
+                                      block: "span",
+                                      cls: "enemy-wins",
+                                      innerText: `Побед: ${gameState.enemyStatistic.victories}`,
+                                    },
+                                    {
+                                      block: "span",
+                                      cls: "enemy-defeats",
+                                      innerText: `Поражений: ${gameState.enemyStatistic.defeats}`,
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
                         },
                       ],
+                      method: {
+                        eventName: "DOMContentLoaded",
+                        methodFunc: () => {
+                          window.application.timers.push(setInterval);
+                        },
+                      },
                     },
                   ],
                 },
@@ -567,7 +937,7 @@ window.application = {
               content: [
                 {
                   block: 'div',
-                  cls: 'round-result-window',
+                  cls: 'round-result-Window',
                   content: [
                     {
                       block: 'div',
@@ -642,22 +1012,69 @@ window.application = {
   },
 
   request: (url, callback) => {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.addEventListener('readystatechange', function (e) {
-    if (e.target.readyState !== 4) {
-      return;
-    }
-    if (e.target.status !== 200) {
-      gameState.errorMessage = 'error';
-      return;
-    }
-    const responseText = e.target.responseText;
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.addEventListener('readystatechange', function(e) {
+      if (e.target.readyState !== 4) {
+        return;
+      }
+      if (e.target.status !== 200) {
+        gameState.errorMessage = 'error';
+        return;
+      }
+      const responseText = e.target.responseText;
 
-    callback(responseText);
-  });
-  xhr.send();
-},
+      callback(responseText);
+    });
+    xhr.send();
+  },
+
+  templateEngine: block => {
+    if (!block) {
+      return document.createTextNode('');
+    }
+
+    if (
+      typeof block === 'string' ||
+      typeof block === 'number' ||
+      block === true
+    ) {
+      return document.createTextNode(String(block));
+    }
+
+    if (Array.isArray(block)) {
+      const fragment = document.createDocumentFragment();
+
+      block.forEach(contentItem => {
+        const el = templateEngine(contentItem);
+
+        fragment.appendChild(el);
+      });
+
+      return fragment;
+    }
+
+    const element = document.createElement(block.block);
+
+    []
+      .concat(block.cls)
+      .filter(Boolean)
+      .forEach(className => element.classList.add(className));
+
+    if (block.attrs) {
+      Object.keys(block.attrs).forEach(key => {
+        element.setAttribute(key, block.attrs[key]);
+      });
+    }
+
+    if (block.innerText) element.innerText = block.innerText;
+
+    if (block.method) element.addEventListener(block.method.eventName, block.method.methodFunc);
+
+    element.appendChild(templateEngine(block.content));
+
+    return element;
+  },
 
   renderScreen: (obj) => {
     if (app.hasChildNodes()) {
@@ -670,28 +1087,17 @@ window.application = {
   },
 
   renderBlock: (arrObj, parentNode) => {
-    arrObj.forEach(obj => parentNode.append(templateEngine(obj)));
+    arrObj.forEach(obj => parentNode.append(window.application.templateEngine(obj)));
   },
+
   timers: [],
-};
-
-function inputName() {
-  gameState.gamerName = document.querySelector('.login-input').value;
 }
 
-function test(data) {
-  console.log(data);
-}
 
-function clickButton() {
-  if (gameState.gamerName.length !== 0) {
-    window.application.renderScreen(window.application.screen.lobbyScreen);
-  }
-  window.application.request(`${gameState.url}login?login=${gameState.gamerName}`, test);
-  console.log(responseText);
-}
 
-/*
+
+
+ /*
 const disassemblyJSON = objJSON => {
   return JSON.parse(objJSON);
 };
@@ -715,11 +1121,6 @@ let objJSON = {
 };
 // Тут пока имитация
 gameState.objFromJSON = objJSON;
-
-const createPageLoginScreen = () => {
-  window.application.renderScreen(window.application.screen.loginScreen);
-  window.application.renderBlock([window.application.block.loginInput, window.application.block.loginButton], app.querySelector('.login'));
-};
 
 
 const selectPlayerChoiceBlock = (choice) => {
@@ -811,7 +1212,7 @@ const showRoundResultWindow = (roundStatus, gamerChoice) => {
   }
 
   app.querySelector('.round-result-field').classList.remove('display-none');
-}
+};
 
 const startGameFieldScreen = () => {
   window.application.renderScreen(window.application.screens.gameFieldScreen);
