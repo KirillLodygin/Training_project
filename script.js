@@ -1201,7 +1201,6 @@ function renderingEnemyList(enemyList) {
       let enemies = document.querySelector('.listGames').querySelectorAll('.opponent_profile-name');
       enemies[enemies.length-1].textContent = enemy.login;
     }
-
   }
 }
 
