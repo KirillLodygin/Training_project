@@ -1,7 +1,7 @@
 const app = document.querySelector('.app');
 
 const gameState = {
-  url: 'http://localhost:3000/',
+  url: 'https://skypro-rock-scissors-paper.herokuapp.com/',
 
   token: '',
 
@@ -14,6 +14,8 @@ const gameState = {
   roundStatus: '',
 
   gameId: '',
+
+  enemyList: [],
 
   gameStatistic: {
     rounds: 0,
@@ -66,7 +68,7 @@ const gameState = {
   },
 };
 
-window.application = {
+Window.application = {
   blocks: {
     loginButton: {
       block: 'button',
@@ -106,13 +108,12 @@ window.application = {
               block: 'img',
               cls: 'opponent_profile-avatar',
               attrs: {
-                src: './assets/img/avatar.png',
+                src: '/assets/img/avatar.png',
               },
             },
             {
               block: 'h3',
               cls: 'opponent_profile-name',
-              innerText: 'Пётр',
             },
           ],
         },
@@ -132,17 +133,14 @@ window.application = {
                 {
                   block: 'p',
                   cls: 'win',
-                  innerText: 'Победы : 0',
                 },
                 {
                   block: 'p',
                   cls: 'loose',
-                  innerText: 'Поражения : 0',
                 },
                 {
                   block: 'p',
                   cls: 'draw',
-                  innerText: 'Ничьи : 0',
                 },
               ],
             },
@@ -198,7 +196,6 @@ window.application = {
             {
               block: 'h2',
               cls: 'yourself_profile-name',
-              innerText: `${gameState.gamerName}`,
             },
           ],
         },
@@ -276,7 +273,7 @@ window.application = {
       method: {
         eventName: 'click',
         methodFunc: () => {
-          window.application.renderScreen(window.application.screens.loginScreen);
+          createPageLoginScreen();
         },
       },
     },
@@ -414,6 +411,12 @@ window.application = {
                 {
                   block: 'div',
                   cls: 'listGames',
+                  method: {
+                    eventName: 'click',
+                    methodFunc: (e) => {
+                      enterToPlayButton(e);
+                    }
+                  },
                 },
               ],
             },
@@ -475,7 +478,6 @@ window.application = {
                     {
                       block: 'h1',
                       cls: 'opponent_profile-name',
-                      innerText: `${gameState.gamerName}`,
                     },
                   ],
                 },
@@ -587,9 +589,9 @@ window.application = {
                       method: {
                         eventName: "click",
                         methodFunc: () => {
-                          yourSideSpinner.classList.add("hidden");
-                          paperImage.classList.remove("hidden");
-                          choiceScreen.classList.add("hidden");
+                          document.querySelector(".your-side-spinner").classList.add("hidden");
+                          document.querySelector(".main-waitscreen__gameprocess-choiceimage-paper").classList.remove("hidden");
+                          document.querySelector(".main-waitscreen__choicescreen").classList.add("hidden");
                           gameState.move = "paper";
                           gameState.gameStatistic.rounds += 1;
                           Window.application.request(
@@ -603,7 +605,7 @@ window.application = {
                           block: "img",
                           cls: "choice-image",
                           attrs: {
-                            src: "./assets/images/paper.jpg",
+                            src: "/assets/img/paper.jpg",
                             alt: "paper fighter",
                           },
                         },
@@ -618,9 +620,9 @@ window.application = {
                       method: {
                         eventName: "click",
                         methodFunc: () => {
-                          yourSideSpinner.classList.add("hidden");
-                          rockImage.classList.remove("hidden");
-                          choiceScreen.classList.add("hidden");
+                          document.querySelector(".your-side-spinner").classList.add("hidden");
+                          document.querySelector(".main-waitscreen__gameprocess-choiceimage-rock").classList.remove("hidden");
+                          document.querySelector(".main-waitscreen__choicescreen").classList.add("hidden");
                           gameState.move = "rock";
                           gameState.gameStatistic.rounds += 1;
                           Window.application.request(
@@ -634,7 +636,7 @@ window.application = {
                           block: "img",
                           cls: "choice-image",
                           attrs: {
-                            src: "./assets/images/rock.jpg",
+                            src: "/assets/img/rock.jpg",
                             alt: "rock fighter",
                           },
                         },
@@ -649,9 +651,9 @@ window.application = {
                       method: {
                         eventName: "click",
                         methodFunc: () => {
-                          yourSideSpinner.classList.add("hidden");
-                          scissorsImage.classList.remove("hidden");
-                          choiceScreen.classList.add("hidden");
+                          document.querySelector(".your-side-spinner").classList.add("hidden");
+                          document.querySelector(".main-waitscreen__gameprocess-choiceimage-scissors").classList.remove("hidden");
+                          document.querySelector(".main-waitscreen__choicescreen").classList.add("hidden");
                           gameState.move = "scissors";
                           gameState.gameStatistic.rounds += 1;
                           Window.application.request(
@@ -665,7 +667,7 @@ window.application = {
                           block: "img",
                           cls: "choice-image",
                           attrs: {
-                            src: "./assets/images/scissors.jpg",
+                            src: "/assets/img/scissors.jpg",
                             alt: "scissors fighter",
                           },
                         },
@@ -703,7 +705,7 @@ window.application = {
                             "hidden",
                           ],
                           attrs: {
-                            src: "./assets/images/rock.jpg",
+                            src: "./assets/img/rock.jpg",
                             alt: "choice",
                           },
                         },
@@ -714,7 +716,7 @@ window.application = {
                             "hidden",
                           ],
                           attrs: {
-                            src: "./assets/images/paper.jpg",
+                            src: "./assets/img/paper.jpg",
                             alt: "choice",
                           },
                         },
@@ -725,7 +727,7 @@ window.application = {
                             "hidden",
                           ],
                           attrs: {
-                            src: "./assets/images/scissors.jpg",
+                            src: "./assets/img/scissors.jpg",
                             alt: "choice",
                           },
                         },
@@ -737,7 +739,7 @@ window.application = {
                               block: "img",
                               cls: "main-waitscreen__gameprocess-avatar",
                               attrs: {
-                                src: "./assets/images/userimage.jpg",
+                                src: "./assets/img/userimage.jpg",
                                 alt: "feedback",
                               },
                             },
@@ -778,7 +780,7 @@ window.application = {
                       block: "img",
                       cls: "main-waitscreen__versus-image",
                       attrs: {
-                        src: "./assets/images/versus.png",
+                        src: "./assets/img/versus.png",
                         alt: "vsimage",
                       },
                     },
@@ -803,7 +805,7 @@ window.application = {
                               block: "img",
                               cls: "main-waitscreen__gameprocess-avatar",
                               attrs: {
-                                src: "./assets/images/userimage.jpg",
+                                src: "./assets/img/userimage.jpg",
                                 alt: "feedback",
                               },
                             },
@@ -843,7 +845,7 @@ window.application = {
                       method: {
                         eventName: "DOMContentLoaded",
                         methodFunc: () => {
-                          Window.application.timers.push(setInterval(window.application.request,
+                          Window.application.timers.push(setInterval(Window.application.request,
                             500,
                             `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`,
                             switchWaitScreen));
@@ -967,17 +969,17 @@ window.application = {
                       content: [
                         {
                           block: 'button',
-                          cls: 'ok-button',
+                          cls: ['button','ok-button'],
                           innerText: 'Ok',
                         },
                         {
                           block: 'button',
-                          cls: 'no-button',
+                          cls: ['button','no-button'],
                           innerText: 'No!!!',
                           method: {
                             eventName: 'click',
                             methodFunc: () => {
-                              createScreen(window.application.screens.loginScreen);
+                              Window.application.renderScreen(Window.application.screens.loginScreen);
                             },
                           },
                         },
@@ -1026,12 +1028,12 @@ window.application = {
       }
       const responseText = e.target.responseText;
 
-      callback(responseText);
+      callback(JSON.parse(responseText));
     });
     xhr.send();
   },
 
-  templateEngine: block => {
+  templateEngine: (block) => {
     if (!block) {
       return document.createTextNode('');
     }
@@ -1048,7 +1050,7 @@ window.application = {
       const fragment = document.createDocumentFragment();
 
       block.forEach(contentItem => {
-        const el = templateEngine(contentItem);
+        const el = Window.application.templateEngine(contentItem);
 
         fragment.appendChild(el);
       });
@@ -1073,15 +1075,15 @@ window.application = {
 
     if (block.method) element.addEventListener(block.method.eventName, block.method.methodFunc);
 
-    element.appendChild(templateEngine(block.content));
+    element.appendChild(Window.application.templateEngine(block.content));
 
     return element;
   },
 
   renderScreen: (obj) => {
-    window.application.timers.forEach(timer => clearInterval(timer));
+    Window.application.timers.forEach(timer => clearInterval(timer));
 
-    window.application.timers.length = 0;
+    Window.application.timers.length = 0;
 
     if (app.hasChildNodes()) {
       while (app.firstChild) {
@@ -1089,31 +1091,25 @@ window.application = {
       }
     }
 
-    app.appendChild(templateEngine(obj));
+    app.appendChild(Window.application.templateEngine(obj));
   },
 
   renderBlock: (arrObj, parentNode) => {
-    arrObj.forEach(obj => parentNode.append(window.application.templateEngine(obj)));
+    arrObj.forEach(obj => parentNode.append(Window.application.templateEngine(obj)));
   },
 
   timers: [],
 }
 
-function disassemblyJSON(objJSON) {
-  return JSON.parse(objJSON);
-}
-
-
 //Login Screen
 
-function getPlayerStatus(data) {
-  const parseStatus = disassemblyJSON(data);
-
+function getPlayerStatus(parseStatus) {
   if (parseStatus['player-status'].status === 'lobby') {
+    console.log(parseStatus['player-status'].status)
     createPageLobbyScreen();
   }
   if (parseStatus['player-status'].status === 'game') {
-    window.application.renderScreen(window.application.screens.waitScreen);
+    createPageWaitScreen()
   }
   if (parseStatus['player-status'].status === 'error') {
     startErrorScreen();
@@ -1122,34 +1118,34 @@ function getPlayerStatus(data) {
 
 //получение токена и статуса
 function getTokenGetPlayerStatus(data) {
-  const parseToken = disassemblyJSON(data);
-  gameState.token = parseToken.token;
-  gameState.gamerName = inputName();
+  gameState.token = data.token;
+  // gameState.gamerName = namePlayer;
 
   Window.application.request(
-    `${gameState.url}player-status?token=${gameState.gamerToken}`,
+    `${gameState.url}player-status?token=${gameState.token}`,
     getPlayerStatus
   );
 }
 
+
 //получение никнэйма
 function inputName() {
-  namePlayer = document.querySelector('.login-input').value;
+  gameState.gamerName = document.querySelector('.login-input').value;
 }
 
 //работа кнопки залогиниться
 function clickButton() {
   Window.application.request(
-    `${gameState.url}login?login=${namePlayer}`,
+    `${gameState.url}login?login=${gameState.gamerName}`,
     getTokenGetPlayerStatus
   );
 }
 
 //функция-обертка для логин-страницы
 function createPageLoginScreen () {
-  Window.application.renderScreen(Window.application.screen.loginScreen);
+  Window.application.renderScreen(Window.application.screens.loginScreen);
   Window.application.renderBlock(
-    [Window.application.block.loginInput, Window.application.block.loginButton],
+    [Window.application.blocks.loginInput, Window.application.blocks.loginButton],
     app.querySelector('.login')
   );
 }
@@ -1161,61 +1157,83 @@ function clickPlayButton() {
   createPageStandByScreen();
 }
 
+//войти в уже имеющуюся игру
+function enterToPlayButton(e){
+  if (e.target.nodeName.toLowerCase() !== 'button') return;
+  gameState.enemyName = e.target.parentNode.parentNode.querySelector('.opponent_profile-name').textContent;
+  createPageWaitScreen();
+}
+
 //получение информации об игроке
-function getStatisticPlayer(data) {
-  const parseStatisticPlayer = disassemblyJSON(data);
+function getStatisticPlayer(parseStatisticPlayer) {
   let obj = parseStatisticPlayer.list;
   obj.forEach(function (obj) {
     if (Object.keys(obj).includes('you')) {
-      gameState.gamerStatistic.wins = obj.wins;
-      gameState.gamerStatistic.loses = obj.loses;
-
-      window.application.renderBlock(
-        [window.application.block.playerInformation],
+      // gameState.gamerStatistic.wins = obj.wins;
+      // gameState.gamerStatistic.loses = obj.loses;
+      Window.application.renderBlock(
+        [Window.application.blocks.playerInformation],
         app.querySelector('.columnHeader')
       );
+      document.querySelector('.yourself_profile-name').textContent = gameState.gamerName;
     }
   });
 }
 
-//получение информации об актуальных играх
-function getAvailableGame(data) {
+//отрисовка листа соперников
+function renderingEnemyList(enemyList) {
   while (document.querySelector('.listGames').firstChild) {
     document
       .querySelector('.listGames')
       .removeChild(document.querySelector('.listGames').lastChild);
   }
-  const parseStatisticEnemy = JSON.parse(data);
-  for (let enemy of parseStatisticEnemy.list) {
-    Window.application.renderBlock(
-      [Window.application.block.showedAvailableGame],
-      document.querySelector('.listGames')
-    );
+
+  gameState.enemyList.length = 0;
+
+  for (let enemy of enemyList) {
+    gameState.enemyList.push(enemy);
+
+    if (!enemy.you) {
+      Window.application.renderBlock(
+        [Window.application.blocks.showedAvailableGame],
+        document.querySelector('.listGames')
+      );
+      let enemies = document.querySelector('.listGames').querySelectorAll('.opponent_profile-name');
+      enemies[enemies.length-1].textContent = enemy.login;
+    }
+
+  }
+}
+
+//получение информации об актуальных играх
+function getAvailableGame(parseStatisticEnemy) {
+  if(gameState.enemyList.length !== parseStatisticEnemy.list.length) {
+    renderingEnemyList(parseStatisticEnemy.list);
+    return;
+  }
+
+  for (let i = 0; i < gameState.enemyList.length; i++) {
+    if (gameState.enemyList[i].login !== parseStatisticEnemy.list[i].login) {
+      renderingEnemyList(parseStatisticEnemy.list);
+      return;
+    }
   }
 }
 
 //функция-обертка для лобби-страницы
 function createPageLobbyScreen() {
-  Window.application.renderScreen(Window.application.screen.lobbyScreen);
-  Window.application.renderBlock(
-    [Window.application.block.playButton],
-    app.querySelector('.columnHeader')
-  );
+  Window.application.renderScreen(Window.application.screens.lobbyScreen);
+
   Window.application.request(
-    `${gameState.url}player-list?token=${gameState.gamerToken}`,
+    `${gameState.url}player-list?token=${gameState.token}`,
     getStatisticPlayer
   );
-  setInterval(
-    Window.application.request,
-    1000,
-    `${gameState.url}player-list?token=${gameState.gamerToken}`,
-    getAvailableGame
-  );
+  Window.application.renderBlock([Window.application.blocks.playButton],document.querySelector('.columnHeader'))
   Window.application.timers.push(
     setInterval(
       Window.application.request,
       1000,
-      `${gameState.url}player-list?token=${gameState.gamerToken}`,
+      `${gameState.url}player-list?token=${gameState.token}`,
       getAvailableGame
     )
   );
@@ -1230,11 +1248,10 @@ function backToLobby() {
 }
 //переход на экран игры
 function toGame() {
-  createScreen(window.application.screens.waitScreen);
+  createPageWaitScreen();
 }
 
-function checkOpponentConnection(data) {
-  const parsedData = disassemblyJSON(data);
+function checkOpponentConnection(parsedData) {
 
   if (parsedData['status'] === 'error') {
     gameState.errorMessage = parsedData['message'];
@@ -1251,16 +1268,27 @@ function checkOpponentConnection(data) {
 }
 
 function createPageStandByScreen() {
-  createScreen(window.application.screens.standbyScreen);
-  createBlock(window.application.blocks.backToLobbyButton, document.querySelector('.undercard'));
-  window.application.timers.push(setInterval(request, 1000, `${gameState.url}game-status?token=${gameState.token}`, checkOpponentConnection));
+  Window.application.renderScreen(Window.application.screens.standByScreen);
+  Window.application.renderBlock([Window.application.blocks.backToLobbyButton], document.querySelector('.undercard'));
+  Window.application.timers.push(setInterval(request, 1000, `${gameState.url}game-status?token=${gameState.token}`, checkOpponentConnection));
 }
 
 //waitScreen
+//  Сценарий
+function createPageWaitScreen() {
+  Window.application.renderScreen(Window.application.screens.waitScreen);
+  Window.application.timers.push(setInterval(Window.application.request,
+    500,
+    `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`,
+    switchWaitScreen));
+    document.querySelector(".your-name").textContent = gameState.gamerName
+    document.querySelector(".enemy-name").textContent = gameState.enemyName
+}
 
-// фуекция для появления надписи Противник ожидает хода
-function switchWaitScreen(data) {
-  const parsedData = disassemblyJSON(data);
+// функция для появления надписи Противник ожидает хода
+
+
+function switchWaitScreen(parsedData) {
   if (parsedData["game-status"].status === "waiting-for-your-move") {
     waitingText.classList.remove("hidden");
     enemyScroll.classList.add("hidden");
@@ -1268,8 +1296,7 @@ function switchWaitScreen(data) {
 }
 
 // запускает процесс ожидания статуса игры
-function switchToGameFieldScreen(jsonString) {
-  const serverAnswer = disassemblyJSON(jsonString);
+function switchToGameFieldScreen(serverAnswer) {
   if (serverAnswer.status === "ok") {
     if (serverAnswer["game-status"].status === "waiting-for-enemy-move") {
       return;
@@ -1282,49 +1309,17 @@ function switchToGameFieldScreen(jsonString) {
   startErrorScreen();
 }
 
-const rockButton = document.querySelector(
-  ".main-waitscreen__choicescreen-rock"
-);
-const paperButton = document.querySelector(
-  ".main-waitscreen__choicescreen-paper"
-);
-const scissorsButton = document.querySelector(
-  ".main-waitscreen__choicescreen-scissors"
-);
-
-const yourSideSpinner = document.querySelector(".your-side-spinner");
-
-const rockImage = document.querySelector(
-  ".main-waitscreen__gameprocess-choiceimage-rock"
-);
-const paperImage = document.querySelector(
-  ".main-waitscreen__gameprocess-choiceimage-paper"
-);
-const scissorsImage = document.querySelector(
-  ".main-waitscreen__gameprocess-choiceimage-scissors"
-);
-
-const waitingText = document.querySelector(
-  ".main-waitscreen__gameprocess-text"
-);
-
-const enemyScroll = document.querySelector(".enemy-scroll");
-
-const choiceScreen = document.querySelector(".main-waitscreen__choicescreen");
-
-
-
 // GameField Screen
 const selectPlayerChoiceBlock = (choice) => {
   switch (choice) {
     case 'rock':
-      return window.application.blocks.rockDiv;
+      return Window.application.blocks.rockDiv;
 
     case 'paper':
-      return window.application.blocks.paperDiv;
+      return Window.application.blocks.paperDiv;
 
     default:
-      return window.application.blocks.scissorsDiv;
+      return Window.application.blocks.scissorsDiv;
   }
 };
 
@@ -1334,13 +1329,13 @@ const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
 
     switch (gamerChoice) {
       case 'rock':
-        return window.application.blocks.paperDiv;
+        return Window.application.blocks.paperDiv;
 
       case 'paper':
-        return window.application.blocks.scissorsDiv;
+        return Window.application.blocks.scissorsDiv;
 
       default:
-        return window.application.blocks.rockDiv;
+        return Window.application.blocks.rockDiv;
     }
   }
 
@@ -1349,25 +1344,25 @@ const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
 
     switch (gamerChoice) {
       case 'rock':
-        return window.application.blocks.scissorsDiv;
+        return Window.application.blocks.scissorsDiv;
 
       case 'paper':
-        return window.application.blocks.rockDiv;
+        return Window.application.blocks.rockDiv;
 
       default:
-        return window.application.blocks.paperDiv;
+        return Window.application.blocks.paperDiv;
     }
   }
 
   switch (gamerChoice) {
     case 'rock':
-      return window.application.blocks.rockDiv;
+      return Window.application.blocks.rockDiv;
 
     case 'paper':
-      return window.application.blocks.paperDiv;
+      return Window.application.blocks.paperDiv;
 
     default:
-      return window.application.blocks.scissorsDiv;
+      return Window.application.blocks.scissorsDiv;
   }
 };
 
@@ -1407,9 +1402,9 @@ const showRoundResultWindow = (roundStatus, gamerChoice) => {
 };
 
 function startGameFieldScreen() {
-  window.application.renderScreen(window.application.screens.gameFieldScreen);
-  window.application.renderBlock([selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
-  window.application.renderBlock([selectEnemyChoiceBlock(gameState.turn, gameState.objFromJSON['game-status'].status)], app.querySelectorAll('.choice-wrapper')[1]);
+  Window.application.renderScreen(Window.application.screens.gameFieldScreen);
+  Window.application.renderBlock([selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
+  Window.application.renderBlock([selectEnemyChoiceBlock(gameState.turn, gameState.objFromJSON['game-status'].status)], app.querySelectorAll('.choice-wrapper')[1]);
   setTimeout(drawCrossAndCheckMark, 4300, gameState.objFromJSON['game-status'].status);
   setTimeout(showRoundResultWindow, 5500, gameState.objFromJSON['game-status'], gameState.turn);
 }
@@ -1417,11 +1412,8 @@ function startGameFieldScreen() {
 // Error Screen
 
 function startErrorScreen() {
-  gameState.gameStatistic.rounds = 0;
-  gameState.gameStatistic.wins = 0;
-  gameState.gameStatistic.loses = 0;
-  window.application.renderScreen(window.application.screens.errorScreen);
-  window.application.renderBlock([window.application.blocks.errorButton], app.querySelector('.error-field'));
+  Window.application.renderScreen(Window.application.screens.errorScreen);
+  Window.application.renderBlock([Window.application.blocks.errorButton], app.querySelector('.error-field'));
 }
 
 
