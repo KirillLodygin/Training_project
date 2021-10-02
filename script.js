@@ -415,7 +415,7 @@ Window.application = {
                     eventName: 'click',
                     methodFunc: (e) => {
                       enterToPlayButton(e);
-                    }
+                    },
                   },
                 },
               ],
@@ -538,22 +538,22 @@ Window.application = {
     },
 
     waitScreen: {
-      block: "div",
+      block: 'div',
       content: [
         {
-          block: "header",
-          cls: "header-waitscreen",
+          block: 'header',
+          cls: 'header-waitscreen',
           content: [
             {
-              block: "nav",
-              cls: "header-waitscreen__navi",
+              block: 'nav',
+              cls: 'header-waitscreen__navi',
               content: [
                 {
-                  block: "button",
-                  cls: "header-waitscreen__navibar-item",
-                  innerText: "Закончить игру досрочно",
+                  block: 'button',
+                  cls: 'header-waitscreen__navibar-item',
+                  innerText: 'Закончить игру досрочно',
                   method: {
-                    eventName: "click",
+                    eventName: 'click',
                     methodFunc: () => {
                       createPageLobbyScreen();
                     },
@@ -564,111 +564,111 @@ Window.application = {
           ],
         },
         {
-          block: "main",
-          cls: "main-waitscreen",
+          block: 'main',
+          cls: 'main-waitscreen',
           content: [
             {
-              block: "section",
-              cls: "main-waitscreen__choicescreen",
+              block: 'section',
+              cls: 'main-waitscreen__choicescreen',
               content: [
                 {
-                  block: "h2",
-                  cls: "main-waitscreen__choicescreen-title",
-                  innerText: "Choose your fighter",
+                  block: 'h2',
+                  cls: 'main-waitscreen__choicescreen-title',
+                  innerText: 'Choose your fighter',
                 },
                 {
-                  block: "div",
-                  cls: "main-waitscreen__choicescreen-container",
+                  block: 'div',
+                  cls: 'main-waitscreen__choicescreen-container',
                   content: [
                     {
-                      block: "button",
+                      block: 'button',
                       cls: [
-                        "main-waitscreen__choicescreen-paper",
-                        "choice-button",
+                        'main-waitscreen__choicescreen-paper',
+                        'choice-button',
                       ],
                       method: {
-                        eventName: "click",
+                        eventName: 'click',
                         methodFunc: () => {
-                          document.querySelector(".your-side-spinner").classList.add("hidden");
-                          document.querySelector(".main-waitscreen__gameprocess-choiceimage-paper").classList.remove("hidden");
-                          document.querySelector(".main-waitscreen__choicescreen").classList.add("hidden");
-                          gameState.move = "paper";
+                          document.querySelector('.your-side-spinner').classList.add('hidden');
+                          document.querySelector('.main-waitscreen__gameprocess-choiceimage-paper').classList.remove('hidden');
+                          document.querySelector('.main-waitscreen__choicescreen').classList.add('hidden');
+                          gameState.move = 'paper';
                           gameState.gameStatistic.rounds += 1;
                           Window.application.request(
                             `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
-                            switchToGameFieldScreen
+                            switchToGameFieldScreen,
                           );
                         },
                       },
                       content: [
                         {
-                          block: "img",
-                          cls: "choice-image",
+                          block: 'img',
+                          cls: 'choice-image',
                           attrs: {
-                            src: "/assets/img/paper.jpg",
-                            alt: "paper fighter",
+                            src: '/assets/img/paper.jpg',
+                            alt: 'paper fighter',
                           },
                         },
                       ],
                     },
                     {
-                      block: "button",
+                      block: 'button',
                       cls: [
-                        "main-waitscreen__choicescreen-rock",
-                        "choice-button",
+                        'main-waitscreen__choicescreen-rock',
+                        'choice-button',
                       ],
                       method: {
-                        eventName: "click",
+                        eventName: 'click',
                         methodFunc: () => {
-                          document.querySelector(".your-side-spinner").classList.add("hidden");
-                          document.querySelector(".main-waitscreen__gameprocess-choiceimage-rock").classList.remove("hidden");
-                          document.querySelector(".main-waitscreen__choicescreen").classList.add("hidden");
-                          gameState.move = "rock";
+                          document.querySelector('.your-side-spinner').classList.add('hidden');
+                          document.querySelector('.main-waitscreen__gameprocess-choiceimage-rock').classList.remove('hidden');
+                          document.querySelector('.main-waitscreen__choicescreen').classList.add('hidden');
+                          gameState.move = 'rock';
                           gameState.gameStatistic.rounds += 1;
                           Window.application.request(
                             `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
-                            switchToGameFieldScreen
+                            switchToGameFieldScreen,
                           );
                         },
                       },
                       content: [
                         {
-                          block: "img",
-                          cls: "choice-image",
+                          block: 'img',
+                          cls: 'choice-image',
                           attrs: {
-                            src: "/assets/img/rock.jpg",
-                            alt: "rock fighter",
+                            src: '/assets/img/rock.jpg',
+                            alt: 'rock fighter',
                           },
                         },
                       ],
                     },
                     {
-                      block: "button",
+                      block: 'button',
                       cls: [
-                        "main-waitscreen__choicescreen-scissors",
-                        "choice-button",
+                        'main-waitscreen__choicescreen-scissors',
+                        'choice-button',
                       ],
                       method: {
-                        eventName: "click",
+                        eventName: 'click',
                         methodFunc: () => {
-                          document.querySelector(".your-side-spinner").classList.add("hidden");
-                          document.querySelector(".main-waitscreen__gameprocess-choiceimage-scissors").classList.remove("hidden");
-                          document.querySelector(".main-waitscreen__choicescreen").classList.add("hidden");
-                          gameState.move = "scissors";
+                          document.querySelector('.your-side-spinner').classList.add('hidden');
+                          document.querySelector('.main-waitscreen__gameprocess-choiceimage-scissors').classList.remove('hidden');
+                          document.querySelector('.main-waitscreen__choicescreen').classList.add('hidden');
+                          gameState.move = 'scissors';
                           gameState.gameStatistic.rounds += 1;
                           Window.application.request(
                             `${gameState.url}play?token=${gameState.token}&id=${gameState.gameId}&move=${gameState.move}`,
-                            switchToGameFieldScreen
+                            switchToGameFieldScreen,
                           );
                         },
                       },
                       content: [
                         {
-                          block: "img",
-                          cls: "choice-image",
+                          block: 'img',
+                          cls: 'choice-image',
                           attrs: {
-                            src: "/assets/img/scissors.jpg",
-                            alt: "scissors fighter",
+                            src: '/assets/img/scissors.jpg',
+                            alt: 'scissors fighter',
                           },
                         },
                       ],
@@ -678,94 +678,94 @@ Window.application = {
               ],
             },
             {
-              block: "section",
-              cls: "section-waitsceen",
+              block: 'section',
+              cls: 'section-waitsceen',
               content: [
                 {
-                  block: "h2",
-                  cls: "main-waitscreen__title",
-                  innerText: "Идет великая битва",
+                  block: 'h2',
+                  cls: 'main-waitscreen__title',
+                  innerText: 'Идет великая битва',
                 },
                 {
-                  block: "div",
-                  cls: "main-waitscreen__gameprocess-container",
+                  block: 'div',
+                  cls: 'main-waitscreen__gameprocess-container',
                   content: [
                     {
-                      block: "div",
-                      cls: "main-waitscreen__gameprocess-playerzone",
+                      block: 'div',
+                      cls: 'main-waitscreen__gameprocess-playerzone',
                       content: [
                         {
-                          block: "div",
-                          cls: ["lds-hourglass", "your-side-spinner"],
+                          block: 'div',
+                          cls: ['lds-hourglass', 'your-side-spinner'],
                         },
                         {
-                          block: "img",
+                          block: 'img',
                           cls: [
-                            "main-waitscreen__gameprocess-choiceimage-rock",
-                            "hidden",
+                            'main-waitscreen__gameprocess-choiceimage-rock',
+                            'hidden',
                           ],
                           attrs: {
-                            src: "./assets/img/rock.jpg",
-                            alt: "choice",
+                            src: './assets/img/rock.jpg',
+                            alt: 'choice',
                           },
                         },
                         {
-                          block: "img",
+                          block: 'img',
                           cls: [
-                            "main-waitscreen__gameprocess-choiceimage-paper",
-                            "hidden",
+                            'main-waitscreen__gameprocess-choiceimage-paper',
+                            'hidden',
                           ],
                           attrs: {
-                            src: "./assets/img/paper.jpg",
-                            alt: "choice",
+                            src: './assets/img/paper.jpg',
+                            alt: 'choice',
                           },
                         },
                         {
-                          block: "img",
+                          block: 'img',
                           cls: [
-                            "main-waitscreen__gameprocess-choiceimage-scissors",
-                            "hidden",
+                            'main-waitscreen__gameprocess-choiceimage-scissors',
+                            'hidden',
                           ],
                           attrs: {
-                            src: "./assets/img/scissors.jpg",
-                            alt: "choice",
+                            src: './assets/img/scissors.jpg',
+                            alt: 'choice',
                           },
                         },
                         {
-                          block: "div",
-                          cls: "main-waitscreen__gameprocess-userinfo",
+                          block: 'div',
+                          cls: 'main-waitscreen__gameprocess-userinfo',
                           content: [
                             {
-                              block: "img",
-                              cls: "main-waitscreen__gameprocess-avatar",
+                              block: 'img',
+                              cls: 'main-waitscreen__gameprocess-avatar',
                               attrs: {
-                                src: "./assets/img/userimage.jpg",
-                                alt: "feedback",
+                                src: './assets/img/userimage.jpg',
+                                alt: 'feedback',
                               },
                             },
                             {
-                              block: "div",
+                              block: 'div',
                               content: [
                                 {
-                                  block: "p",
+                                  block: 'p',
                                   cls: [
-                                    "main-waitscreen__gameprocess-username",
-                                    "your-name",
+                                    'main-waitscreen__gameprocess-username',
+                                    'your-name',
                                   ],
                                   innerText: gameState.gamerName,
                                 },
                                 {
-                                  block: "p",
-                                  cls: "main-waitscreen__gameprocess-statistic",
+                                  block: 'p',
+                                  cls: 'main-waitscreen__gameprocess-statistic',
                                   content: [
                                     {
-                                      block: "span",
-                                      cls: "your-wins",
+                                      block: 'span',
+                                      cls: 'your-wins',
                                       innerText: `Побед: ${gameState.gamerStatistic.wins}`,
                                     },
                                     {
-                                      block: "span",
-                                      cls: "your-defeats",
+                                      block: 'span',
+                                      cls: 'your-defeats',
                                       innerText: `Поражений: ${gameState.gamerStatistic.loses}`,
                                     },
                                   ],
@@ -777,62 +777,62 @@ Window.application = {
                       ],
                     },
                     {
-                      block: "img",
-                      cls: "main-waitscreen__versus-image",
+                      block: 'img',
+                      cls: 'main-waitscreen__versus-image',
                       attrs: {
-                        src: "./assets/img/versus.png",
-                        alt: "vsimage",
+                        src: './assets/img/versus.png',
+                        alt: 'vsimage',
                       },
                     },
                     {
-                      block: "div",
-                      cls: "main-waitscreen__gameprocess-waiting-another-player",
+                      block: 'div',
+                      cls: 'main-waitscreen__gameprocess-waiting-another-player',
                       content: [
                         {
-                          block: "div",
-                          cls: ["lds-hourglass", "enemy-scroll"],
+                          block: 'div',
+                          cls: ['lds-hourglass', 'enemy-scroll'],
                         },
                         {
-                          block: "p",
-                          cls: ["main-waitscreen__gameprocess-text", "hidden"],
-                          innerText: "Противник ожидает ваш ход",
+                          block: 'p',
+                          cls: ['main-waitscreen__gameprocess-text', 'hidden'],
+                          innerText: 'Противник ожидает ваш ход',
                         },
                         {
-                          block: "div",
-                          cls: "main-waitscreen__gameprocess-userinfo",
+                          block: 'div',
+                          cls: 'main-waitscreen__gameprocess-userinfo',
                           content: [
                             {
-                              block: "img",
-                              cls: "main-waitscreen__gameprocess-avatar",
+                              block: 'img',
+                              cls: 'main-waitscreen__gameprocess-avatar',
                               attrs: {
-                                src: "./assets/img/userimage.jpg",
-                                alt: "feedback",
+                                src: './assets/img/userimage.jpg',
+                                alt: 'feedback',
                               },
                             },
                             {
-                              block: "div",
-                              cls: "",
+                              block: 'div',
+                              cls: '',
                               content: [
                                 {
-                                  block: "p",
+                                  block: 'p',
                                   cls: [
-                                    "main-waitscreen__gameprocess-username",
-                                    "enemy-name",
+                                    'main-waitscreen__gameprocess-username',
+                                    'enemy-name',
                                   ],
                                   innerText: gameState.enemyName,
                                 },
                                 {
-                                  block: "p",
-                                  cls: "main-waitscreen__gameprocess-statistic",
+                                  block: 'p',
+                                  cls: 'main-waitscreen__gameprocess-statistic',
                                   content: [
                                     {
-                                      block: "span",
-                                      cls: "enemy-wins",
+                                      block: 'span',
+                                      cls: 'enemy-wins',
                                       innerText: `Побед: ${gameState.enemyStatistic.wins}`,
                                     },
                                     {
-                                      block: "span",
-                                      cls: "enemy-defeats",
+                                      block: 'span',
+                                      cls: 'enemy-defeats',
                                       innerText: `Поражений: ${gameState.enemyStatistic.loses}`,
                                     },
                                   ],
@@ -843,7 +843,7 @@ Window.application = {
                         },
                       ],
                       method: {
-                        eventName: "DOMContentLoaded",
+                        eventName: 'DOMContentLoaded',
                         methodFunc: () => {
                           Window.application.timers.push(setInterval(Window.application.request,
                             500,
@@ -969,12 +969,12 @@ Window.application = {
                       content: [
                         {
                           block: 'button',
-                          cls: ['button','ok-button'],
+                          cls: ['button', 'ok-button'],
                           innerText: 'Ok',
                         },
                         {
                           block: 'button',
-                          cls: ['button','no-button'],
+                          cls: ['button', 'no-button'],
                           innerText: 'No!!!',
                           method: {
                             eventName: 'click',
@@ -1104,7 +1104,7 @@ Window.application = {
   },
 
   timers: [],
-}
+};
 
 //Login Screen
 
@@ -1113,7 +1113,7 @@ function getPlayerStatus(parseStatus) {
     createPageLobbyScreen();
   }
   if (parseStatus['player-status'].status === 'game') {
-    createPageWaitScreen()
+    createPageWaitScreen(parseStatus);
   }
   if (parseStatus['player-status'].status === 'error') {
     startErrorScreen();
@@ -1127,7 +1127,7 @@ function getTokenGetPlayerStatus(data) {
 
   Window.application.request(
     `${gameState.url}player-status?token=${gameState.token}`,
-    getPlayerStatus
+    getPlayerStatus,
   );
 }
 
@@ -1141,16 +1141,16 @@ function inputName() {
 function clickButton() {
   Window.application.request(
     `${gameState.url}login?login=${gameState.gamerName}`,
-    getTokenGetPlayerStatus
+    getTokenGetPlayerStatus,
   );
 }
 
 //функция-обертка для логин-страницы
-function createPageLoginScreen () {
+function createPageLoginScreen() {
   Window.application.renderScreen(Window.application.screens.loginScreen);
   Window.application.renderBlock(
     [Window.application.blocks.loginInput, Window.application.blocks.loginButton],
-    app.querySelector('.login')
+    app.querySelector('.login'),
   );
 }
 
@@ -1158,25 +1158,29 @@ function createPageLoginScreen () {
 //Lobby Screen
 //нажатие на кнопку 'создать игру'
 function clickPlayButton() {
-  Window.application.request(`${gameState.url}start?token=${gameState.token}`, createPageStandByScreen)
+  Window.application.request(`${gameState.url}start?token=${gameState.token}`, createPageStandByScreen);
 }
 
 //войти в уже имеющуюся игру
-function enterToPlayButton(e){
+function enterToPlayButton(e) {
   if (e.target.nodeName.toLowerCase() !== 'button') return;
-  Window.application.request(`${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, createPageWaitScreen)
+  Window.application.request(`${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, enterGame);
+}
+
+function enterGame(parsedData) {
+  if (parsedData['game-status'].status === 'waiting-for-your-move') createPageWaitScreen(parsedData);
 }
 
 //получение информации об игроке
-function getStatisticPlayer(parseStatisticPlayer) {
-  let obj = parseStatisticPlayer.list;
-  obj.forEach(function (obj) {
+function getStatisticPlayer(parsedData) {
+  let obj = parsedData.list;
+  obj.forEach(function(obj) {
     if (Object.keys(obj).includes('you')) {
       // gameState.gamerStatistic.wins = obj.wins;
       // gameState.gamerStatistic.loses = obj.loses;
       Window.application.renderBlock(
         [Window.application.blocks.playerInformation],
-        app.querySelector('.columnHeader')
+        app.querySelector('.columnHeader'),
       );
       document.querySelector('.yourself_profile-name').textContent = gameState.gamerName;
     }
@@ -1199,17 +1203,17 @@ function renderingEnemyList(enemyList) {
     if (!enemy.you) {
       Window.application.renderBlock(
         [Window.application.blocks.showedAvailableGame],
-        document.querySelector('.listGames')
+        document.querySelector('.listGames'),
       );
       let enemies = document.querySelector('.listGames').querySelectorAll('.opponent_profile-name');
-      enemies[enemies.length-1].textContent = enemy.login;
+      enemies[enemies.length - 1].textContent = enemy.login;
     }
   }
 }
 
 //получение информации об актуальных играх
 function getAvailableGame(parseStatisticEnemy) {
-  if(gameState.enemyList.length !== parseStatisticEnemy.list.length) {
+  if (gameState.enemyList.length !== parseStatisticEnemy.list.length) {
     renderingEnemyList(parseStatisticEnemy.list);
     return;
   }
@@ -1228,16 +1232,16 @@ function createPageLobbyScreen() {
 
   Window.application.request(
     `${gameState.url}player-list?token=${gameState.token}`,
-    getStatisticPlayer
+    getStatisticPlayer,
   );
-  Window.application.renderBlock([Window.application.blocks.playButton],document.querySelector('.columnHeader'))
+  Window.application.renderBlock([Window.application.blocks.playButton], document.querySelector('.columnHeader'));
   Window.application.timers.push(
     setInterval(
       Window.application.request,
       1000,
       `${gameState.url}player-list?token=${gameState.token}`,
-      getAvailableGame
-    )
+      getAvailableGame,
+    ),
   );
 }
 
@@ -1248,9 +1252,9 @@ function createPageLobbyScreen() {
 function backToLobby() {
   createPageLobbyScreen();
 }
+
 //переход на экран игры
 function checkOpponentConnection(parsedData) {
-  console.log(parsedData);
   if (parsedData['status'] === 'error') {
     gameState.errorMessage = parsedData['message'];
     startErrorScreen();
@@ -1275,34 +1279,34 @@ function createPageStandByScreen(parsedData) {
 //waitScreen
 //  Сценарий
 function createPageWaitScreen(parsedData) {
-  gameState.enemyName = parsedData["game-status"].enemy.login;
+  gameState.enemyName = parsedData['game-status'].enemy.login;
   Window.application.renderScreen(Window.application.screens.waitScreen);
   Window.application.timers.push(setInterval(Window.application.request,
     500,
     `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`,
     switchWaitScreen));
-    document.querySelector(".your-name").textContent = gameState.gamerName
-    document.querySelector(".enemy-name").textContent = gameState.enemyName
+  document.querySelector('.your-name').textContent = gameState.gamerName;
+  document.querySelector('.enemy-name').textContent = gameState.enemyName;
 }
 
 // функция для появления надписи Противник ожидает хода
 
 
 function switchWaitScreen(parsedData) {
-  if (parsedData["game-status"].status === "waiting-for-your-move") {
-    waitingText.classList.remove("hidden");
-    enemyScroll.classList.add("hidden");
+  if (parsedData['game-status'].status === 'waiting-for-your-move') {
+    waitingText.classList.remove('hidden');
+    enemyScroll.classList.add('hidden');
 
   }
 }
 
 // запускает процесс ожидания статуса игры
 function switchToGameFieldScreen(serverAnswer) {
-  if (serverAnswer.status === "ok") {
-    if (serverAnswer["game-status"].status === "waiting-for-enemy-move") {
+  if (serverAnswer.status === 'ok') {
+    if (serverAnswer['game-status'].status === 'waiting-for-enemy-move') {
       return;
     }
-    gameState.gameStatus = serverAnswer["game-status"].status;
+    gameState.gameStatus = serverAnswer['game-status'].status;
     startGameFieldScreen();
     return;
   }
