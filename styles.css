@@ -351,7 +351,7 @@ h2 {
     padding-right: 20px;
 }
 
-button {
+.button {
     margin-right: 15px;
     width: 75px;
     box-sizing: border-box;
@@ -785,7 +785,7 @@ button {
 
 .wrapper {
     background-color: goldenrod;
-    height: auto;
+    height: 1200px;
     width: 80%;
     position: absolute;
     margin: 0 50px 0 150px;
@@ -819,6 +819,9 @@ h1 {
     width: 50%;
     text-align: center;
     float: right;
+    overflow-y: scroll;
+    height: 700px;
+    padding: 0 210px 0 0;
 }
 
 audio {
@@ -838,9 +841,9 @@ audio {
     width: 50%;
     display: flex;
     flex-direction: column;
-    float: right;
     height: 500px;
     justify-content: flex-start;
+    margin: 0 100px 0 0;
 }
 
 .avatar {
@@ -852,6 +855,7 @@ audio {
     width: 300px;
     height: 300px;
     padding: 0 0 0 0;
+    margin: 0 0 0 -100px;
 }
 
 .popUp {
@@ -936,7 +940,7 @@ audio {
 }
 
 .main_yourself_profile-block {
-    margin: 40px 10px 20px 50px;
+    margin: 39px 3px 20px -158px;
     padding: 0 0 0 0;
     width: 350px;
     border: 2px solid;
@@ -944,6 +948,7 @@ audio {
     background: antiquewhite;
     align-content: center;
     float: left;
+    
 }
 
 .main_yourself_profile-block-header {
@@ -1004,8 +1009,8 @@ audio {
 }
 
 .createGame {
-    float: left;
-    margin: 300px 0 0 -300px;
+    float:left;
+    margin: 240px 0 0 200px;
     border-radius: 5px;
     width: 100px;
     height: 50px;
@@ -1018,7 +1023,7 @@ audio {
     height: 70px;
     font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
     font-size: 1em;
-    float: left;
+    float: none;
 }
 
 .availableGame {
@@ -1125,3 +1130,217 @@ audio {
 .opacity.opacity {
     opacity: 1;
 }
+
+/* waitScreen */
+.hidden.hidden {
+    display: none;
+  }
+  
+  /* header */
+  .header-waitscreen {
+    background-color: #e07d48;
+  }
+  .header-waitscreen__navi {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header-waitscreen__navibar-item {
+    background-color: #d3e03d;
+    border-radius: 15px;
+    border: 1px solid #983de0;
+    padding: 0 10px;
+    margin: 15px 0;
+    min-width: 140px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 35px;
+    color: #983de0;
+    cursor: pointer;
+  }
+  .header-waitscreen__navibar-item:hover {
+    color: #d3e03d;
+    background-color: #983de0;
+  }
+  .header-waitscreen__navibar-item:focus {
+    color: #d3e03d;
+    background-color: #983de0;
+  }
+  
+  /* main-content */
+  .main-waitscreen {
+    background: linear-gradient(to right, #69e0db 50%, #983de0);
+  }
+  /* choicescreen */
+  .main-waitscreen__choicescreen-title {
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 66px;
+    text-align: center;
+    text-shadow: -1px -1px 1px silver, 1px -1px 1px silver;
+    color: #983de0;
+  }
+  .main-waitscreen__choicescreen-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+  .choice-button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+  .choice-image {
+    border-radius: 30%;
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    cursor: pointer;
+    animation: bouncing 1s cubic-bezier(0.1, 0.25, 0.1, 1) 0s infinite alternate
+      both;
+  }
+  .choice-image:hover {
+    transform: scale(1.2);
+  }
+  @keyframes bouncing {
+    0% {
+      bottom: 0;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      bottom: 50px;
+      box-shadow: 0 50px 50px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  /* waitscreen */
+  
+  .main-waitscreen__versus-image {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+  }
+  
+  .main-waitscreen__gameprocess-container {
+    max-width: 1200px;
+    height: calc(100vh - 150px);
+    display: flex;
+    margin: 0 auto;
+  }
+  .main-waitscreen__title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 66px;
+    text-align: center;
+    text-shadow: -1px -1px 1px silver, 1px -1px 1px silver;
+    color: #983de0;
+  }
+  
+  .main-waitscreen__gameprocess-waiting-another-player {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 600px;
+    height: 520px;
+  }
+  
+  .main-waitscreen__gameprocess-playerzone {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 600px;
+    height: 520px;
+  }
+  .main-waitscreen__gameprocess-choiceimage-rock,
+  .main-waitscreen__gameprocess-choiceimage-paper,
+  .main-waitscreen__gameprocess-choiceimage-scissors {
+    align-self: center;
+    width: 400px;
+    height: 400px;
+  }
+  .main-waitscreen__gif {
+    width: 60px;
+    height: 40px;
+    border-radius: 40px;
+  }
+  .lds-hourglass {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-left: 70px;
+    margin-top: 40px;
+  }
+  .lds-hourglass:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 32px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-hourglass 1.2s infinite;
+  }
+  @keyframes lds-hourglass {
+    0% {
+      transform: rotate(0);
+      animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    50% {
+      transform: rotate(900deg);
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    100% {
+      transform: rotate(1800deg);
+    }
+  }
+  
+  .main-waitscreen__gameprocess-text {
+    margin-top: 40%;
+    text-align: center;
+    justify-self: center;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: -0.3px;
+    color: aquamarine;
+  }
+  .main-waitscreen__gameprocess-userinfo {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .main-waitscreen__gameprocess-username,
+  .main-waitscreen__gameprocess-statistic {
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: -0.3px;
+  }
+  
+  .main-waitscreen__gameprocess-username {
+    margin-top: 14px;
+  
+    text-shadow: -1px -1px 1px silver, 1px -1px 1px silver;
+    color: #983de0;
+  }
+  
+  .main-waitscreen__gameprocess-statistic {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    color: #ff0000;
+  
+    margin-top: 15px;
+  }
+  .main-waitscreen__gameprocess-avatar {
+    width: 80px;
+    height: 80px;
+    border: 10px solid #e07d48;
+    border-radius: 50%;
+  }
