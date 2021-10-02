@@ -1292,6 +1292,7 @@ function switchWaitScreen(parsedData) {
   if (parsedData["game-status"].status === "waiting-for-your-move") {
     waitingText.classList.remove("hidden");
     enemyScroll.classList.add("hidden");
+
   }
 }
 
