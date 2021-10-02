@@ -1024,11 +1024,16 @@ Window.application = {
       }
       if (e.target.status !== 200) {
         gameState.errorMessage = 'error';
-        return;
+        startErrorScreen();
       }
-      const responseText = e.target.responseText;
+      const responseText = JSON.parse(e.target.responseText);
 
-      callback(JSON.parse(responseText));
+      if (responseText.status === 'error') {
+        gameState.errorMessage = responseText.message;
+        startErrorScreen();
+      }
+
+      callback(responseText);
     });
     xhr.send();
   },
@@ -1105,7 +1110,6 @@ Window.application = {
 
 function getPlayerStatus(parseStatus) {
   if (parseStatus['player-status'].status === 'lobby') {
-    console.log(parseStatus['player-status'].status)
     createPageLobbyScreen();
   }
   if (parseStatus['player-status'].status === 'game') {
@@ -1154,13 +1158,12 @@ function createPageLoginScreen () {
 //Lobby Screen
 //нажатие на кнопку 'создать игру'
 function clickPlayButton() {
-  Window.application.request(`${gameState.url}player-status?token=${gameState.token}`, createPageStandByScreen)
+  Window.application.request(`${gameState.url}start?token=${gameState.token}`, createPageStandByScreen)
 }
 
 //войти в уже имеющуюся игру
 function enterToPlayButton(e){
   if (e.target.nodeName.toLowerCase() !== 'button') return;
-  gameState.enemyName = e.target.parentNode.parentNode.querySelector('.opponent_profile-name').textContent;
   Window.application.request(`${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, createPageWaitScreen)
 }
 
@@ -1246,12 +1249,8 @@ function backToLobby() {
   createPageLobbyScreen();
 }
 //переход на экран игры
-function toGame() {
-  createPageWaitScreen();
-}
-
 function checkOpponentConnection(parsedData) {
-
+  console.log(parsedData);
   if (parsedData['status'] === 'error') {
     gameState.errorMessage = parsedData['message'];
     startErrorScreen();
@@ -1261,8 +1260,8 @@ function checkOpponentConnection(parsedData) {
   gameState.enemyStatistic.wins = parsedData['game-status']['enemy']['wins'];
   gameState.enemyStatistic.loses = parsedData['game-status']['enemy']['loses'];
 
-  if (parsedData['game-status'].status !== 'waiting-for-start') {
-    toGame();
+  if (parsedData['game-status'].status === 'waiting-for-your-move') {
+    createPageWaitScreen(parsedData);
   }
 }
 
