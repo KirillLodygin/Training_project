@@ -786,9 +786,9 @@ h2 {
 .wrapper {
     background-color: goldenrod;
     height: 1200px;
-    width: 80%;
+    width: 100%;
     position: absolute;
-    margin: 0 50px 0 150px;
+    padding: 0 300px 0 -100px;
 }
 
 h1 {
@@ -804,6 +804,7 @@ h1 {
 }
 
 .columnHeaders {
+    color: #D5E052;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -813,6 +814,7 @@ h1 {
     width: 50%;
     text-align: center;
     float: left;
+    padding: 0 0 0 100px;
 }
 
 .columnHeader2 {
@@ -821,7 +823,8 @@ h1 {
     float: right;
     overflow-y: scroll;
     height: 700px;
-    padding: 0 210px 0 0;
+    padding: 0 300px 0 0;
+    margin: 0 200px 0 0;
 }
 
 audio {
@@ -830,7 +833,7 @@ audio {
 
 .yourself {
     height: 300px;
-    float: left;
+    float: none;
     width: 45%;
     display: flex;
     padding: 0 0 0 10px;
@@ -853,6 +856,7 @@ audio {
 
 .opponent {
     width: 300px;
+    float:none;
     height: 300px;
     padding: 0 0 0 0;
     margin: 0 0 0 -100px;
@@ -1010,7 +1014,7 @@ audio {
 
 .createGame {
     float:left;
-    margin: 240px 0 0 200px;
+    margin: 240px 0 10px 200px;
     border-radius: 5px;
     width: 100px;
     height: 50px;
