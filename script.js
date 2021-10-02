@@ -1154,14 +1154,14 @@ function createPageLoginScreen () {
 //Lobby Screen
 //нажатие на кнопку 'создать игру'
 function clickPlayButton() {
-  createPageStandByScreen();
+  Window.application.request(`${gameState.url}player-status?token=${gameState.token}`, createPageStandByScreen)
 }
 
 //войти в уже имеющуюся игру
 function enterToPlayButton(e){
   if (e.target.nodeName.toLowerCase() !== 'button') return;
   gameState.enemyName = e.target.parentNode.parentNode.querySelector('.opponent_profile-name').textContent;
-  createPageWaitScreen();
+  Window.application.request(`${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, createPageWaitScreen)
 }
 
 //получение информации об игроке
@@ -1266,15 +1266,17 @@ function checkOpponentConnection(parsedData) {
   }
 }
 
-function createPageStandByScreen() {
+function createPageStandByScreen(parsedData) {
+  gameState.gameId = parsedData['player-status'].game.id;
   Window.application.renderScreen(Window.application.screens.standByScreen);
   Window.application.renderBlock([Window.application.blocks.backToLobbyButton], document.querySelector('.undercard'));
-  Window.application.timers.push(setInterval(request, 1000, `${gameState.url}game-status?token=${gameState.token}`, checkOpponentConnection));
+  Window.application.timers.push(setInterval(Window.application.request, 1000, `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, checkOpponentConnection));
 }
 
 //waitScreen
 //  Сценарий
-function createPageWaitScreen() {
+function createPageWaitScreen(parsedData) {
+  gameState.enemyName = parsedData["game-status"].enemy.login;
   Window.application.renderScreen(Window.application.screens.waitScreen);
   Window.application.timers.push(setInterval(Window.application.request,
     500,
