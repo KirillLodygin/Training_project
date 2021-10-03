@@ -262,26 +262,28 @@ Window.application = {
       method: {
         eventName: 'click',
         methodFunc: () => {
+          gameState.gameId = '';
+          gameState.token = '';
           createPageLoginScreen();
         },
       },
     },
 
-  waitingPlayer: {
-  block: 'div',
-  cls: 'undercard',
-  content:[
-    {
-      block: 'h1',
-      cls: 'undercard_text',
-      innerText: 'Ожидаем подключение соперника...',
-    },
-    {
+    waitingPlayer: {
       block: 'div',
-      cls: 'lds-hourglass',
+      cls: 'undercard',
+      content: [
+        {
+          block: 'h1',
+          cls: 'undercard_text',
+          innerText: 'Ожидаем подключение соперника...',
+        },
+        {
+          block: 'div',
+          cls: 'lds-hourglass',
+        },
+      ],
     },
-  ]
-  },
 
 
     backToLobbyButton: {
@@ -863,8 +865,7 @@ Window.application = {
           content: [
             {
               block: 'p',
-              cls: ['fadeIn', 'invisible'],
-              innerText: `Раунд ${gameState.gameStatistic.rounds}`,
+              cls: ['fadeIn', 'invisible', 'round-num'],
             },
           ],
         },
@@ -933,7 +934,7 @@ Window.application = {
               content: [
                 {
                   block: 'div',
-                  cls: 'round-result-Window',
+                  cls: 'round-result-window',
                   content: [
                     {
                       block: 'div',
@@ -946,7 +947,6 @@ Window.application = {
                         {
                           block: 'p',
                           cls: 'statistic',
-                          innerText: `Побед: ${gameState.gameStatistic.wins}, поражений: ${gameState.gameStatistic.loses}, вничью: ${gameState.gameStatistic.rounds - gameState.gameStatistic.wins - gameState.gameStatistic.loses}`,
                         },
                         {
                           block: 'p',
@@ -963,6 +963,14 @@ Window.application = {
                           block: 'button',
                           cls: ['button', 'ok-button'],
                           innerText: 'Ok',
+                          method: {
+                            eventName: 'click',
+                            methodFunc: () => {
+                              gameState.move = '';
+                              gameState.roundStatus = '';
+                              createPageWaitScreen();
+                            },
+                          }
                         },
                         {
                           block: 'button',
@@ -971,7 +979,9 @@ Window.application = {
                           method: {
                             eventName: 'click',
                             methodFunc: () => {
-                              Window.application.renderScreen(Window.application.screens.loginScreen);
+                              gameState.gameStatistic.rounds = 0;
+                              gameState.gameId = '';
+                              createPageLobbyScreen();
                             },
                           },
                         },
@@ -1148,15 +1158,15 @@ function createPageLoginScreen() {
 //Lobby Screen
 
 //функция получения id игры. Создание своей игры
-function createGame(parsedData){
-  gameState.gameId = parsedData['player-status'].game.id
-  console.log(gameState.gameId)
-  createPageStandByScreen()
+function createGame(parsedData) {
+  gameState.gameId = parsedData['player-status'].game.id;
+  console.log(gameState.gameId);
+  createPageStandByScreen();
 }
 
 //нажатие на кнопку 'создать игру'
 function clickPlayButton() {
-  console.log(gameState.token)
+  console.log(gameState.token);
   Window.application.request(`${gameState.url}start?token=${gameState.token}`, createGame);
 }
 
@@ -1173,7 +1183,7 @@ function enterGame(parsedData) {
     startErrorScreen();
   }
 
-  if(parsedData['game-status'].status === 'waiting-for-your-move') checkOpponentConnection(parsedData);
+  if (parsedData['game-status'].status === 'waiting-for-your-move') checkOpponentConnection(parsedData);
 }
 
 //получение информации об игроке
@@ -1259,7 +1269,7 @@ function backToLobby() {
 
 //переход на экран игры
 function checkOpponentConnection(parsedData) {
-  if (parsedData['game-status'].status !== 'waiting-for-start'){
+  if (parsedData['game-status'].status !== 'waiting-for-start') {
     if (parsedData.status === 'error') {
       gameState.errorMessage = parsedData['message'];
       startErrorScreen();
@@ -1269,19 +1279,19 @@ function checkOpponentConnection(parsedData) {
     // console.log(parsedData['game-status'].enemy.login)
     if (parsedData['game-status'].status === 'waiting-for-your-move') {
       gameState.enemyName = parsedData['game-status'].enemy.login;
-      gameState.roundStatus = parsedData['game-status'].status
+      gameState.roundStatus = parsedData['game-status'].status;
       createPageWaitScreen();
+    }
+    gameState.roundStatus = parsedData['game-status'].status;
   }
-  gameState.roundStatus = parsedData['game-status'].status
-}
   // gameState.enemyStatistic.wins = parsedData['game-status'].enemy.wins;
   // gameState.enemyStatistic.loses = parsedData['game-status'].enemy.loses;
-  }
+}
 
 
 function createPageStandByScreen() {
   Window.application.renderScreen(Window.application.screens.standByScreen);
-  Window.application.renderBlock([Window.application.blocks.waitingPlayer], document.querySelector('.main'))
+  Window.application.renderBlock([Window.application.blocks.waitingPlayer], document.querySelector('.main'));
   Window.application.renderBlock([Window.application.blocks.backToLobbyButton], document.querySelector('.undercard'));
   Window.application.timers.push(setInterval(Window.application.request, 500, `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, checkOpponentConnection));
 }
@@ -1300,25 +1310,36 @@ function createPageWaitScreen() {
 
 // функция для появления надписи Противник ожидает хода
 function switchWaitScreen(parsedData) {
+  if (parsedData.status !== 'ok') {
+    gameState.errorMessage = parsedData.message;
+    startErrorScreen();
+  }
+
   if (parsedData['game-status'].status === 'waiting-for-your-move') {
     document.querySelector('.main-waitscreen__gameprocess-text').classList.remove('hidden');
     document.querySelector('.lds-hourglass').classList.add('hidden');
-
   }
+
+  if (parsedData['game-status'].status !== 'waiting-for-your-move') {
+    gameState.roundStatus = parsedData['game-status'].status;
+    gameState.gameStatistic.rounds += 1;
+    startGameFieldScreen();
+  }
+
 }
 
-//ВОТ ДО СЮДА ВСЕ СДЕЛАНО!!!! ПОЖАЛУЙСТА! ДОБЕЙТЕ!
 // функция хода игрока
-function switchToGameFieldScreen(serverAnswer) {
-  console.log(gameState.roundStatus)
-  gameState.roundStatus = serverAnswer['game-status'].status;
-  if (serverAnswer.status === 'ok') {
+function switchToGameFieldScreen(parsedData) {
+  if (parsedData.status === 'ok') {
+    console.log(parsedData['game-status'].status);
     if (serverAnswer['game-status'].status !== 'waiting-for-enemy-move') {
-      startGameFieldScreen()
+      gameState.roundStatus = parsedData['game-status'].status;
+      startGameFieldScreen();
     }
+  } else {
+    gameState.errorMessage = serverAnswer.message;
+    startErrorScreen();
   }
-  gameState.errorMessage = serverAnswer.message;
-  startErrorScreen();
 }
 
 // GameField Screen
@@ -1341,12 +1362,15 @@ const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
 
     switch (gamerChoice) {
       case 'rock':
+        app.querySelector('.comment').textContent = gameState.loseMessages['rock'];
         return Window.application.blocks.paperDiv;
 
       case 'paper':
+        app.querySelector('.comment').textContent = gameState.loseMessages['paper'];
         return Window.application.blocks.scissorsDiv;
 
       default:
+        app.querySelector('.comment').textContent = gameState.loseMessages['scissors'];
         return Window.application.blocks.rockDiv;
     }
   }
@@ -1356,24 +1380,30 @@ const selectEnemyChoiceBlock = (gamerChoice, roundStatus) => {
 
     switch (gamerChoice) {
       case 'rock':
+        app.querySelector('.comment').textContent = gameState.winMessages['rock'];
         return Window.application.blocks.scissorsDiv;
 
       case 'paper':
+        app.querySelector('.comment').textContent = gameState.winMessages['paper'];
         return Window.application.blocks.rockDiv;
 
       default:
+        app.querySelector('.comment').textContent = gameState.winMessages['scissors'];
         return Window.application.blocks.paperDiv;
     }
   }
 
   switch (gamerChoice) {
     case 'rock':
+      app.querySelector('.comment').textContent = gameState.drawMessages['rock'];
       return Window.application.blocks.rockDiv;
 
     case 'paper':
+      app.querySelector('.comment').textContent = gameState.drawMessages['paper'];
       return Window.application.blocks.paperDiv;
 
     default:
+      app.querySelector('.comment').textContent = gameState.drawMessages['scissors'];
       return Window.application.blocks.scissorsDiv;
   }
 };
@@ -1417,6 +1447,8 @@ function startGameFieldScreen() {
   Window.application.renderScreen(Window.application.screens.gameFieldScreen);
   Window.application.renderBlock([selectPlayerChoiceBlock(gameState.move)], app.querySelectorAll('.choice-wrapper')[0]);
   Window.application.renderBlock([selectEnemyChoiceBlock(gameState.move, gameState.roundStatus)], app.querySelectorAll('.choice-wrapper')[1]);
+  app.querySelector('.round-num').textContent = `Раунд ${gameState.gameStatistic.rounds}`;
+  app.querySelector('.statistic').textContent = `Побед: ${gameState.gameStatistic.wins}, поражений: ${gameState.gameStatistic.loses}, вничью: ${gameState.gameStatistic.rounds - gameState.gameStatistic.wins - gameState.gameStatistic.loses}`;
   setTimeout(drawCrossAndCheckMark, 4300, gameState.roundStatus);
   setTimeout(showRoundResultWindow, 5500, gameState.roundStatus, gameState.move);
 }
