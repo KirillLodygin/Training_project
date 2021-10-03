@@ -1,7 +1,7 @@
 const app = document.querySelector('.app');
 
 const gameState = {
-  url: 'https://skypro-rock-scissors-paper.herokuapp.com/',
+  url: 'http://localhost:3000/',
 
   token: '',
 
@@ -146,17 +146,6 @@ Window.application = {
             },
           ],
         },
-        {
-          block: 'div',
-          cls: 'enterBlock',
-          content: [
-            {
-              block: 'button',
-              cls: 'enterButton',
-              innerText: 'Войти в игру',
-            },
-          ],
-        },
       ],
     },
 
@@ -167,7 +156,7 @@ Window.application = {
         {
           block: 'button',
           cls: 'create',
-          innerText: 'Создать игру',
+          innerText: 'Играть',
           method: {
             eventName: 'click',
             methodFunc: () => {
@@ -277,6 +266,23 @@ Window.application = {
         },
       },
     },
+
+  waitingPlayer: {
+  block: 'div',
+  cls: 'undercard',
+  content:[
+    {
+      block: 'h1',
+      cls: 'undercard_text',
+      innerText: 'Ожидаем подключение соперника...',
+    },
+    {
+      block: 'div',
+      cls: 'lds-hourglass',
+    },              
+  ]
+  }, 
+ 
 
     backToLobbyButton: {
       block: 'div',
@@ -458,6 +464,7 @@ Window.application = {
                   cls: 'header_text',
                   innerText: 'Вы создали комнату',
                 },
+                
               ],
             },
             {
@@ -514,21 +521,6 @@ Window.application = {
                       ],
                     },
                   ],
-                },
-              ],
-            },
-            {
-              block: 'div',
-              cls: 'undercard',
-              content: [
-                {
-                  block: 'h1',
-                  cls: 'undercard_text',
-                  innerText: 'Ожидаем подключение соперника...',
-                },
-                {
-                  block: 'div',
-                  cls: 'lds-hourglass',
                 },
               ],
             },
@@ -1123,8 +1115,6 @@ function getPlayerStatus(parseStatus) {
 //получение токена и статуса
 function getTokenGetPlayerStatus(data) {
   gameState.token = data.token;
-  // gameState.gamerName = namePlayer;
-
   Window.application.request(
     `${gameState.url}player-status?token=${gameState.token}`,
     getPlayerStatus,
@@ -1156,19 +1146,25 @@ function createPageLoginScreen() {
 
 
 //Lobby Screen
-//нажатие на кнопку 'создать игру'
-function clickPlayButton() {
-  Window.application.request(`${gameState.url}start?token=${gameState.token}`, createPageStandByScreen);
+
+//функция получения id игры. Создание своей игры
+function createGame(parsedData){
+  gameState.gameId = parsedData['player-status'].game.id
+  console.log(gameState.gameId)
+  createPageStandByScreen()
 }
 
-//войти в уже имеющуюся игру
+//нажатие на кнопку 'создать игру'
+function clickPlayButton() {
+  console.log(gameState.token)
+  Window.application.request(`${gameState.url}start?token=${gameState.token}`, createGame);
+}
+
+
+//Кнопка играть
 function enterToPlayButton(e) {
   if (e.target.nodeName.toLowerCase() !== 'button') return;
   Window.application.request(`${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, enterGame);
-}
-
-function enterGame(parsedData) {
-  if (parsedData['game-status'].status === 'waiting-for-your-move') createPageWaitScreen(parsedData);
 }
 
 //получение информации об игроке
@@ -1255,31 +1251,36 @@ function backToLobby() {
 
 //переход на экран игры
 function checkOpponentConnection(parsedData) {
-  if (parsedData['status'] === 'error') {
-    gameState.errorMessage = parsedData['message'];
-    startErrorScreen();
-    return;
+  if (parsedData['game-status'].status !== 'waiting-for-start'){
+    if (parsedData.status === 'error') {
+      gameState.errorMessage = parsedData['message'];
+      startErrorScreen();
+    }
+    // console.log(gameState.token)
+    // console.log(gameState.gameId)
+    // console.log(parsedData['game-status'].enemy.login)
+    if (parsedData['game-status'].status === 'waiting-for-your-move') {
+      gameState.enemyName = parsedData['game-status'].enemy.login;
+      gameState.roundStatus = parsedData['game-status'].status
+      createPageWaitScreen();
   }
-  gameState.enemyName = parsedData['game-status']['enemy']['login'];
-  gameState.enemyStatistic.wins = parsedData['game-status']['enemy']['wins'];
-  gameState.enemyStatistic.loses = parsedData['game-status']['enemy']['loses'];
-
-  if (parsedData['game-status'].status === 'waiting-for-your-move') {
-    createPageWaitScreen(parsedData);
-  }
+  gameState.roundStatus = parsedData['game-status'].status
 }
+  // gameState.enemyStatistic.wins = parsedData['game-status'].enemy.wins;
+  // gameState.enemyStatistic.loses = parsedData['game-status'].enemy.loses;
+  }
+  
 
-function createPageStandByScreen(parsedData) {
-  gameState.gameId = parsedData['player-status'].game.id;
+function createPageStandByScreen() {
   Window.application.renderScreen(Window.application.screens.standByScreen);
+  Window.application.renderBlock([Window.application.blocks.waitingPlayer], document.querySelector('.main'))
   Window.application.renderBlock([Window.application.blocks.backToLobbyButton], document.querySelector('.undercard'));
-  Window.application.timers.push(setInterval(Window.application.request, 1000, `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, checkOpponentConnection));
+  Window.application.timers.push(setInterval(Window.application.request, 500, `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, checkOpponentConnection));
 }
 
 //waitScreen
 //  Сценарий
-function createPageWaitScreen(parsedData) {
-  gameState.enemyName = parsedData['game-status'].enemy.login;
+function createPageWaitScreen() {
   Window.application.renderScreen(Window.application.screens.waitScreen);
   Window.application.timers.push(setInterval(Window.application.request,
     500,
@@ -1290,25 +1291,22 @@ function createPageWaitScreen(parsedData) {
 }
 
 // функция для появления надписи Противник ожидает хода
-
-
 function switchWaitScreen(parsedData) {
   if (parsedData['game-status'].status === 'waiting-for-your-move') {
-    waitingText.classList.remove('hidden');
-    enemyScroll.classList.add('hidden');
+    document.querySelector('.main-waitscreen__gameprocess-text').classList.remove('hidden');
+    document.querySelector('.lds-hourglass').classList.add('hidden');
 
   }
 }
 
-// запускает процесс ожидания статуса игры
+//ВОТ ДО СЮДА ВСЕ СДЕЛАНО!!!! ПОЖАЛУЙСТА! ДОБЕЙТЕ!
+// функция хода игрока
 function switchToGameFieldScreen(serverAnswer) {
+  console.log(gameState.roundStatus)
   if (serverAnswer.status === 'ok') {
-    if (serverAnswer['game-status'].status === 'waiting-for-enemy-move') {
-      return;
+    if (serverAnswer['game-status'].status !== 'waiting-for-enemy-move') {
+      startGameFieldScreen() 
     }
-    gameState.gameStatus = serverAnswer['game-status'].status;
-    startGameFieldScreen();
-    return;
   }
   gameState.errorMessage = serverAnswer.message;
   startErrorScreen();
@@ -1408,10 +1406,10 @@ const showRoundResultWindow = (roundStatus, gamerChoice) => {
 
 function startGameFieldScreen() {
   Window.application.renderScreen(Window.application.screens.gameFieldScreen);
-  Window.application.renderBlock([selectPlayerChoiceBlock(gameState.turn)], app.querySelectorAll('.choice-wrapper')[0]);
-  Window.application.renderBlock([selectEnemyChoiceBlock(gameState.turn, gameState.objFromJSON['game-status'].status)], app.querySelectorAll('.choice-wrapper')[1]);
-  setTimeout(drawCrossAndCheckMark, 4300, gameState.objFromJSON['game-status'].status);
-  setTimeout(showRoundResultWindow, 5500, gameState.objFromJSON['game-status'], gameState.turn);
+  Window.application.renderBlock([selectPlayerChoiceBlock(gameState.move)], app.querySelectorAll('.choice-wrapper')[0]);
+  Window.application.renderBlock([selectEnemyChoiceBlock(gameState.move, gameState.roundStatus)], app.querySelectorAll('.choice-wrapper')[1]);
+  setTimeout(drawCrossAndCheckMark, 4300, gameState.roundStatus);
+  setTimeout(showRoundResultWindow, 5500, gameState.roundStatus, gameState.move);
 }
 
 // Error Screen
