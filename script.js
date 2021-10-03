@@ -1167,10 +1167,18 @@ function enterToPlayButton(e) {
   Window.application.request(`${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, enterGame);
 }
 
+function enterGame(parsedData) {
+  if (parsedData.status === 'error') {
+    gameState.errorMessage = parsedData['message'];
+    startErrorScreen();
+  }
+
+  if(parsedData['game-status'].status === 'waiting-for-your-move') checkOpponentConnection(parsedData);
+}
+
 //получение информации об игроке
 function getStatisticPlayer(parsedData) {
-  let obj = parsedData.list;
-  obj.forEach(function(obj) {
+  parsedData.list.forEach(function(obj) {
     if (Object.keys(obj).includes('you')) {
       // gameState.gamerStatistic.wins = obj.wins;
       // gameState.gamerStatistic.loses = obj.loses;
