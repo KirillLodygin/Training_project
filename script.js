@@ -1311,6 +1311,7 @@ function switchWaitScreen(parsedData) {
 // функция хода игрока
 function switchToGameFieldScreen(serverAnswer) {
   console.log(gameState.roundStatus)
+  gameState.roundStatus = serverAnswer['game-status'].status;
   if (serverAnswer.status === 'ok') {
     if (serverAnswer['game-status'].status !== 'waiting-for-enemy-move') {
       startGameFieldScreen()
@@ -1427,6 +1428,5 @@ function startErrorScreen() {
   Window.application.renderBlock([Window.application.blocks.errorButton], app.querySelector('.error-field'));
   app.querySelector('.error-message').textContent = gameState.errors[gameState.errorMessage];
 }
-
 
 document.addEventListener('DOMContentLoaded', createPageLoginScreen);
