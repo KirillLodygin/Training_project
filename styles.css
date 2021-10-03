@@ -785,46 +785,37 @@ h2 {
 
 .wrapper {
     background-color: goldenrod;
-    height: auto;
-    width: 80%;
-    position: absolute;
-    margin: 0 50px 0 150px;
+    height: 100vh;
 }
-
 h1 {
     color: black;
     text-align: center;
 }
-
 .header {
     color: aquamarine;
-    width: auto;
+    max-width: 1200px;
+    margin: 0 auto;
     height: 60px;
     text-align: center;
 }
-
 .columnHeaders {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-
-.columnHeader {
+.columnHeader2, .columnHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:15px;
     width: 50%;
     text-align: center;
-    float: left;
 }
-
-.columnHeader2 {
-    width: 50%;
-    text-align: center;
-    float: right;
-}
-
 audio {
     display: none;
 }
-
 .yourself {
     height: 300px;
     float: left;
@@ -832,7 +823,6 @@ audio {
     display: flex;
     padding: 0 0 0 10px;
 }
-
 .opponents {
     overflow: scroll;
     width: 50%;
@@ -842,26 +832,23 @@ audio {
     height: 500px;
     justify-content: flex-start;
 }
-
 .avatar {
     height: 100%;
     width: 30%;
 }
-
 .opponent {
     width: 300px;
     height: 300px;
     padding: 0 0 0 0;
 }
-
 .popUp {
     width: 300px;
     height: 50px;
     text-align: center;
     padding: 15px;
-    border: 3px solid #0000cc;
+    border: 3px solid #0000CC;
     border-radius: 10px;
-    color: #0000cc;
+    color: #0000CC;
     background-color: white;
     display: none;
     position: absolute;
@@ -871,19 +858,13 @@ audio {
     left: 0;
     margin: auto;
 }
-
 .main_opponent_profile-block {
-    margin: 50px 10px 20px 100px;
-    padding: 0 0 0 0;
+    margin-top: 15px;
     width: 350px;
-
     border: 2px solid;
     border-radius: 15px;
     background: antiquewhite;
-    align-content: center;
-    float: right;
 }
-
 .main_opponent_profile-block-header {
     margin-top: 20px;
     display: flex;
@@ -892,17 +873,14 @@ audio {
     justify-content: center;
     gap: 15px;
 }
-
 .opponent_profile-avatar {
     max-width: 75px;
     max-height: 75px;
     border-radius: 25px;
 }
-
 .opponent_profile-name {
-    color: #983de0;
+    color: #983DE0;
 }
-
 .opponent_profile_statistics-block {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -910,42 +888,31 @@ audio {
     justify-content: center;
     flex-direction: column;
 }
-
 .win {
     color: seagreen;
 }
-
 .loose {
     color: red;
 }
-
 .draw {
     color: yellow;
 }
-
 .statistics-header {
     align-self: center;
     margin-bottom: 20px;
-    color: #e07d48;
+    color: #E07D48;
 }
-
 .statistic-items {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
-
 .main_yourself_profile-block {
-    margin: 40px 10px 20px 50px;
-    padding: 0 0 0 0;
     width: 350px;
     border: 2px solid;
     border-radius: 15px;
     background: antiquewhite;
-    align-content: center;
-    float: left;
 }
-
 .main_yourself_profile-block-header {
     margin-top: 10px;
     display: flex;
@@ -954,17 +921,14 @@ audio {
     justify-content: center;
     gap: 15px;
 }
-
 .yourself_profile-avatar {
     max-width: 75px;
     max-height: 75px;
     border-radius: 25px;
 }
-
 .yourself_profile-name {
-    color: #983de0;
+    color: #983DE0;
 }
-
 .yourself_profile_statistics-block {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -972,7 +936,6 @@ audio {
     justify-content: center;
     flex-direction: column;
 }
-
 .popup_opponent_profile-block {
     margin: 27px -23px 11px -18px;
     padding: 0 0 0 0;
@@ -983,34 +946,26 @@ audio {
     align-content: center;
     float: right;
 }
-
 .announce {
     font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
     font-size: medium;
 }
-
 .accept {
     border-radius: 5px;
     width: 100px;
     height: 40px;
     font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
 }
-
 .deny {
     border-radius: 5px;
     width: 100px;
     height: 40px;
     font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
 }
-
 .createGame {
-   
-    margin: 0 auto;
-    border-radius: 5px;
-    width: 100px;
-    height: 50px;
+    display: flex;
+    justify-content: center;
 }
-
 .create {
     color: darkgoldenrod;
     border-radius: 5px;
@@ -1018,14 +973,11 @@ audio {
     height: 70px;
     font-family: StratosSkyeng, 'Helvetica Neue', sans-serif;
     font-size: 1em;
-    
 }
-
 .availableGame {
     display: flex;
     flex-direction: row;
 }
-
 .enterButton {
     margin: 0 0 0 120px;
     border-radius: 5px;
@@ -1036,7 +988,6 @@ audio {
     font-size: 1em;
     float: left;
 }
-
 .popUpWaitingScreen {
     margin: 20% 0 0 40%;
     display: compact;
@@ -1047,9 +998,8 @@ audio {
 .loader:after {
     border-radius: 50%;
 }
-
 .loader {
-    color: #ffffff;
+    color: #FFFFFF;
     font-size: 11px;
     text-indent: -99999em;
     margin: 55px auto;
@@ -1061,17 +1011,15 @@ audio {
     -ms-transform: translateZ(0);
     transform: translateZ(0);
 }
-
 .loader:before,
 .loader:after {
     position: absolute;
     content: '';
 }
-
 .loader:before {
     width: 5.2em;
     height: 10.2em;
-    background: #0dc5c1;
+    background: #0DC5C1;
     border-radius: 10.2em 0 0 10.2em;
     top: -0.1em;
     left: -0.1em;
@@ -1080,11 +1028,10 @@ audio {
     -webkit-animation: load2 2s infinite ease 1.5s;
     animation: load2 2s infinite ease 1.5s;
 }
-
 .loader:after {
     width: 5.2em;
     height: 10.2em;
-    background: #0dc5c1;
+    background: #0DC5C1;
     border-radius: 0 10.2em 10.2em 0;
     top: -0.1em;
     left: 4.9em;
@@ -1093,44 +1040,115 @@ audio {
     -webkit-animation: load2 2s infinite ease;
     animation: load2 2s infinite ease;
 }
-
 @-webkit-keyframes load2 {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
-
 @keyframes load2 {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
-
 .display-none.display-none {
     display: none;
 }
-
 .opacity.opacity {
     opacity: 1;
+}
+/* "Экран ожидания игрока" */
+.text-style {
+    text-shadow: 1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000;
+}
+.standBy_container {
+    height: 100%;
+    font-family: StratosSkyeng, "Helvetica Neue", sans-serif;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    background: sandybrown;
+}
+.header_text {
+    color: white;
+}
+.undercard_text {
+    color: chartreuse;
+    margin: 20px 0 30px 0;
+}
+.standBy_main_opponent_profile-block {
+    margin: 70px 10px 20px 10px;
+    width: 600px;
+    border: 2px solid;
+    border-radius: 15px;
+    background: antiquewhite;
+}
+.opponent_profile-avatar {
+    max-width: 75px;
+    max-height: 75px;
+    border-radius: 25px;
+}
+.undercard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.back_button_box-button {
+    color: white;
+    height: 50px;
+    background: brown;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    margin: 50px 0px 00px 10px;
+    padding-right: 10px;
+}
+.standBy_lds-hourglass {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.standBy_lds-hourglass:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 15px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: standBy_lds-hourglass 1.8s infinite;
+}
+@keyframes standBy_lds-hourglass {
+    0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    100% {
+        transform: rotate(1800deg);
+    }
 }
 
 /* waitScreen */
 .hidden.hidden {
     display: none;
   }
-  
+
   /* header */
   .header-waitscreen {
     background-color: #e07d48;
@@ -1139,7 +1157,7 @@ audio {
     max-width: 1200px;
     margin: 0 auto;
   }
-  
+
   .header-waitscreen__navibar-item {
     background-color: #d3e03d;
     border-radius: 15px;
@@ -1162,7 +1180,7 @@ audio {
     color: #d3e03d;
     background-color: #983de0;
   }
-  
+
   /* main-content */
   .main-waitscreen {
     background: linear-gradient(to right, #69e0db 50%, #983de0);
@@ -1209,15 +1227,15 @@ audio {
       box-shadow: 0 50px 50px rgba(0, 0, 0, 0.1);
     }
   }
-  
+
   /* waitscreen */
-  
+
   .main-waitscreen__versus-image {
     width: 250px;
     height: 250px;
     object-fit: contain;
   }
-  
+
   .main-waitscreen__gameprocess-container {
     max-width: 1200px;
     height: calc(100vh - 150px);
@@ -1232,7 +1250,7 @@ audio {
     text-shadow: -1px -1px 1px silver, 1px -1px 1px silver;
     color: #983de0;
   }
-  
+
   .main-waitscreen__gameprocess-waiting-another-player {
     display: flex;
     flex-direction: column;
@@ -1240,7 +1258,7 @@ audio {
     width: 600px;
     height: 520px;
   }
-  
+
   .main-waitscreen__gameprocess-playerzone {
     display: flex;
     flex-direction: column;
@@ -1293,7 +1311,7 @@ audio {
       transform: rotate(1800deg);
     }
   }
-  
+
   .main-waitscreen__gameprocess-text {
     margin-top: 40%;
     text-align: center;
@@ -1308,7 +1326,7 @@ audio {
     display: flex;
     gap: 20px;
   }
-  
+
   .main-waitscreen__gameprocess-username,
   .main-waitscreen__gameprocess-statistic {
     font-size: 25px;
@@ -1316,21 +1334,21 @@ audio {
     line-height: 15px;
     letter-spacing: -0.3px;
   }
-  
+
   .main-waitscreen__gameprocess-username {
     margin-top: 14px;
-  
+
     text-shadow: -1px -1px 1px silver, 1px -1px 1px silver;
     color: #983de0;
   }
-  
+
   .main-waitscreen__gameprocess-statistic {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
     color: #ff0000;
-  
+
     margin-top: 15px;
   }
   .main-waitscreen__gameprocess-avatar {

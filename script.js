@@ -450,79 +450,84 @@ Window.application = {
     },
 
     standByScreen: {
-      block: 'div',
-      cls: 'container',
+      block: "div",
+      cls: "standBy_container",
       content: [
         {
-          block: 'div',
-          cls: 'main',
+          block: "div",
+          cls: "main",
           content: [
             {
-              block: 'header',
-              cls: 'header',
+              block: "header",
+              cls: "header",
               content: [
                 {
-                  block: 'h1',
-                  cls: 'header_text',
-                  innerText: 'Вы создали комнату',
+                  block: "h1",
+                  cls: ["header_text", "text-style"],
+                  innerText: "Вы создали комнату",
                 },
-
               ],
             },
             {
-              block: 'div',
-              cls: ['main_opponent_profile-block', 'bigEntrance'],
+              block: "div",
+              cls: ["standBy_main_opponent_profile-block", "bigEntrance"],
               content: [
                 {
-                  block: 'div',
-                  cls: 'main_opponent_profile-block-header',
+                  block: "div",
+                  cls: "main_opponent_profile-block-header",
                   content: [
                     {
-                      block: 'img',
-                      cls: 'opponent_profile-avatar',
+                      block: "img",
+                      cls: "opponent_profile-avatar",
                       attrs: {
-                        src: './assets/img/avatar.png',
+                        src: "./assets/img/avatar.png",
                       },
                     },
                     {
-                      block: 'h1',
-                      cls: 'opponent_profile-name',
+                      block: "h1",
+                      cls: ["opponent_profile-name", "text-style"],
                     },
                   ],
                 },
                 {
-                  block: 'div',
-                  cls: 'opponent_profile_statistics-block',
+                  block: "div",
+                  cls: "opponent_profile_statistics-block",
                   content: [
                     {
-                      block: 'h2',
-                      cls: 'statistics-header',
-                      innerText: 'Ваша Статистика ',
+                      block: "h2",
+                      cls: ["statistics-header", "text-style"],
+                      innerText: "Ваша Статистика ",
                     },
                     {
-                      block: 'div',
-                      cls: 'statistic-items',
+                      block: "div",
+                      cls: "statistic-items",
                       content: [
                         {
-                          block: 'h3',
-                          cls: 'win',
-                          innerText:
-                            `Победы : ${gameState.gamerStatistic.wins}`,
+                          block: "h3",
+                          cls: ["win", "text-style"],
                         },
                         {
-                          block: 'h3',
-                          cls: 'loose',
-                          innerText:
-                            `Поражения : ${gameState.gamerStatistic.loses}`,
-                        },
-                        {
-                          block: 'h3',
-                          cls: 'draw',
-                          innerText: 'Ничьи :  ',
+                          block: "h3",
+                          cls: ["loose", "text-style"],
                         },
                       ],
                     },
                   ],
+                },
+              ],
+            },
+            {
+              block: "div",
+              cls: "undercard",
+              content: [
+                {
+                  block: "h1",
+                  cls: ["undercard_text", "text-style"],
+                  innerText: "Ожидаем подключение соперника...",
+                },
+                {
+                  block: "div",
+                  cls: "standBy_lds-hourglass",
                 },
               ],
             },
@@ -746,23 +751,6 @@ Window.application = {
                                     'main-waitscreen__gameprocess-username',
                                     'your-name',
                                   ],
-                                  innerText: gameState.gamerName,
-                                },
-                                {
-                                  block: 'p',
-                                  cls: 'main-waitscreen__gameprocess-statistic',
-                                  content: [
-                                    {
-                                      block: 'span',
-                                      cls: 'your-wins',
-                                      innerText: `Побед: ${gameState.gamerStatistic.wins}`,
-                                    },
-                                    {
-                                      block: 'span',
-                                      cls: 'your-defeats',
-                                      innerText: `Поражений: ${gameState.gamerStatistic.loses}`,
-                                    },
-                                  ],
                                 },
                               ],
                             },
@@ -813,38 +801,12 @@ Window.application = {
                                     'main-waitscreen__gameprocess-username',
                                     'enemy-name',
                                   ],
-                                  innerText: gameState.enemyName,
-                                },
-                                {
-                                  block: 'p',
-                                  cls: 'main-waitscreen__gameprocess-statistic',
-                                  content: [
-                                    {
-                                      block: 'span',
-                                      cls: 'enemy-wins',
-                                      innerText: `Побед: ${gameState.enemyStatistic.wins}`,
-                                    },
-                                    {
-                                      block: 'span',
-                                      cls: 'enemy-defeats',
-                                      innerText: `Поражений: ${gameState.enemyStatistic.loses}`,
-                                    },
-                                  ],
                                 },
                               ],
                             },
                           ],
                         },
                       ],
-                      method: {
-                        eventName: 'DOMContentLoaded',
-                        methodFunc: () => {
-                          Window.application.timers.push(setInterval(Window.application.request,
-                            500,
-                            `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`,
-                            switchWaitScreen));
-                        },
-                      },
                     },
                   ],
                 },
@@ -1291,9 +1253,12 @@ function checkOpponentConnection(parsedData) {
 
 function createPageStandByScreen() {
   Window.application.renderScreen(Window.application.screens.standByScreen);
-  Window.application.renderBlock([Window.application.blocks.waitingPlayer], document.querySelector('.main'));
-  Window.application.renderBlock([Window.application.blocks.backToLobbyButton], document.querySelector('.undercard'));
-  Window.application.timers.push(setInterval(Window.application.request, 500, `${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, checkOpponentConnection));
+  document.querySelector(".opponent_profile-name").textContent = gameState.gamerName;
+  document.querySelector(".win").textContent = `Побед:  ${gameState.gamerStatistic.wins}`;
+  document.querySelector(".loose").textContent = `Поражений: ${gameState.gamerStatistic.loses}`;
+  Window.application.renderBlock([Window.application.blocks.waitingPlayer],document.querySelector(".main"));
+  Window.application.renderBlock([Window.application.blocks.backToLobbyButton],document.querySelector(".undercard"));
+  Window.application.timers.push(setInterval(Window.application.request, 500,`${gameState.url}game-status?token=${gameState.token}&id=${gameState.gameId}`, checkOpponentConnection));
 }
 
 //waitScreen
@@ -1317,7 +1282,7 @@ function switchWaitScreen(parsedData) {
 
   if (parsedData['game-status'].status === 'waiting-for-your-move') {
     document.querySelector('.main-waitscreen__gameprocess-text').classList.remove('hidden');
-    document.querySelector('.lds-hourglass').classList.add('hidden');
+    document.querySelector('.enemy-scroll').classList.add('hidden');
   }
 
   if (parsedData['game-status'].status !== 'waiting-for-your-move') {
