@@ -1,7 +1,7 @@
 const app = document.querySelector('.app');
 
 const gameState = {
-  url: 'http://localhost:3000/',
+  url: 'https://skypro-rock-scissors-paper.herokuapp.com/',
 
   token: '',
 
